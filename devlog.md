@@ -9,6 +9,19 @@ In Xcode I created a new `iOS 18` project in the local directory in `Landmarks/`
 
 I'm going to pause for now and then carry this on later.
 
+## Software Updates
+
+My enthusiasm was halted when I had to perform a software update on my phone and mac. Not to worry I thought.
+Unforunately, my phone did not have enough free storage to perform the software update so I spent ages deleting loads of WhatsApp
+videos to make space. Eventually, we got there in the end.
+
+I can now connect my iPhone to my MacBook, open Xcode and build the project directly to an app on my iPhone.
+I had to go into the iPhone settings and whitelist myself as a developer but yeah, we're there. It's quite
+nifty in all honesty. I like that I can develop with the simulator, see the results in realtime, and then periodically build the
+app onto my iPhone and have the results shown in near-realtime. Decent.
+
+Right, onwards with the tutorial then.
+
 # 20/02/25
 
 Ran:
