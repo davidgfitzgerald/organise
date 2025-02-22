@@ -1,3 +1,3 @@
-# iOS Hello World App
+# Following SwiftUI Tutorial
 
-Just creating an iOS "Hello, World!" style app.
+Following this: https://developer.apple.com/tutorials/swiftui/
