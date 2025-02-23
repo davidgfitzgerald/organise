@@ -1,3 +1,19 @@
+# Dev Log
+
+This file is for rambling thoughts and notes during development.
+
+# 23/02/25
+
+Continuing with: https://developer.apple.com/tutorials/swiftui/creating-and-combining-views
+
+Having some teething problems trying to work out best way to develop. Xcode has no integrated terminal which I am very much used to.
+I'd like to see if I can continue to use VSCode.
+
+Anyways, I'm just gonna carry on as is for now and get through the tutorial.
+
+In `Xcode`, quite cool. On the Canvas choose selector mode (mouse cursor) then `Ctrl`+`Cmd`+Click an element and view the inspector. 
+You can then change attributes in a UI that will also edit the code.
+
 # 22/02/25
 
 Didn't really start anything so going to start again and follow the apple developer tutorial here:
