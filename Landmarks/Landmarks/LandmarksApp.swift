@@ -15,3 +15,7 @@ struct LandmarksApp: App {
         }
     }
 }
+
+#Preview {
+    ContentView()
+}

@@ -2,6 +2,22 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 24/02/25
+
+Starting on the next section of the tutorial: https://developer.apple.com/tutorials/swiftui/building-lists-and-navigation
+
+Ok. I'm quite liking swift, I'm not gonna lie.
+
+This tutorial was great and I really took time to soak it in.
+
+The fact that device previews are available for things like iPhone and iPad is really cool. 
+It's super nice to just get the iPad view pretty much for free. I'm really liking this. There
+is very little boilerplate code. It's just a case of defining what I want to exist. 
+
+Nice.
+
+This one next: https://developer.apple.com/tutorials/swiftui/handling-user-input
+
 # 23/02/25
 
 Continuing with: https://developer.apple.com/tutorials/swiftui/creating-and-combining-views
