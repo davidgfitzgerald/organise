@@ -2,6 +2,21 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 02/03/25
+
+Interesting, so I've just looked into flutter a bit more and I am very intrigued by it.
+
+It appears that I could create one app using flutter that will compile to any platform: iOS, Android, Web, Desktop, Mac... etc.
+
+The API appears to be declarative too. I just watched Fireship's [Flutter in 100 seconds](https://www.youtube.com/watch?v=lHhRhPV--G0)
+and now I'm going to follow his [Flutter Basic Training - 12 Minute Bootcamp](https://www.youtube.com/watch?v=1xipg02Wu8s) video.
+
+It seems like this could be a preferable option if it means I can widen my deployment options whilst retaining a single codebase.
+
+Let's give it a go.
+
+I'm going to start a new branch for this.
+
 # 24/02/25
 
 Starting on the next section of the tutorial: https://developer.apple.com/tutorials/swiftui/building-lists-and-navigation
