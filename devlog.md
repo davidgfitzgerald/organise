@@ -2,6 +2,10 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 17/03/25
+
+Carrying on with [Flutter Basic Training - 12 Minute Bootcamp](https://www.youtube.com/watch?v=1xipg02Wu8s) video
+
 # 02/03/25
 
 Interesting, so I've just looked into flutter a bit more and I am very intrigued by it.
@@ -16,6 +20,10 @@ It seems like this could be a preferable option if it means I can widen my deplo
 Let's give it a go.
 
 I'm going to start a new branch for this.
+
+## Flutter Bootcamp
+
+Following [this video](https://www.youtube.com/watch?v=1xipg02Wu8s) now.
 
 # 24/02/25
 
