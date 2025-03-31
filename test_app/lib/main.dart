@@ -1,11 +1,22 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/bottom_nav.dart';
+import 'package:test_app/nav.dart';
 import 'package:test_app/drawer.dart';
+import 'package:test_app/scrollable.dart';
 
 void main() {
   // Flutter has a global called runApp, which
   // takes a widget and inflates to fit the screen.
   runApp(const MyApp());
+}
+
+class MouseAndTouchScroll extends MaterialScrollBehavior {
+  // Override behavior methods and getters like dragDevices
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse, // allows scrolling with mouse on web
+  };
 }
 
 class MyApp extends StatelessWidget {
@@ -14,6 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: MouseAndTouchScroll(),
       home: SelectionArea(
         child: Scaffold(
           appBar: AppBar(title: const Text('Habit Tracker')),
@@ -25,6 +37,7 @@ class MyApp extends StatelessWidget {
           ),
           bottomNavigationBar: BottomNav(),
           drawer: const SideDrawer(),
+          body: const ScrollableView(),
         ),
       ),
     );

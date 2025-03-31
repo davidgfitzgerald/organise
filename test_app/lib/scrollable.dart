@@ -1,0 +1,37 @@
+import 'package:flutter/material.dart';
+
+class ScrollableView extends StatelessWidget {
+  const ScrollableView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 3,
+        child: Row(
+          children: [
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.blue,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.red,
+              ),
+            ),
+            Expanded(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                color: Colors.green,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
