@@ -13,21 +13,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: const Text(
-            'Habit Tracker',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        body: Container(
-          margin: EdgeInsets.all(10),
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: const Text('Hi, Mom!', style: TextStyle(color: Colors.white)),
+        appBar: AppBar(title: const Text('Habit Tracker')),
+        body: Column(
+          children: const [
+            Text('Hello, World 1!'),
+            Text('Hello, World 2!'),
+            Text('Hello, World 3!'),
+          ],
         ),
       ),
     );
