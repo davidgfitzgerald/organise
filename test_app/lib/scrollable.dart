@@ -45,7 +45,7 @@ class InfiniteScroll extends StatelessWidget {
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(
         itemBuilder: (context, index) {
-          return Container(height: 100, color: randomColour(index));
+          return Container(height: 300, color: randomColour(index));
         },
       ),
     );
