@@ -7,7 +7,11 @@ import 'package:test_app/scrollable.dart';
 void main() {
   // Flutter has a global called runApp, which
   // takes a widget and inflates to fit the screen.
-  runApp(const MyApp());
+  runApp(const HomePage());
+
+  // Flutter has navigator 1.0 and 2.0
+  // 1.0 - Imperative & simple
+  // 2.0 - Declarative & complex
 }
 
 class MouseAndTouchScroll extends MaterialScrollBehavior {
@@ -19,15 +23,32 @@ class MouseAndTouchScroll extends MaterialScrollBehavior {
   };
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyAppState extends State<MyApp> {
+// Other state management options include
+// - Riverpod
+// - Provider
+// - Bloc
+// - Cubit
+class _HomePageState extends State<HomePage> {
   int count = 0;
+
+  @override
+  void initState() {
+    // TODO: fetch data from Firebase
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,74 +80,6 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class VerifiedIcon extends StatelessWidget {
-  const VerifiedIcon({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(color: Colors.blue, width: 40, height: 40),
-        const Icon(Icons.verified, color: Colors.white, size: 32),
-      ],
-    );
-  }
-}
-
-class IconButtons extends StatelessWidget {
-  const IconButtons({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: const [
-            Expanded(
-              flex: 4,
-              child: AppIcon(
-                icon: Icons.favorite,
-                text: 'Favorites',
-                color: Colors.red,
-              ),
-            ),
-            AppIcon(icon: Icons.abc_outlined, text: 'Keyboard'),
-            AppIcon(icon: Icons.access_alarm_outlined, text: 'Timers'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AppIcon extends StatelessWidget {
-  const AppIcon({
-    super.key,
-    required this.icon,
-    required this.text,
-    this.color,
-  });
-
-  final IconData icon;
-  final String text;
-  final double iconSize = 40.0;
-  final Color? color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [Icon(icon, size: iconSize, color: color), Text(text)],
       ),
     );
   }
