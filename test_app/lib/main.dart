@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           ),
           bottomNavigationBar: BottomNav(),
           drawer: const SideDrawer(),
-          body: const ScrollableView(),
+          body: const InfiniteScroll(),
         ),
       ),
     );
