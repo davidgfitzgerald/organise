@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:test_app/bottom_nav.dart';
+import 'package:test_app/drawer.dart';
 
 void main() {
   // Flutter has a global called runApp, which
@@ -21,15 +23,8 @@ class MyApp extends StatelessWidget {
             },
             child: const Icon(Icons.add),
           ),
-          bottomNavigationBar: BottomNavigationBar(
-            items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'Settings',
-              ),
-            ],
-          ),
+          bottomNavigationBar: BottomNav(),
+          drawer: const SideDrawer(),
         ),
       ),
     );
