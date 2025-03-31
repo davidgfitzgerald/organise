@@ -14,14 +14,36 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Habit Tracker')),
-        body: Column(
+        body: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: const [
-            Text('Hello, World 1!'),
-            Text('Hello, World 2!'),
-            Text('Hello, World 3!'),
+            AppIcon(icon: Icons.favorite, text: 'Favorites', color: Colors.red),
+            AppIcon(icon: Icons.abc_outlined, text: 'Keyboard'),
+            AppIcon(icon: Icons.access_alarm_outlined, text: 'Timers'),
           ],
         ),
       ),
+    );
+  }
+}
+
+class AppIcon extends StatelessWidget {
+  const AppIcon({
+    super.key,
+    required this.icon,
+    required this.text,
+    this.color,
+  });
+
+  final IconData icon;
+  final String text;
+  final double iconSize = 40.0;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [Icon(icon, size: iconSize, color: color), Text(text)],
     );
   }
 }
