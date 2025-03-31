@@ -12,25 +12,68 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Habit Tracker')),
-        body: Container(
-          margin: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [
-              Expanded(
-                child: AppIcon(
-                  icon: Icons.favorite,
-                  text: 'Favorites',
-                  color: Colors.red,
-                ),
+      home: SelectionArea(
+        child: Scaffold(
+          appBar: AppBar(title: const Text('Habit Tracker')),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              debugPrint('Pressed');
+            },
+            child: const Icon(Icons.add),
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings',
               ),
-              AppIcon(icon: Icons.abc_outlined, text: 'Keyboard'),
-              AppIcon(icon: Icons.access_alarm_outlined, text: 'Timers'),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class VerifiedIcon extends StatelessWidget {
+  const VerifiedIcon({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(color: Colors.blue, width: 40, height: 40),
+        const Icon(Icons.verified, color: Colors.white, size: 32),
+      ],
+    );
+  }
+}
+
+class IconButtons extends StatelessWidget {
+  const IconButtons({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        margin: const EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: const [
+            Expanded(
+              flex: 4,
+              child: AppIcon(
+                icon: Icons.favorite,
+                text: 'Favorites',
+                color: Colors.red,
+              ),
+            ),
+            AppIcon(icon: Icons.abc_outlined, text: 'Keyboard'),
+            AppIcon(icon: Icons.access_alarm_outlined, text: 'Timers'),
+          ],
         ),
       ),
     );
