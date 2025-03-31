@@ -1,6 +1,10 @@
 # Dev Log
 
-This file is for rambling thoughts and notes during development.
+# 31/03/25
+
+I've been thinking about this whole app thing. I've decided that I want to try and build this in Flutter.
+
+I've also been thinking about what I want to build. I want to build a simple app that allows me to track my habits.
 
 # 17/03/25
 
