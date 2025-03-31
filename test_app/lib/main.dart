@@ -20,6 +20,15 @@ class MyApp extends StatelessWidget {
             style: TextStyle(color: Colors.white),
           ),
         ),
+        body: Container(
+          margin: EdgeInsets.all(10),
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text('Hi, Mom!', style: TextStyle(color: Colors.white)),
+        ),
       ),
     );
   }
