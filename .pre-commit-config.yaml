@@ -1,9 +1,9 @@
 repos:
 - repo: local
   hooks:
-  - id: flutter-format
-    name: Flutter Format
-    entry: flutter format
+  - id: dart-format
+    name: Dart Format
+    entry: dart format
     language: system
     types: [ dart ]
     pass_filenames: true
@@ -13,3 +13,9 @@ repos:
     language: system
     types: [ dart ]
     pass_filenames: false
+  - id: shellcheck
+    name: ShellCheck
+    entry: shellcheck
+    language: system
+    types: [ shell ]
+    pass_filenames: true

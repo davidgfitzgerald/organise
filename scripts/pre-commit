@@ -8,8 +8,8 @@ if [ -z "$STAGED_FILES" ]; then
 fi
 
 # Format the staged Dart files
-echo "Running Flutter format..."
-flutter format $STAGED_FILES
+echo "Running Dart format..."
+dart format $STAGED_FILES
 
 # Stage the formatted files
 git add $STAGED_FILES
