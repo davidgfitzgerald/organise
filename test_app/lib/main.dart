@@ -19,8 +19,15 @@ class MouseAndTouchScroll extends MaterialScrollBehavior {
   };
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +38,26 @@ class MyApp extends StatelessWidget {
           appBar: AppBar(title: const Text('Habit Tracker')),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              setState(() {
+                count++;
+              });
               debugPrint('Pressed');
             },
             child: const Icon(Icons.add),
           ),
           bottomNavigationBar: BottomNav(),
           drawer: const SideDrawer(),
-          body: const InfiniteScroll(),
+          body: Stack(
+            children: [
+              const InfiniteScroll(),
+              Center(
+                child: Text(
+                  'Count: $count',
+                  style: const TextStyle(color: Colors.white, fontSize: 48),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

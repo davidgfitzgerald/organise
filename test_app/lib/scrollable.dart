@@ -44,6 +44,7 @@ class InfiniteScroll extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(
+        itemCount: 1000000, // not technically infinite, but close enough
         itemBuilder: (context, index) {
           return Container(height: 300, color: randomColour(index));
         },
