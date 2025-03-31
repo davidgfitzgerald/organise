@@ -14,13 +14,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Habit Tracker')),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: const [
-            AppIcon(icon: Icons.favorite, text: 'Favorites', color: Colors.red),
-            AppIcon(icon: Icons.abc_outlined, text: 'Keyboard'),
-            AppIcon(icon: Icons.access_alarm_outlined, text: 'Timers'),
-          ],
+        body: Container(
+          margin: const EdgeInsets.all(16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: const [
+              Expanded(
+                child: AppIcon(
+                  icon: Icons.favorite,
+                  text: 'Favorites',
+                  color: Colors.red,
+                ),
+              ),
+              AppIcon(icon: Icons.abc_outlined, text: 'Keyboard'),
+              AppIcon(icon: Icons.access_alarm_outlined, text: 'Timers'),
+            ],
+          ),
         ),
       ),
     );
@@ -42,8 +52,11 @@ class AppIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [Icon(icon, size: iconSize, color: color), Text(text)],
+    return Container(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [Icon(icon, size: iconSize, color: color), Text(text)],
+      ),
     );
   }
 }
