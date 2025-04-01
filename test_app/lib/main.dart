@@ -41,7 +41,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Habit Tracker')),
+      appBar: AppBar(
+        title: Hero(tag: 'title', child: const Text('Habit Tracker')),
+      ),
       body: CounterScroll(),
     );
   }
@@ -104,7 +106,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Habit Tracker')),
+      appBar: AppBar(title: Hero(tag: 'title', child: const Text('Settings'))),
       bottomNavigationBar: BottomNav(),
     );
   }
