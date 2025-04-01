@@ -105,7 +105,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Habit Tracker')),
-      body: const Text('Settings'),
+      bottomNavigationBar: BottomNav(),
     );
   }
 }
