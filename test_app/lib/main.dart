@@ -7,7 +7,7 @@ import 'package:test_app/scrollable.dart';
 void main() {
   // Flutter has a global called runApp, which
   // takes a widget and inflates to fit the screen.
-  runApp(const HomePage());
+  runApp(const MyApp());
 
   // Flutter has navigator 1.0 and 2.0
   // 1.0 - Imperative & simple
@@ -23,19 +23,38 @@ class MouseAndTouchScroll extends MaterialScrollBehavior {
   };
 }
 
-class HomePage extends StatefulWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      scrollBehavior: MouseAndTouchScroll(),
+      home: SelectionArea(child: HomePage()),
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Habit Tracker')),
+      body: CounterScroll(),
+    );
+  }
 }
 
-// Other state management options include
-// - Riverpod
-// - Provider
-// - Bloc
-// - Cubit
-class _HomePageState extends State<HomePage> {
+class CounterScroll extends StatefulWidget {
+  const CounterScroll({super.key});
+
+  @override
+  State<CounterScroll> createState() => _CounterScrollState();
+}
+
+class _CounterScrollState extends State<CounterScroll> {
   int count = 0;
 
   @override
@@ -52,35 +71,41 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      scrollBehavior: MouseAndTouchScroll(),
-      home: SelectionArea(
-        child: Scaffold(
-          appBar: AppBar(title: const Text('Habit Tracker')),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              setState(() {
-                count++;
-              });
-              debugPrint('Pressed');
-            },
-            child: const Icon(Icons.add),
-          ),
-          bottomNavigationBar: BottomNav(),
-          drawer: const SideDrawer(),
-          body: Stack(
-            children: [
-              const InfiniteScroll(),
-              Center(
-                child: Text(
-                  'Count: $count',
-                  style: const TextStyle(color: Colors.white, fontSize: 48),
-                ),
-              ),
-            ],
-          ),
-        ),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            count++;
+          });
+          debugPrint('Pressed');
+        },
+        child: const Icon(Icons.add),
       ),
+      body: Stack(
+        children: [
+          const InfiniteScroll(),
+          Center(
+            child: Text(
+              'Count: $count',
+              style: const TextStyle(color: Colors.white, fontSize: 48),
+            ),
+          ),
+        ],
+      ),
+      drawer: const SideDrawer(),
+      bottomNavigationBar: BottomNav(),
+    );
+  }
+}
+
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Habit Tracker')),
+      body: const Text('Settings'),
     );
   }
 }
