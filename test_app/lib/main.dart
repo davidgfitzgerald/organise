@@ -6,7 +6,7 @@ import 'package:test_app/nav.dart';
 import 'package:test_app/drawer.dart';
 import 'package:test_app/scrollable.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
