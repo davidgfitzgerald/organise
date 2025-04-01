@@ -42,7 +42,29 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Hero(tag: 'title', child: const Text('Habit Tracker')),
+        title: Hero(
+          tag: 'title',
+          // Use HeroMode to customize how the hero behaves
+          flightShuttleBuilder: (
+            BuildContext flightContext,
+            Animation<double> animation,
+            HeroFlightDirection flightDirection,
+            BuildContext fromHeroContext,
+            BuildContext toHeroContext,
+          ) {
+            // Return the exact same text widget during transition
+            return Material(
+              color: Colors.transparent,
+              child: Text(
+                'Habit Tracker',
+                style:
+                    Theme.of(context).appBarTheme.titleTextStyle ??
+                    Theme.of(context).textTheme.titleLarge,
+              ),
+            );
+          },
+          child: const Text('Habit Tracker'),
+        ),
       ),
       body: CounterScroll(),
     );
@@ -106,7 +128,31 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Hero(tag: 'title', child: const Text('Settings'))),
+      appBar: AppBar(
+        title: Hero(
+          tag: 'title',
+          // Use the same flightShuttleBuilder to maintain consistency
+          flightShuttleBuilder: (
+            BuildContext flightContext,
+            Animation<double> animation,
+            HeroFlightDirection flightDirection,
+            BuildContext fromHeroContext,
+            BuildContext toHeroContext,
+          ) {
+            // Return the exact same text widget during transition
+            return Material(
+              color: Colors.transparent,
+              child: Text(
+                'Settings',
+                style:
+                    Theme.of(context).appBarTheme.titleTextStyle ??
+                    Theme.of(context).textTheme.titleLarge,
+              ),
+            );
+          },
+          child: const Text('Settings'),
+        ),
+      ),
       bottomNavigationBar: BottomNav(),
     );
   }
