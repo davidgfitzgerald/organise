@@ -1,0 +1,75 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "2173b576f2c8ae882880c43e8986c0d9a2f1821a459c95ceabc8a09109fcd6d0"
+    }
+  ],
+  "containerPath" : "/Users/david/code/experiments/ios-hello-world/HelloWorld.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "arm64",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : false,
+      "platform" : "iphonesimulator",
+      "sdk" : "iphonesimulator18.4",
+      "sdkVariant" : "iphonesimulator",
+      "supportedArchitectures" : [
+        "arm64",
+        "x86_64"
+      ],
+      "targetArchitecture" : "arm64"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/david/code/experiments/ios-hello-world/build/Build/Products",
+      "derivedDataPath" : "/Users/david/code/experiments/ios-hello-world/build",
+      "indexDataStoreFolderPath" : "/Users/david/code/experiments/ios-hello-world/build/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/david/code/experiments/ios-hello-world/build/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ACTION" : "build",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_MODEL" : "iPhone17,3",
+          "ASSETCATALOG_FILTER_FOR_DEVICE_OS_VERSION" : "18.4",
+          "ASSETCATALOG_FILTER_FOR_THINNING_DEVICE_CONFIGURATION" : "iPhone17,3",
+          "BUILD_ACTIVE_RESOURCES_ONLY" : "YES",
+          "CLANG_COVERAGE_MAPPING" : "YES",
+          "CLANG_PROFILE_DATA_DIRECTORY" : "/Users/david/code/experiments/ios-hello-world/build/Build/ProfileData",
+          "COLOR_DIAGNOSTICS" : "YES",
+          "diagnostic_message_length" : "82",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES",
+          "ONLY_ACTIVE_ARCH" : "YES",
+          "TARGET_DEVICE_IDENTIFIER" : "E944D32C-6CC2-47BD-BAB5-211E48FD05DC",
+          "TARGET_DEVICE_MODEL" : "iPhone17,3",
+          "TARGET_DEVICE_OS_VERSION" : "18.4",
+          "TARGET_DEVICE_PLATFORM_NAME" : "iphonesimulator"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

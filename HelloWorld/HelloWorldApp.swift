@@ -6,5 +6,6 @@ struct HelloWorldApp: App {
         WindowGroup {
             ContentView()
         }
+        .handlesExternalEvents(matching: Set(arrayLiteral: "habit"))
     }
 } 

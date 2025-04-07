@@ -1,8 +1,15 @@
 name: HelloWorld
 options:
-  bundleIdPrefix: com.example
+  bundleIdPrefix: com.davidfitzgerald
   deploymentTarget:
     iOS: 15.0
+  generateEmptyDirectories: true
+  createIntermediateGroups: true
+
+packages:
+  ViewInspector:
+    url: https://github.com/nalexn/ViewInspector.git
+    from: 0.9.7
 
 targets:
   HelloWorld:
@@ -13,7 +20,11 @@ targets:
     settings:
       base:
         INFOPLIST_FILE: HelloWorld/Info.plist
-        PRODUCT_BUNDLE_IDENTIFIER: com.example.helloworld
+        PRODUCT_BUNDLE_IDENTIFIER: com.davidfitzgerald.HelloWorld
+        # DEVELOPMENT_TEAM: D25P5AYBQK
+        DEVELOPMENT_TEAM: Personal Team
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: YES
     info:
       path: HelloWorld/Info.plist
       properties:
@@ -30,3 +41,24 @@ targets:
         - UIInterfaceOrientationPortraitUpsideDown
         - UIInterfaceOrientationLandscapeLeft
         - UIInterfaceOrientationLandscapeRight
+        CFBundleURLTypes:
+        - CFBundleTypeRole: Editor
+          CFBundleURLName: com.davidfitzgerald.HelloWorld
+          CFBundleURLSchemes:
+          - habit
+          LSHandlerRank: Owner
+
+  HelloWorldTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+    - HelloWorldTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.davidfitzgerald.HelloWorldTests
+        DEVELOPMENT_TEAM: Personal Team
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: YES
+    dependencies:
+    - target: HelloWorld
+    - package: ViewInspector

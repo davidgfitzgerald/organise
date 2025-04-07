@@ -1,0 +1,28 @@
+{
+  "" : {
+    "diagnostics" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorld-master.dia",
+    "emit-module-dependencies" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorld-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorld-master-emit-module.dia",
+    "swift-dependencies" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorld-master.swiftdeps"
+  },
+  "/Users/david/code/experiments/ios-hello-world/HelloWorld/ContentView.swift" : {
+    "const-values" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/david/code/experiments/ios-hello-world/HelloWorld/HelloWorldApp.swift" : {
+    "const-values" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.swiftconstvalues",
+    "dependencies" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.d",
+    "diagnostics" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.dia",
+    "index-unit-output-path" : "/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.o",
+    "llvm-bc" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.bc",
+    "object" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.o",
+    "swift-dependencies" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp.swiftdeps",
+    "swiftmodule" : "/Users/david/code/experiments/ios-hello-world/build/Build/Intermediates.noindex/HelloWorld.build/Debug-iphonesimulator/HelloWorld.build/Objects-normal/arm64/HelloWorldApp~partial.swiftmodule"
+  }
+}
