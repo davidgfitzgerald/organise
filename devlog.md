@@ -2,6 +2,17 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 07/04/25
+
+After trying with Flutter, I've decided to try again with SwiftUI.
+
+In practice, I just want to make an app that allows me to track my habits 
+and the only platform I'll really use is iOS.
+
+I'm going to use cursor to write as much of the code as possible.
+
+Just wiping out the repo and starting again.
+
 # 24/02/25
 
 Starting on the next section of the tutorial: https://developer.apple.com/tutorials/swiftui/building-lists-and-navigation
