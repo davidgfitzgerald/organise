@@ -1,14 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:test_app/firebase_options.dart';
 import 'package:test_app/nav.dart';
 import 'package:test_app/drawer.dart';
 import 'package:test_app/scrollable.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // Flutter has a global called runApp, which
   // takes a widget and inflates to fit the screen.
@@ -88,7 +85,7 @@ class _CounterScrollState extends State<CounterScroll> {
 
   @override
   void initState() {
-    // TODO: fetch data from Firebase
+    // TODO: fetch data from DB
     super.initState();
   }
 

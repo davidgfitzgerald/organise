@@ -5,6 +5,10 @@ default:
 devices:
     flutter devices
 
+# Build the app
+build:
+    cd test_app && dart run build_runner build
+
 # Run Flutter app on iOS simulator
 sim:
     open -a Simulator
@@ -16,12 +20,13 @@ ios:
 
 # Run Flutter app on Chrome
 web:
-    cd test_app && flutter run -d chrome#
+    cd test_app && flutter run -d chrome
 
 # Run tests
 test:
     cd test_app && flutter test
 
-# Clean iOS project
-clean-ios:
-    cd test_app/ios && rm -rf Pods Podfile.lock && pod install && cd .. && flutter clean && flutter pub get
+# Clean project
+clean:
+    cd test_app/ios && pod deintegrate && pod install && cd .. && flutter clean && flutter pub get
+    # cd test_app/ios && rm -rf Pods Podfile.lock && pod install && cd .. && flutter clean && flutter pub get
