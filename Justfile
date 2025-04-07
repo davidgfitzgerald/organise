@@ -1,8 +1,13 @@
 default:
     @just --list
 
+# List all devices
+devices:
+    flutter devices
+
 # Run Flutter app on iOS simulator
 sim:
+    open -a Simulator
     cd test_app && flutter run -d "D82BA525-5C30-4333-9D2B-CC1A026624FE"
 
 # Run Flutter app on physical iPhone
@@ -11,7 +16,12 @@ ios:
 
 # Run Flutter app on Chrome
 web:
-    cd test_app && flutter run -d chrome
+    cd test_app && flutter run -d chrome#
 
+# Run tests
+test:
+    cd test_app && flutter test
+
+# Clean iOS project
 clean-ios:
     cd test_app/ios && rm -rf Pods Podfile.lock && pod install && cd .. && flutter clean && flutter pub get
