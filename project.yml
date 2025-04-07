@@ -1,0 +1,32 @@
+name: HelloWorld
+options:
+  bundleIdPrefix: com.example
+  deploymentTarget:
+    iOS: 15.0
+
+targets:
+  HelloWorld:
+    type: application
+    platform: iOS
+    sources:
+    - HelloWorld
+    settings:
+      base:
+        INFOPLIST_FILE: HelloWorld/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.helloworld
+    info:
+      path: HelloWorld/Info.plist
+      properties:
+        LSRequiresIPhoneOS: true
+        UILaunchStoryboardName: LaunchScreen
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+        UISupportedInterfaceOrientations:
+        - UIInterfaceOrientationPortrait
+        - UIInterfaceOrientationLandscapeLeft
+        - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+        - UIInterfaceOrientationPortrait
+        - UIInterfaceOrientationPortraitUpsideDown
+        - UIInterfaceOrientationLandscapeLeft
+        - UIInterfaceOrientationLandscapeRight
