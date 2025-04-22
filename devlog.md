@@ -1,6 +1,11 @@
 # Dev Log
 
+
 This file is for rambling thoughts and notes during development.
+
+# 22/04/25
+
+I've decided to try and build this app in SwiftUI. I'm going to use cursor to write as much of the code as possible.
 
 # 07/04/25
 
