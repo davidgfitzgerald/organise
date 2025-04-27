@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="24C5029f" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Activity" representedClassName="Activity" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="descriptionText" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isActive" optional="NO" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="lastCompleted" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="points" optional="NO" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="NO" attributeType="String"/>
+        <attribute name="type" optional="NO" attributeType="String"/>
+        <attribute name="frequency" optional="YES" attributeType="String"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="targetDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="completionRecords" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CompletionRecord" inverseName="activity" inverseEntity="CompletionRecord"/>
+        <relationship name="streak" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Streak" inverseName="activity" inverseEntity="Streak"/>
+    </entity>
+    <entity name="CompletionRecord" representedClassName="CompletionRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="completedAt" optional="NO" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="pointsEarned" optional="NO" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="activity" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="completionRecords" inverseEntity="Activity"/>
+    </entity>
+    <entity name="Streak" representedClassName="Streak" syncable="YES" codeGenerationType="class">
+        <attribute name="bestStreak" optional="NO" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="currentStreak" optional="NO" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" optional="NO" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastBroken" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="activity" optional="NO" maxCount="1" deletionRule="Nullify" destinationEntity="Activity" inverseName="streak" inverseEntity="Activity"/>
+    </entity>
+</model> 
