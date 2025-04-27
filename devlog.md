@@ -3,6 +3,10 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 27/04/25
+
+Starting fresh with SwiftUI again.
+
 # 22/04/25
 
 I've decided to try and build this app in SwiftUI. I'm going to use cursor to write as much of the code as possible.
