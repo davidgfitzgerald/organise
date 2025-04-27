@@ -10,12 +10,10 @@ import SwiftData
 
 @main
 struct ToDoApp: App {
-    let persistenceManager = PersistenceManager.shared
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environment(\.managedObjectContext, persistenceManager.context)
         }
     }
 }
