@@ -3,6 +3,10 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 03/05/25
+
+Gonna follow the SwiftUI tutorial again.
+
 # 27/04/25
 
 Starting fresh with SwiftUI again.
