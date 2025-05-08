@@ -1,0 +1,194 @@
+[
+    {
+        "name": "Turtle Rock",
+        "category": "Rivers",
+        "city": "Twentynine Palms",
+        "state": "California",
+        "id": 1001,
+        "isFeatured": true,
+        "isFavorite": true,
+        "park": "Joshua Tree National Park",
+        "coordinates": {
+            "longitude": -116.166868,
+            "latitude": 34.011286
+        },
+        "description": "Turtle Rock stands as one of Joshua Tree National Park's most distinctive geological formations. This massive boulder cluster, sculpted by millions of years of wind and rain, truly resembles a turtle with its dome-shaped shell and extended head. The surrounding landscape features classic Mojave Desert scenery with iconic Joshua trees, yucca plants, and diverse cacti species. Visitors can enjoy excellent bouldering and rock climbing opportunities, with routes suitable for various skill levels. The area is especially magical at sunrise and sunset when the golden light transforms the rock's color. Several interconnected hiking trails offer panoramic views of the valley and access to nearby attractions including Split Rock and Skull Rock.",
+        "imageName": "turtlerock"
+    },
+    {
+        "name": "Silver Salmon Creek",
+        "category": "Lakes",
+        "city": "Port Alsworth",
+        "state": "Alaska",
+        "id": 1002,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "Lake Clark National Park and Preserve",
+        "coordinates": {
+            "longitude": -152.665167,
+            "latitude": 59.980167
+        },
+        "description": "Silver Salmon Creek offers one of Alaska's most remarkable wildlife viewing experiences within Lake Clark National Park. This pristine watershed is renowned for its exceptional bear-watching opportunities, where coastal brown bears can be observed fishing for salmon in their natural habitat. The creek flows through lush meadows filled with wildflowers during summer months before emptying into Cook Inlet. Abundant salmon runs attract not only bears but also eagles, wolves, and other wildlife. The surrounding landscape features dramatic mountain backdrops, extensive wetlands, and coastal beaches. Visitors can explore the area through guided tours, photography excursions, or fly-in fishing trips. The ecosystem represents one of Alaska's most perfect examples of intact wilderness, showcasing the interconnected relationship between land, water, and wildlife.",
+        "imageName": "silversalmoncreek"
+    },
+    {
+        "name": "Chilkoot Trail",
+        "category": "Mountains",
+        "city": "Skagway",
+        "state": "Alaska",
+        "id": 1003,
+        "isFeatured": false,
+        "isFavorite": true,
+        "park": "Klondike Gold Rush National Historical Park",
+        "coordinates": {
+            "longitude": -135.334571,
+            "latitude": 59.560551
+        },
+        "description": "The historic Chilkoot Trail stretches 33 miles through spectacular mountain terrain, serving as a living museum of the famous Klondike Gold Rush. Once the primary route for thousands of hopeful gold seekers in 1898, today's hikers follow in the footsteps of these determined stampeders. The trail begins in coastal rainforest near Dyea, Alaska, then climbs through increasingly rugged alpine territory, including the challenging Chilkoot Pass at the US-Canada border. Artifacts from the gold rush era remain visible along the path, including abandoned equipment, tent platforms, and weather-worn boots. The diverse ecosystems encountered include temperate rainforest, boreal forest, alpine tundra, and subalpine meadows. Completing the multi-day trek rewards hikers with breathtaking vistas, encounters with wildlife, and a profound connection to a pivotal chapter in North American history.",
+        "imageName": "chilkoottrail"
+    },
+    {
+        "name": "St. Mary Lake",
+        "category": "Lakes",
+        "city": "Browning",
+        "state": "Montana",
+        "id": 1004,
+        "isFeatured": true,
+        "isFavorite": true,
+        "park": "Glacier National Park",
+        "coordinates": {
+            "longitude": -113.536248,
+            "latitude": 48.69423
+        },
+        "description": "St. Mary Lake stretches nearly 10 miles along Glacier National Park's eastern edge, forming one of the park's most photographed and awe-inspiring landscapes. Crystal-clear glacial waters reflect the towering mountains of the Lewis Range, creating mirror images of peaks that rise dramatically from the shoreline. The lake was carved by massive glaciers during the last ice age, resulting in its distinctive elongated shape and steep sides. Wild Goose Island, a tiny forested outcrop near the lake's center, provides a focal point for countless photographs. The Going-to-the-Sun Road follows the north shore, offering numerous pullouts for viewing wildlife including mountain goats, bighorn sheep, and occasionally moose or bears. Violent winds can sometimes create massive waves on the lake's surface, while during calm periods, the perfect reflections create an almost surreal doubling of the mountain scenery.",
+        "imageName": "stmarylake"
+    },
+    {
+        "name": "Twin Lake",
+        "category": "Lakes",
+        "city": "Twin Lakes",
+        "state": "Alaska",
+        "id": 1005,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "Lake Clark National Park and Preserve",
+        "coordinates": {
+            "longitude": -153.849883,
+            "latitude": 60.641684
+        },
+        "description": "Twin Lake represents the epitome of Alaskan wilderness within Lake Clark National Park, consisting of two connected glacial lakes nestled among towering mountains. These pristine waters stretch approximately twelve miles through a valley carved by ancient ice, displaying remarkable clarity that allows visibility to depths of over twenty feet. The surrounding landscape features dense spruce forests interspersed with aspen groves that turn brilliant gold in autumn. Wildlife abounds here, with moose frequently wading in the shallows, wolves patrolling the shorelines, and bears foraging along the margins. Massive lake trout and Arctic grayling populate the deep, cold waters, attracting anglers from around the world. The region holds significant cultural importance to local Dena'ina Athabascan people, who have relied on its bounty for countless generations. This remote paradise remains accessible primarily by floatplane, preserving its untouched character and offering visitors a true wilderness experience.",
+        "imageName": "twinlake"
+    },
+    {
+        "name": "Lake McDonald",
+        "category": "Mountains",
+        "city": "West Glacier",
+        "state": "Montana",
+        "id": 1006,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "Glacier National Park",
+        "coordinates": {
+            "longitude": -113.934831,
+            "latitude": 48.56002
+        },
+        "description": "Lake McDonald, the largest lake in Glacier National Park, stretches ten miles long and nearly 500 feet deep, cradled in a valley carved by massive glaciers. Its remarkably clear waters showcase a dazzling array of colored stones along the shoreline—red, green, gray, and blue—polished smooth by glacial action. The surrounding mountains rise dramatically from the lakeshore, with dense forests of cedar, hemlock, and Douglas fir creating a verdant frame for the snowcapped peaks. Historic Lake McDonald Lodge, built in 1913 in Swiss chalet style, stands as a rustic landmark on the eastern shore. Dawn and dusk transform the lake into a photographer's dream as calm waters perfectly mirror the surrounding landscape. Wildlife viewing opportunities abound, with eagles soaring overhead and occasional deer, elk, or bears visible along the shores. The western portion of Going-to-the-Sun Road follows the lake's southern edge, providing spectacular viewpoints and access to numerous hiking trails that lead deeper into the wilderness.",
+        "imageName": "lakemcdonald"
+    },
+    {
+        "name": "Charley Rivers",
+        "category": "Rivers",
+        "city": "Eaking",
+        "state": "Alaska",
+        "id": 1007,
+        "isFeatured": true,
+        "isFavorite": false,
+        "park": "Charley Rivers National Preserve",
+        "coordinates": {
+            "longitude": -143.122586,
+            "latitude": 65.350021
+        },
+        "description": "The Charley River flows wild and free through the remote Yukon-Charley Rivers National Preserve, representing one of Alaska's most pristine waterways. This crystal-clear, 108-mile tributary of the mighty Yukon River cuts through spectacular boreal forest and dramatic limestone canyons. The watershed encompasses a complete spectrum of intact sub-arctic ecosystems, from alpine tundra to river valleys. Experienced whitewater enthusiasts navigate its challenging Class II-IV rapids surrounded by unspoiled wilderness. The river corridor provides critical habitat for Dall sheep, wolves, lynx, wolverines, and one of the last naturally functioning salmon ecosystems in North America. Evidence of ancient human habitation and gold rush history can be spotted along the banks. No roads reach this wilderness; access is primarily by aircraft or challenging river journey. The Charley represents one of the last places where visitors can experience Alaska as it has existed for thousands of years—raw, powerful, and gloriously untamed.",
+        "imageName": "charleyrivers"
+    },
+    {
+        "name": "Icy Bay",
+        "category": "Mountains",
+        "city": "Icy Bay",
+        "state": "Alaska",
+        "id": 1008,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "Wrangell-St. Elias National Park and Preserve",
+        "coordinates": {
+            "longitude": -141.518167,
+            "latitude": 60.089917
+        },
+        "description": "Icy Bay represents one of Alaska's most dynamic coastal landscapes, formed entirely within the last century as glaciers retreated over 30 miles, revealing this spectacular fjord. Three tidewater glaciers—Yahtse, Tsaa, and Guyot—continue to calve massive icebergs directly into the bay's cold waters with thunderous crashes. The surrounding terrain features some of North America's most dramatic topography, with Mount St. Elias rising 18,008 feet nearly straight from the shoreline. Wildlife thrives in this harsh environment, including harbor seals resting on floating ice, sea otters swimming among the bergs, and numerous bird species nesting in the cliffs. The ever-changing landscape showcases geological processes in real-time as the glaciers continue their retreat. Kayakers paddle carefully through the ice-choked waters, while researchers study the rapidly evolving ecosystem. Remote and challenging to access, Icy Bay rewards visitors with a raw glimpse of nature's tremendous forces at work in an environment that epitomizes the wild character of coastal Alaska.",
+        "imageName": "icybay"
+    },
+    {
+        "name": "Rainbow Lake",
+        "category": "Lakes",
+        "city": "Willow",
+        "state": "Alaska",
+        "id": 1009,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "State Recreation Area",
+        "coordinates": {
+            "longitude": -150.086103,
+            "latitude": 61.694334
+        },
+        "description": "Rainbow Lake sparkles like a hidden jewel within Alaska's Mat-Su Valley, offering accessible wilderness experiences just a short drive from Anchorage. This pristine 80-acre lake derives its name from the abundant rainbow trout that thrive in its cold, clear waters, delighting anglers throughout the open-water season. The surrounding landscape features classic Alaskan mixed forest with spruce, birch, and aspen creating a diverse habitat for wildlife. Gentle hiking trails circumnavigate the shoreline, providing opportunities to spot moose, beavers, and numerous bird species. During summer, the midnight sun casts magical golden light across the water late into the evening. Winter transforms the lake into a different playground, with ice fishing, cross-country skiing, and snowshoeing becoming popular activities. Modest facilities include rustic campsites, a small boat launch, and picnic areas that balance accessibility with preserving the natural character. The lake exemplifies Alaska's recreational opportunities, where visitors can experience genuine wilderness without venturing far from urban amenities.",
+        "imageName": "rainbowlake"
+    },
+    {
+        "name": "Hidden Lake",
+        "category": "Lakes",
+        "city": "Newhalem",
+        "state": "Washington",
+        "id": 1010,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "North Cascades National Park",
+        "coordinates": {
+            "longitude": -121.17799,
+            "latitude": 48.495442
+        },
+        "description": "Hidden Lake lives up to its name as one of North Cascades National Park's most spectacular alpine treasures, nestled at 6,890 feet elevation amid jagged mountain peaks. Reaching this glacial tarn requires a challenging 8-mile hike with significant elevation gain, ensuring that visitors earn their reward. The intensely blue waters reflect surrounding summits including Sahale, Forbidden, and Boston peaks, creating a 360-degree panorama of North Cascades grandeur. Alpine wildflower meadows explode with color during the brief summer season, carpeting the landscape with lupine, paintbrush, and mountain heather. Mountain goats often traverse the nearby ridges while marmots whistle warnings from rocky perches. The pristine waters harbor native cutthroat trout that have been isolated for centuries. Heavy snow typically keeps the trail inaccessible until mid-July through September, creating a short window to experience this alpine wonderland. The historic fire lookout perched above the lake offers shelter in emergencies and serves as a reminder of the region's conservation history. This remarkable destination epitomizes the rugged character and breathtaking beauty that earned North Cascades its reputation as the 'American Alps.'",
+        "imageName": "hiddenlake"
+    },
+    {
+        "name": "Chincoteague",
+        "category": "Rivers",
+        "city": "Chincoteague",
+        "state": "Virginia",
+        "id": 1011,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "Chincoteague National Wildlife Refuge",
+        "coordinates": {
+            "longitude": -75.383212,
+            "latitude": 37.91531
+        },
+        "description": "Chincoteague National Wildlife Refuge encompasses over 14,000 acres of diverse coastal habitats, most famously known for its population of wild ponies immortalized in the children's classic 'Misty of Chincoteague.' This barrier island ecosystem features extensive salt marshes, maritime forests, freshwater wetlands, and pristine beaches that support extraordinary biodiversity. The refuge provides critical habitat for migratory birds, with over 320 species recorded including the endangered piping plover and delicate sandpipers that dance along the shore. The annual pony swim and auction, when some foals are rounded up from Assateague Island, draws visitors from around the world. Extensive wildlife viewing opportunities await along the refuge's trail system and Wildlife Loop, where sightings of deer, foxes, and diverse bird species are common. The historic Assateague Lighthouse stands sentinel over the landscape, offering climbing opportunities during scheduled hours. The interplay between land and sea creates a dynamic environment where nature's resilience is on full display through constantly shifting sands, storm-shaped forests, and the persistent rhythm of coastal life.",
+        "imageName": "chincoteague"
+    },
+    {
+        "name": "Lake Umbagog",
+        "category": "Lakes",
+        "city": "Errol",
+        "state": "New Hampshire",
+        "id": 1012,
+        "isFeatured": false,
+        "isFavorite": false,
+        "park": "Umbagog National Wildlife Refuge",
+        "coordinates": {
+            "longitude": -71.056816,
+            "latitude": 44.747408
+        },
+        "description": "Lake Umbagog stretches across the New Hampshire-Maine border, forming the centerpiece of Umbagog National Wildlife Refuge with over 8,700 acres of open water surrounded by extensive wetlands and northern forest. This shallow, island-dotted lake represents one of New England's last great wilderness waters, with minimal development along its shorelines. The intricate mosaic of wetlands provides nesting habitat for common loons, whose haunting calls echo across the water, as well as rare species like bald eagles and osprey that fish in its productive waters. Moose frequently wade in the shallows during summer mornings, while otters play along the marshy edges. The watershed hosts one of the most significant breeding populations of loons in New Hampshire, with dedicated conservation efforts monitoring their success. Paddlers explore countless coves, channels, and backwaters that reveal a continuously changing panorama of habitats. Fall transforms the surrounding hardwood forests into a spectacular riot of color reflected perfectly in the lake's surface. Remote campsites accessible only by boat offer unparalleled wilderness experiences within a day's journey from urban centers, making Umbagog a rare east coast destination where nature still dominates the landscape.",
+        "imageName": "umbagog"
+    }
+]
