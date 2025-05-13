@@ -3,6 +3,10 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 13/05/25
+
+Carrying on with the SwiftUI tutorial from here: https://developer.apple.com/tutorials/swiftui/composing-complex-interfaces
+
 # 03/05/25
 
 Gonna follow the SwiftUI tutorial again.
