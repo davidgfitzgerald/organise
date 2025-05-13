@@ -2,7 +2,7 @@
 //  Landmark.swift
 //  Landmarks
 //
-//  Created by David Fitzgerald on 24/02/2025.
+//  Created by David Fitzgerald on 03/05/2025.
 //
 
 import Foundation
@@ -15,6 +15,15 @@ struct Landmark: Hashable, Codable, Identifiable {
     var park: String
     var state: String
     var description: String
+    var isFavorite: Bool
+    var isFeatured: Bool
+    
+    var category: Category
+    enum Category: String, CaseIterable, Codable {
+        case lakes = "Lakes"
+        case rivers = "Rivers"
+        case mountains = "Mountains"        
+    }
     
     private var imageName: String
     var image: Image {
@@ -33,5 +42,4 @@ struct Landmark: Hashable, Codable, Identifiable {
         var latitude: Double
         var longitude: Double
     }
-    
 }
