@@ -5,7 +5,18 @@ This file is for rambling thoughts and notes during development.
 
 # 13/05/25
 
+## Tutorial
+
 Carrying on with the SwiftUI tutorial from here: https://developer.apple.com/tutorials/swiftui/composing-complex-interfaces
+
+## New Project
+
+Right. 
+
+Finally done enough of the tutorial now. But my next question is on swift data persistence. I'm just gonna watch this video on SwiftData
+to understand what it is and if it suits my needs.
+
+https://developer.apple.com/videos/play/wwdc2024/10137/
 
 # 03/05/25
 
