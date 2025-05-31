@@ -30,11 +30,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		632384BA2DD3F82A00EF2BA2 /* Organise */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Organise;
-			sourceTree = "<group>";
-		};
 		632384CA2DD3F82B00EF2BA2 /* OrganiseTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = OrganiseTests;
@@ -43,6 +38,11 @@
 		632384D42DD3F82B00EF2BA2 /* OrganiseUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = OrganiseUITests;
+			sourceTree = "<group>";
+		};
+		636A822E2DDD21D100FD29EC /* Organise */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Organise;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,7 +75,7 @@
 		632384AF2DD3F82A00EF2BA2 = {
 			isa = PBXGroup;
 			children = (
-				632384BA2DD3F82A00EF2BA2 /* Organise */,
+				636A822E2DDD21D100FD29EC /* Organise */,
 				632384CA2DD3F82B00EF2BA2 /* OrganiseTests */,
 				632384D42DD3F82B00EF2BA2 /* OrganiseUITests */,
 				632384B92DD3F82A00EF2BA2 /* Products */,
@@ -108,7 +108,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				632384BA2DD3F82A00EF2BA2 /* Organise */,
+				636A822E2DDD21D100FD29EC /* Organise */,
 			);
 			name = Organise;
 			packageProductDependencies = (

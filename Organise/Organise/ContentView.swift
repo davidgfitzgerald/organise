@@ -10,52 +10,70 @@ import SwiftData
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Query private var habits: [Habit]
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
+                ForEach(habits) { habit in
+                    HabitRowView(habit: habit)
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete(perform: deleteHabits)
+                Button(action: addHabit) {
+                    Label("Add", systemImage: "plus")
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: addHabit) {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
             }
-        } detail: {
-            Text("Select an item")
+            .navigationTitle(Text(Date(), style: .date))
+            .navigationBarItems(trailing: EditButton())
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
+    
+    private func addHabit() {
+        print("Adding habit")
+        let newHabit = Habit(title: "Habit", icon: "😎", isCompleted: false)
+        modelContext.insert(newHabit)
+        do {
+            try modelContext.save()
+        } catch {
+            print("Failed to save to database: \(error.localizedDescription)")
         }
     }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+    
+    private func deleteHabits(at offsets: IndexSet) {
+        for index in offsets {
+            modelContext.delete(habits[index])
+            do {
+                try modelContext.save()
+            } catch {
+                print("Failed to save to database: \(error.localizedDescription)")
             }
         }
     }
+
 }
 
 #Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: Habit.self, configurations: config)
+        
+        let modelContext = container.mainContext
+        for i in 1...5 {
+            let newHabit = Habit(title: "Habit \(i)", icon: "😎", isCompleted: false)
+            modelContext.insert(newHabit)
+        }
+        
+        return ContentView()
+            .modelContainer(container)
+    } catch {
+        // Return a fallback view if container creation fails
+        return Text("Failed to create preview: \(error.localizedDescription)")
+    }
 }
