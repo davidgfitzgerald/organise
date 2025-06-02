@@ -24,8 +24,13 @@ struct PreviewHelper {
         )
         
         let sampleData: SampleData = load("data.json")
+
         for habit in sampleData.habits {
             container.mainContext.insert(Habit(name: habit.name))
+        }
+        
+        for activity in sampleData.activities {
+            container.mainContext.insert(Activity(name: activity.name))
         }
         
         return container
