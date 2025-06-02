@@ -9,9 +9,19 @@ import SwiftUI
 import SwiftData
 
 struct ActivityList: View {
-    @Query private var activities: [Activity]
+    @Query private var allActivities: [Activity]
     @Binding var date: Date
     @State private var showingPicker = false
+    
+    private var filteredActivities: [Activity] {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        return allActivities.filter { activity in
+            activity.completedAt >= startOfDay && activity.completedAt < endOfDay
+        }
+    }
 
     var body: some View {
         VStack {
@@ -21,7 +31,7 @@ struct ActivityList: View {
             DatePickerView(date: $date, showing: $showingPicker)
                 .padding()
             
-            List(activities) { activity in
+            List(filteredActivities) { activity in
                 Text(activity.habit.name)
             }
         }
