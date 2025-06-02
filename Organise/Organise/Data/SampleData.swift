@@ -9,17 +9,22 @@ import Foundation
 import SwiftUICore
 import SwiftData
 
+struct SampleData: Codable {
+    let habits: [Habit]
+    let activities: [Activity]
+}
+
 struct PreviewHelper {
-    // Load habits.json into Swift Habit model data for
+    // Load data.json into Swift Habit model data for
     // reuse in development across the project.
     @MainActor static func createSampleContainer() -> ModelContainer {
         let container = try! ModelContainer(
-            for: Habit.self,
+            for: Habit.self, Activity.self,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
         
-        let habits: [Habit] = load("habits.json")
-        for habit in habits {
+        let sampleData: SampleData = load("data.json")
+        for habit in sampleData.habits {
             container.mainContext.insert(Habit(name: habit.name))
         }
         

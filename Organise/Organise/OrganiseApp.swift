@@ -14,6 +14,9 @@ struct OrganiseApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(for: Habit.self)
+        .modelContainer(for: [
+            Habit.self,
+            Activity.self,
+        ])
     }
 }

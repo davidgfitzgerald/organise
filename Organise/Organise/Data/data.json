@@ -1,0 +1,19 @@
+{
+    "habits": [
+        {
+            "name": "Exercise",
+            "createdAt": "2025-06-02T19:32:01.317Z"
+        },
+        {
+            "name": "Read",
+            "createdAt": "2025-06-02T19:32:01.317Z"
+        },
+        {
+            "name": "Meditate",
+            "createdAt": "2025-06-02T19:32:01.317Z"
+        }
+    ],
+    "activities": [
+        
+    ]
+}

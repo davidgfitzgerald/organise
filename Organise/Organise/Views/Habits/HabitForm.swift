@@ -15,28 +15,24 @@ struct HabitForm: View {
     @State private var showError = false
     
     var body: some View {
-        VStack {
-            TextField("Enter habit name", text: $name)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(showError ? .red : .clear)
-                )
-                .onSubmit {
-                    if name.isEmpty {
-                        withAnimation(.easeInOut) {
-                            showError = true
-                        }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            withAnimation(.easeInOut) {
-                                showError = false
-                            }
-                        }
-                    } else {
-                        let habit = Habit(name: name)
-                        context.insert(habit)
-                        name = ""
+        VStack(alignment: .leading) {
+            TextField("", text: $name, prompt: Text("Enter habit name").foregroundColor(showError ? .red : .gray))
+            .onSubmit {
+                if name.isEmpty {
+                    withAnimation(.easeInOut) {
+                        showError = true
                     }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        withAnimation(.easeInOut) {
+                            showError = false
+                        }
+                    }
+                } else {
+                    let habit = Habit(name: name)
+                    context.insert(habit)
+                    name = ""
                 }
+            }
         }
     }
 }
