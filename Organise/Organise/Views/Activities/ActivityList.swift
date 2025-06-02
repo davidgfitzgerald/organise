@@ -22,7 +22,7 @@ struct ActivityList: View {
                 .padding()
             
             List(activities) { activity in
-                Text(activity.name)
+                Text(activity.habit.name)
             }
         }
         .dismissDatePicker(when: showingPicker) {

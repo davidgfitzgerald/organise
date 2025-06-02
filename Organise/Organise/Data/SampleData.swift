@@ -10,8 +10,19 @@ import SwiftUICore
 import SwiftData
 
 struct SampleData: Codable {
-    let habits: [Habit]
-    let activities: [Activity]
+    let habits: [HabitData]
+    let activities: [ActivityData]
+    
+    struct HabitData: Codable {
+        let id: Int
+        let name: String
+        let createdAt: String
+    }
+    
+    struct ActivityData: Codable {
+        let habitId: Int
+        let completedAt: String
+    }
 }
 
 struct PreviewHelper {
@@ -24,13 +35,28 @@ struct PreviewHelper {
         )
         
         let sampleData: SampleData = load("data.json")
-
-        for habit in sampleData.habits {
-            container.mainContext.insert(Habit(name: habit.name))
+        
+        var habitsById: [Int: Habit] = [:]
+        for habitData in sampleData.habits {
+            let habit = Habit(name: habitData.name)
+            container.mainContext.insert(habit)
+            habitsById[habitData.id] = habit
         }
         
-        for activity in sampleData.activities {
-            container.mainContext.insert(Activity(name: activity.name))
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        for activityData in sampleData.activities {
+            guard let habit = habitsById[activityData.habitId] else {
+                fatalError("No habit found with ID \(activityData.habitId)")
+            }
+            if let completedAt = formatter.date(from: activityData.completedAt) {
+                print(completedAt)
+                let activity = Activity(habit: habit, completedAt: completedAt)
+                container.mainContext.insert(activity)
+            } else {
+                print("Failed to parse date \(activityData.completedAt)")
+            }
         }
         
         return container
