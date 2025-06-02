@@ -10,38 +10,31 @@ import SwiftData
 
 struct ActivityList: View {
     @Query private var activities: [Activity]
-    @State private var date = Date()
+    @Binding var date: Date
     @State private var showingPicker = false
 
     var body: some View {
         VStack {
             Text("Activities")
                 .font(.title)
-                .onTapGesture {
-                    if showingPicker {
-                        withAnimation {
-                            showingPicker = false
-                        }
-                    }
-                }
+            
             DatePickerView(date: $date, showing: $showingPicker)
                 .padding()
             
             List(activities) { activity in
                 Text(activity.name)
             }
-            .onTapGesture {
-                if showingPicker {
-                    withAnimation {
-                        showingPicker = false
-                    }
-                }
+        }
+        .dismissDatePicker(when: showingPicker) {
+            withAnimation {
+                showingPicker = false
             }
         }
     }
 }
 
 #Preview {
-    ActivityList()
+    @Previewable @State var date: Date = Date()
+    ActivityList(date: $date)
         .withSampleData()
 }

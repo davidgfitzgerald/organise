@@ -27,11 +27,20 @@ struct DatePickerView: View {
                 DatePicker("", selection: $date, displayedComponents: .date)
                     .allowsHitTesting(true)
                     .datePickerStyle(.wheel)
-//                    .frame(width: 200, height: 150)
                     .background(.regularMaterial)
                     .cornerRadius(16)
                     .shadow(radius: 10)
                     .scaleEffect(showing ? 1 : 0.8)
+            }
+        }
+    }
+}
+
+extension View {
+    func dismissDatePicker(when showing: Bool, action: @escaping () -> Void) -> some View {
+        self.onTapGesture {
+            if showing {
+                action()
             }
         }
     }

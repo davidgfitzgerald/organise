@@ -10,13 +10,15 @@ import SwiftData
 
 
 struct ContentView: View {
+    @State private var date = Date()
+
     var body: some View {
         TabView {
             Tab("Habits", systemImage: "list.bullet") {
                 HabitsList()
             }
             Tab("Activities", systemImage: "figure.run") {
-                ActivityList()
+                ActivityList(date: $date)
             }
         }
     }
