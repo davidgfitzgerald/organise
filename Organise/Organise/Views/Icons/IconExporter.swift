@@ -13,17 +13,33 @@ struct IconExporter: View {
         (76, "icon-76")          // iPad (1x)
     ]
     
+    let iconTypes: [(view: AnyView, name: String)] = [
+        (AnyView(CheckmarkIcon()), "checkmark"),
+        (AnyView(ProgressIcon()), "progress"),
+        (AnyView(StreakIcon()), "streak"),
+        (AnyView(TargetIcon()), "target")
+    ]
+    
     var body: some View {
         VStack(spacing: 30) {
             Text("Icon Exporter")
                 .font(.title)
                 .fontWeight(.bold)
             
-            // Preview of the icons
-            IconsPreview(lightMode: .constant(true))
+            // Preview of all icons
+            HStack(spacing: 20) {
+                CheckmarkIcon()
+                    .frame(width: 60, height: 60)
+                ProgressIcon()
+                    .frame(width: 60, height: 60)
+                StreakIcon()
+                    .frame(width: 60, height: 60)
+                TargetIcon()
+                    .frame(width: 60, height: 60)
+            }
             
-            Button("Export All Icon Sizes") {
-                exportAllSizes()
+            Button("Export All Icons & Sizes") {
+                exportAllIconsAndSizes()
             }
             .buttonStyle(.borderedProminent)
             .font(.headline)
@@ -35,38 +51,43 @@ struct IconExporter: View {
                     .multilineTextAlignment(.center)
             }
             
-            Text("Icons will be saved to Documents folder")
+            Text("Icons will be saved to Documents/AppIcons/[icon-name]/")
                 .font(.caption)
                 .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
         }
         .padding()
     }
     
-    func exportAllSizes() {
+    func exportAllIconsAndSizes() {
         exportStatus = "Exporting..."
-        var successCount = 0
+        var totalSuccessCount = 0
+        let totalExpected = iconTypes.count * iconSizes.count
         
-        for iconSize in iconSizes {
-            if exportIcon(size: iconSize.size, filename: iconSize.name) {
-                successCount += 1
+        for iconType in iconTypes {
+            for iconSize in iconSizes {
+                let filename = "\(iconType.name)-\(iconSize.name)"
+                if exportIcon(iconView: iconType.view, size: iconSize.size, filename: filename, folderName: iconType.name) {
+                    totalSuccessCount += 1
+                }
             }
         }
         
-        if successCount == iconSizes.count {
-            exportStatus = "✅ All \(iconSizes.count) icon sizes exported to Documents/AppIcons/"
+        if totalSuccessCount == totalExpected {
+            exportStatus = "✅ All \(totalExpected) icons exported successfully!\n(\(iconTypes.count) icon types × \(iconSizes.count) sizes)"
         } else {
-            exportStatus = "⚠️ Exported \(successCount)/\(iconSizes.count) icons. Check console for errors."
+            exportStatus = "⚠️ Exported \(totalSuccessCount)/\(totalExpected) icons. Check console for errors."
         }
     }
     
-    func exportIcon(size: CGFloat, filename: String) -> Bool {
+    func exportIcon(iconView: AnyView, size: CGFloat, filename: String, folderName: String) -> Bool {
         // Create the icon view that fills the entire frame
-        let iconView = CheckmarkIcon()
+        let scaledIconView = iconView
             .frame(width: size, height: size)
             .scaleEffect(1.0) // Ensure it fills the frame
             .background(Color.clear)
         
-        let renderer = ImageRenderer(content: iconView)
+        let renderer = ImageRenderer(content: scaledIconView)
         renderer.scale = 1.0 // Use 1.0 since we're setting exact pixel dimensions
         // Set the proposed size to match our intended output
         renderer.proposedSize = ProposedViewSize(width: size, height: size)
@@ -84,15 +105,15 @@ struct IconExporter: View {
             return false
         }
         
-        // Create AppIcons subfolder
-        let appIconsFolder = documentsPath.appendingPathComponent("AppIcons")
+        // Create AppIcons/[icon-name] subfolder
+        let appIconsFolder = documentsPath.appendingPathComponent("AppIcons").appendingPathComponent(folderName)
         
         do {
             try FileManager.default.createDirectory(at: appIconsFolder,
                                                    withIntermediateDirectories: true,
                                                    attributes: nil)
         } catch {
-            print("❌ Could not create AppIcons folder: \(error)")
+            print("❌ Could not create AppIcons/\(folderName) folder: \(error)")
             return false
         }
         
@@ -126,14 +147,29 @@ struct IconExporterMac: View {
         (76, "icon-76")
     ]
     
+    let iconTypes: [(view: AnyView, name: String)] = [
+        (AnyView(CheckmarkIcon()), "checkmark"),
+        (AnyView(ProgressIcon()), "progress"),
+        (AnyView(StreakIcon()), "streak"),
+        (AnyView(TargetIcon()), "target")
+    ]
+    
     var body: some View {
         VStack(spacing: 30) {
             Text("Icon Exporter (macOS)")
                 .font(.title)
                 .fontWeight(.bold)
             
-            CheckmarkIcon()
-                .frame(width: 100, height: 100)
+            HStack(spacing: 20) {
+                CheckmarkIcon()
+                    .frame(width: 60, height: 60)
+                ProgressIcon()
+                    .frame(width: 60, height: 60)
+                StreakIcon()
+                    .frame(width: 60, height: 60)
+                TargetIcon()
+                    .frame(width: 60, height: 60)
+            }
             
             Button("Export to Desktop") {
                 exportToDesktop()
@@ -151,7 +187,8 @@ struct IconExporterMac: View {
     
     func exportToDesktop() {
         exportStatus = "Exporting..."
-        var successCount = 0
+        var totalSuccessCount = 0
+        let totalExpected = iconTypes.count * iconSizes.count
         
         // Get Desktop directory
         guard let desktopPath = FileManager.default.urls(for: .desktopDirectory,
@@ -160,37 +197,40 @@ struct IconExporterMac: View {
             return
         }
         
-        // Create AppIcons folder on Desktop
-        let appIconsFolder = desktopPath.appendingPathComponent("AppIcons")
-        
-        do {
-            try FileManager.default.createDirectory(at: appIconsFolder,
-                                                   withIntermediateDirectories: true,
-                                                   attributes: nil)
-        } catch {
-            exportStatus = "❌ Could not create AppIcons folder: \(error.localizedDescription)"
-            return
-        }
-        
-        for iconSize in iconSizes {
-            if exportIconMac(size: iconSize.size, filename: iconSize.name, to: appIconsFolder) {
-                successCount += 1
+        for iconType in iconTypes {
+            // Create AppIcons/[icon-name] folder on Desktop
+            let appIconsFolder = desktopPath.appendingPathComponent("AppIcons").appendingPathComponent(iconType.name)
+            
+            do {
+                try FileManager.default.createDirectory(at: appIconsFolder,
+                                                       withIntermediateDirectories: true,
+                                                       attributes: nil)
+            } catch {
+                exportStatus = "❌ Could not create AppIcons/\(iconType.name) folder: \(error.localizedDescription)"
+                return
+            }
+            
+            for iconSize in iconSizes {
+                let filename = "\(iconType.name)-\(iconSize.name)"
+                if exportIconMac(iconView: iconType.view, size: iconSize.size, filename: filename, to: appIconsFolder) {
+                    totalSuccessCount += 1
+                }
             }
         }
         
-        if successCount == iconSizes.count {
-            exportStatus = "✅ All \(iconSizes.count) icons exported to Desktop/AppIcons/"
+        if totalSuccessCount == totalExpected {
+            exportStatus = "✅ All \(totalExpected) icons exported to Desktop/AppIcons/"
         } else {
-            exportStatus = "⚠️ Exported \(successCount)/\(iconSizes.count) icons"
+            exportStatus = "⚠️ Exported \(totalSuccessCount)/\(totalExpected) icons"
         }
     }
     
-    func exportIconMac(size: CGFloat, filename: String, to folder: URL) -> Bool {
-        let iconView = CheckmarkIcon()
+    func exportIconMac(iconView: AnyView, size: CGFloat, filename: String, to folder: URL) -> Bool {
+        let scaledIconView = iconView
             .frame(width: size, height: size)
             .background(Color.clear)
         
-        let renderer = ImageRenderer(content: iconView)
+        let renderer = ImageRenderer(content: scaledIconView)
         renderer.scale = 1.0
         
         guard let nsImage = renderer.nsImage else {
