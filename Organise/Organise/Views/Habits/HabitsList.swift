@@ -13,13 +13,12 @@ struct HabitsList: View {
     @Query(sort: \Habit.createdAt, order: .reverse) private var habits: [Habit]
     
     var body: some View {
-        VStack {
-            Text("You have \(habits.count) habits")
-            List {
-                HabitForm()
-                ForEach(habits) { habit in
-                    Text(habit.name)
-                }
+        Text("Habits")
+            .font(.title)
+        List {
+            HabitForm()
+            ForEach(habits) { habit in
+                Text(habit.name)
             }
         }
     }

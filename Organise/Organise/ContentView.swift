@@ -11,8 +11,13 @@ import SwiftData
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            HabitsList()
+        TabView {
+            Tab("Habits", systemImage: "list.bullet") {
+                HabitsList()
+            }
+            Tab("Activities", systemImage: "figure.run") {
+                ActivityList()
+            }
         }
     }
 }
