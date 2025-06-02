@@ -10,13 +10,16 @@ import SwiftData
 
 
 struct HabitsList: View {
-    @Query private var habits: [Habit]
+    @Query(sort: \Habit.createdAt, order: .reverse) private var habits: [Habit]
     
     var body: some View {
         VStack {
             Text("You have \(habits.count) habits")
-            List(habits) { habit in
-                Text(habit.name)
+            List {
+                HabitForm()
+                ForEach(habits) { habit in
+                    Text(habit.name)
+                }
             }
         }
     }
