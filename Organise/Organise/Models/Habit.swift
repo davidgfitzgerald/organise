@@ -2,24 +2,30 @@
 //  Habit.swift
 //  Organise
 //
-//  Created by David Fitzgerald on 20/05/2025.
+//  Created by David Fitzgerald on 31/05/2025.
 //
-
-import Foundation
 import SwiftData
+import Foundation
 
 @Model
-final class Habit {
-    var title: String
-    var icon: String
-    var isCompleted: Bool
-    private var createdAt: Date
+class Habit: Codable {
+    var name: String
     
-    init(title: String, icon: String, isCompleted: Bool = false) {
-        self.title = title
-        self.icon = icon
-        self.isCompleted = isCompleted
-        self.createdAt = Date()
+    init(name: String) {
+        self.name = name
+    }
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(name, forKey: .name)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case name
     }
 }
-
