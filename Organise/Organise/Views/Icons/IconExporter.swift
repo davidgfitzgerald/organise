@@ -20,7 +20,7 @@ struct IconExporter: View {
                 .fontWeight(.bold)
             
             // Preview of the icon
-            CheckmarkIcon()
+            CheckmarkIconClean()
                 .frame(width: 100, height: 100)
             
             Button("Export All Icon Sizes") {
@@ -61,13 +61,16 @@ struct IconExporter: View {
     }
     
     func exportIcon(size: CGFloat, filename: String) -> Bool {
-        // Create the icon view without shadows for app icons
-        let iconView = CheckmarkIcon()
+        // Create the icon view that fills the entire frame
+        let iconView = CheckmarkIconClean()
             .frame(width: size, height: size)
+            .scaleEffect(1.0) // Ensure it fills the frame
             .background(Color.clear)
         
         let renderer = ImageRenderer(content: iconView)
         renderer.scale = 1.0 // Use 1.0 since we're setting exact pixel dimensions
+        // Set the proposed size to match our intended output
+        renderer.proposedSize = ProposedViewSize(width: size, height: size)
         
         guard let uiImage = renderer.uiImage,
               let pngData = uiImage.pngData() else {
@@ -130,7 +133,7 @@ struct IconExporterMac: View {
                 .font(.title)
                 .fontWeight(.bold)
             
-            CheckmarkIcon()
+            CheckmarkIconClean()
                 .frame(width: 100, height: 100)
             
             Button("Export to Desktop") {
@@ -184,7 +187,7 @@ struct IconExporterMac: View {
     }
     
     func exportIconMac(size: CGFloat, filename: String, to folder: URL) -> Bool {
-        let iconView = CheckmarkIcon()
+        let iconView = CheckmarkIconClean()
             .frame(width: size, height: size)
             .background(Color.clear)
         
@@ -219,26 +222,28 @@ struct IconExporterMac: View {
 }
 #endif
 
-// MARK: - Clean Icon Version (No Shadows)
+// MARK: - Clean Icon Version (Scalable)
 struct CheckmarkIconClean: View {
     var body: some View {
-        ZStack {
-            // Background circle - no shadow for app icons
-            Circle()
-                .fill(
-                    LinearGradient(
-                        colors: [Color.blue, Color.purple],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+        GeometryReader { geometry in
+            ZStack {
+                // Background circle that fills the entire frame
+                Circle()
+                    .fill(
+                        LinearGradient(
+                            colors: [Color.blue, Color.purple],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
                     )
-                )
-            
-            // Checkmark symbol
-            Image(systemName: "checkmark")
-                .font(.system(size: 50, weight: .bold))
-                .foregroundColor(.white)
-                .scaleEffect(0.5) // Adjust based on frame size
+                
+                // Checkmark symbol that scales with the container
+                Image(systemName: "checkmark")
+                    .font(.system(size: geometry.size.width * 0.4, weight: .bold))
+                    .foregroundColor(.white)
+            }
         }
+        .aspectRatio(1, contentMode: .fit)
     }
 }
 
