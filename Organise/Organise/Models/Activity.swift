@@ -10,10 +10,14 @@ import Foundation
 @Model
 class Activity {
     var habit: Habit
-    var completedAt: Date
+    var completedAt: Date?
     
-    init(habit: Habit, completedAt: Date) {
+    init(habit: Habit, completedAt: Date? = nil) {
         self.habit = habit
         self.completedAt = completedAt
+    }
+    
+    var isCompleted: Bool {
+        completedAt != nil
     }
 }

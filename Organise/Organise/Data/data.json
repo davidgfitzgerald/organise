@@ -24,6 +24,10 @@
         {
             "habitId": 1,
             "completedAt": "2025-06-02T21:20:22.562Z"
+        },
+        {
+            "habitId": 2,
+            "completedAt": null
         }
     ]
 }

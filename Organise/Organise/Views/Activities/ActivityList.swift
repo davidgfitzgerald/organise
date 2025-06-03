@@ -19,7 +19,8 @@ struct ActivityList: View {
         let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
         
         return allActivities.filter { activity in
-            activity.completedAt >= startOfDay && activity.completedAt < endOfDay
+            guard let completedAt = activity.completedAt else { return false}
+            return completedAt >= startOfDay && completedAt < endOfDay
         }
     }
 
@@ -31,8 +32,11 @@ struct ActivityList: View {
             DatePickerView(date: $date, showing: $showingPicker)
                 .padding()
             
-            List(filteredActivities) { activity in
-                Text(activity.habit.name)
+            List {
+                ForEach(filteredActivities) { activity in
+                    ActivityRow(activity: activity)
+                }
+                ActivityRow(activity: Activity(habit: Habit(name: "Test")))
             }
         }
         .dismissDatePicker(when: showingPicker) {
@@ -44,7 +48,13 @@ struct ActivityList: View {
 }
 
 #Preview {
-    @Previewable @State var date: Date = Date()
-    ActivityList(date: $date)
+    @Previewable @State var june2nd2025: Date = {
+        var components = DateComponents()
+        components.year = 2025
+        components.month = 6
+        components.day = 2
+        return Calendar.current.date(from: components) ?? Date()
+    }()
+    ActivityList(date: $june2nd2025)
         .withSampleData()
 }
