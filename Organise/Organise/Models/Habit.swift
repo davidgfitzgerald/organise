@@ -11,6 +11,8 @@ import Foundation
 class Habit: Identifiable {
     var name: String
     var createdAt: Date
+    @Relationship(deleteRule: .cascade, inverse: \Activity.habit)  // TODO: How to handle deleting habits?
+    var activities: [Activity] = []
     
     init(name: String) {
         self.name = name

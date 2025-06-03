@@ -18,7 +18,7 @@ struct ContentView: View {
                 HabitsList()
             }
             Tab("Activities", systemImage: "figure.run") {
-                ActivityList(date: $date)
+                ActivityDayList(date: $date)
             }
         }
     }

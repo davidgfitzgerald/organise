@@ -1,5 +1,5 @@
 //
-//  ActivityList.swift
+//  ActivityDayList.swift
 //  Organise
 //
 //  Created by David Fitzgerald on 02/06/2025.
@@ -8,22 +8,32 @@
 import SwiftUI
 import SwiftData
 
-struct ActivityList: View {
+// TODO move this elsewhere?
+extension Date {
+    func isOn(_ day: Date) -> Bool {
+        Calendar.current.isDate(self, inSameDayAs: day)
+    }
+}
+
+struct ActivityDayList: View {
     @Query private var allActivities: [Activity]
+    @Query private var allHabits: [Habit]
     @Binding var date: Date
     @State private var showingPicker = false
     
-    private var filteredActivities: [Activity] {
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
-        
+    private var completeActivities: [Activity] {
         return allActivities.filter { activity in
-            guard let completedAt = activity.completedAt else { return false}
-            return completedAt >= startOfDay && completedAt < endOfDay
+            guard let completedAt = activity.completedAt else { return false }
+            return completedAt.isOn(date)
         }
     }
-
+    
+    private var incompleteHabits: [Habit] {
+        let allHabitsSet = Set(allHabits)
+        let completeHabitsSet = Set(completeActivities.map { $0.habit })
+        return Array(allHabitsSet.subtracting(completeHabitsSet))
+    }
+    
     var body: some View {
         VStack {
             Text("Activities")
@@ -33,10 +43,12 @@ struct ActivityList: View {
                 .padding()
             
             List {
-                ForEach(filteredActivities) { activity in
+                ForEach(completeActivities) { activity in
                     ActivityRow(activity: activity)
                 }
-                ActivityRow(activity: Activity(habit: Habit(name: "Test")))
+                ForEach(incompleteHabits) { habit in
+                    ActivityRow(activity: Activity(habit: habit))
+                }
             }
         }
         .dismissDatePicker(when: showingPicker) {
@@ -55,6 +67,6 @@ struct ActivityList: View {
         components.day = 2
         return Calendar.current.date(from: components) ?? Date()
     }()
-    ActivityList(date: $june2nd2025)
+    ActivityDayList(date: $june2nd2025)
         .withSampleData()
 }

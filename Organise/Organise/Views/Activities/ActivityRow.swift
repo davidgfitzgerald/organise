@@ -41,7 +41,7 @@ struct ActivityRow: View {
         components.day = 2
         return Calendar.current.date(from: components) ?? Date()
     }()
-    ActivityList(date: $june2nd2025)
+    ActivityDayList(date: $june2nd2025)
         .withSampleData()
 }
 
