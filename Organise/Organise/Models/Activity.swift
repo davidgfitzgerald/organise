@@ -2,13 +2,13 @@
 //  Activity.swift
 //  Organise
 //
-//  Created by David Fitzgerald on 02/06/2025.
+//  Created by David Fitzgerald on 04/06/2025.
 //
-import SwiftData
 import Foundation
+import SwiftData
 
 @Model
-class Activity {
+final class Activity {
     var habit: Habit
     var completedAt: Date?
     

@@ -1,5 +1,5 @@
 //
-//  Activity2List.swift
+//  ActivityList.swift
 //  Organise
 //
 //  Created by David Fitzgerald on 04/06/2025.
@@ -8,8 +8,8 @@
 import SwiftUI
 import SwiftData
 
-struct ActivityList2: View {
-    @Query(sort: \Activity2.habit.name) private var items: [Activity2]
+struct ActivityList: View {
+    @Query(sort: \Activity.habit.name) private var items: [Activity]
     
     var body: some View {
         List {
@@ -23,25 +23,25 @@ struct ActivityList2: View {
 
 #Preview {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Activity2.self, Habit2.self, configurations: config)
+    let container = try! ModelContainer(for: Activity.self, Habit.self, configurations: config)
     
-    let sampleHabits: [Habit2] = [
-        Habit2(name: "Exercise"),
-        Habit2(name: "Read"),
-        Habit2(name: "Meditate"),
+    let sampleHabits: [Habit] = [
+        Habit(name: "Exercise"),
+        Habit(name: "Read"),
+        Habit(name: "Meditate"),
     ]
     sampleHabits.forEach { container.mainContext.insert($0) }
     try? container.mainContext.save()
     
     let sampleActivities = [
-        Activity2(habit: sampleHabits[0], completedAt: Date()),
-        Activity2(habit: sampleHabits[1]),
-        Activity2(habit: sampleHabits[2], completedAt: Date().addingTimeInterval(-3600))
+        Activity(habit: sampleHabits[0], completedAt: Date()),
+        Activity(habit: sampleHabits[1]),
+        Activity(habit: sampleHabits[2], completedAt: Date().addingTimeInterval(-3600))
     ]
     sampleActivities.forEach { container.mainContext.insert($0) }
 
     try? container.mainContext.save()
     
-    return ActivityList2()
+    return ActivityList()
         .modelContainer(container)
 }
