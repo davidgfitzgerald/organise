@@ -10,7 +10,7 @@ import SwiftData
 
 
 struct ActivityDayList: View {
-    @Query(sort: \Activity.habit.name) private var allActivities: [Activity]
+    @Query(sort: \Activity.completedAt) private var allActivities: [Activity]
     var body: some View {
         VStack {
             Text("Activities")
@@ -22,6 +22,8 @@ struct ActivityDayList: View {
                 }
             }
             .listStyle(.plain)
+            .animation(.easeInOut(duration: 0.3), value: allActivities.map { $0.id })
+
         }
     }
 }
