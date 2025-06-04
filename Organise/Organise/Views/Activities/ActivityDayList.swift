@@ -17,22 +17,9 @@ extension Date {
 
 struct ActivityDayList: View {
     @Query private var allActivities: [Activity]
-    @Query private var allHabits: [Habit]
+
     @Binding var date: Date
     @State private var showingPicker = false
-    
-    private var completeActivities: [Activity] {
-        return allActivities.filter { activity in
-            guard let completedAt = activity.completedAt else { return false }
-            return completedAt.isOn(date)
-        }
-    }
-    
-    private var incompleteHabits: [Habit] {
-        let allHabitsSet = Set(allHabits)
-        let completeHabitsSet = Set(completeActivities.map { $0.habit })
-        return Array(allHabitsSet.subtracting(completeHabitsSet))
-    }
     
     var body: some View {
         VStack {
@@ -43,11 +30,8 @@ struct ActivityDayList: View {
                 .padding()
             
             List {
-                ForEach(completeActivities) { activity in
+                ForEach(allActivities) { activity in
                     ActivityRow(activity: activity)
-                }
-                ForEach(incompleteHabits) { habit in
-                    ActivityRow(activity: Activity(habit: habit))
                 }
             }
         }

@@ -17,7 +17,7 @@ class Activity {
         self.completedAt = completedAt
     }
     
-    var isCompleted: Bool {
-        completedAt != nil
-    }
+//    var isCompleted: Bool {
+//        completedAt != nil
+//    }
 }

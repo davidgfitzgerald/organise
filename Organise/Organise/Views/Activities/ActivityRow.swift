@@ -4,30 +4,43 @@
 //
 //  Created by David Fitzgerald on 03/06/2025.
 //
-
+import SwiftData
 import SwiftUI
 
 struct ActivityRow: View {
-    var activity: Activity
+    @Environment(\.modelContext) private var context
+    let activity: Activity
 
     var body: some View {
         HStack {
             HStack {
                 Text(activity.habit.name)
                 
-                    .foregroundColor(activity.isCompleted ? .secondary : .primary)
+                    .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
             Spacer()
             }
-            .fullStrikethrough(activity.isCompleted)
+            .fullStrikethrough(activity.completedAt != nil)
             
-            if activity.isCompleted {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
-                    .padding(.leading, 12)
+            if activity.completedAt != nil {
+                Button {
+                    print("Button pressed")
+                    activity.completedAt = nil
+                    try? context.save()
+                } label: {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                        .padding(.leading, 12)
+                }
             } else {
-                Image(systemName: "circle")
-                    .foregroundColor(.secondary)
-                    .padding(.leading, 12)
+                Button {
+                    print("Button pressed")
+                    activity.completedAt = Date()
+                    try? context.save()
+                } label: {
+                    Image(systemName: "circle")
+                        .foregroundColor(.secondary)
+                        .padding(.leading, 12)
+                }
             }
         }
     }
@@ -47,11 +60,8 @@ struct ActivityRow: View {
 
 #Preview {
     let container = PreviewHelper.createSampleContainer()
-    let habit = Habit(name: "Laundry")
-    let activity = Activity(habit: habit, completedAt: Date())
-    container.mainContext.insert(habit)
-    container.mainContext.insert(activity)
-    try? container.mainContext.save()
+    let activity = Activity(habit: Habit(name: "Laundry"), completedAt: Date())
     
-    return ActivityRow(activity: activity)
+    ActivityRow(activity: activity)
+    .modelContainer(container)
 }

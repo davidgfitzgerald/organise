@@ -25,7 +25,6 @@ struct SampleData: Codable {
 }
 
 struct PreviewHelper {
-    // FIXED: Removed @MainActor and restructured to avoid preview issues
     static func createSampleContainer() -> ModelContainer {
         do {
             let container = try ModelContainer(
@@ -33,50 +32,42 @@ struct PreviewHelper {
                 configurations: ModelConfiguration(isStoredInMemoryOnly: true)
             )
             
-            // Load and insert data in a Task to handle MainActor properly
-            Task { @MainActor in
-                let sampleData: SampleData = load("data.json")
-                
-                var habitsById: [Int: Habit] = [:]
-                for habitData in sampleData.habits {
-                    let habit = Habit(name: habitData.name)
-                    container.mainContext.insert(habit)
-                    habitsById[habitData.id] = habit
-                }
-                
-                let formatter = ISO8601DateFormatter()
-                formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-                
-                for activityData in sampleData.activities {
-                    guard let habit = habitsById[activityData.habitId] else {
-                        print("⚠️ No habit found with ID \(activityData.habitId)")
-                        continue // Don't crash, just skip
-                    }
-                    let completedAt: Date?
-                    if activityData.completedAt == nil {
-                        completedAt = nil
-                    } else {
-                        completedAt = formatter.date(from: activityData.completedAt!)
-                        if completedAt == nil {
-                            print("⚠️ Failed to parse date \(String(describing: activityData.completedAt))")
-                        }
-                    }
-
-                    let activity = Activity(habit: habit, completedAt: completedAt)
-                    container.mainContext.insert(activity)
-                }
-                
-                // Save the context
-                try? container.mainContext.save()
+            // Create a new context that isn't MainActor isolated
+            let context = ModelContext(container)
+            
+            let sampleData: SampleData = load("data.json")
+            
+            var habitsById: [Int: Habit] = [:]
+            for habitData in sampleData.habits {
+                let habit = Habit(name: habitData.name)
+                context.insert(habit)
+                habitsById[habitData.id] = habit
             }
             
+            let formatter = ISO8601DateFormatter()
+            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            
+            for activityData in sampleData.activities {
+                guard let habit = habitsById[activityData.habitId] else {
+                    print("⚠️ No habit found with ID \(activityData.habitId)")
+                    continue
+                }
+                
+                let completedAt: Date? = activityData.completedAt.flatMap {
+                    formatter.date(from: $0)
+                }
+                
+                let activity = Activity(habit: habit, completedAt: completedAt)
+                context.insert(activity)
+            }
+            
+            try context.save()
             return container
         } catch {
             fatalError("Failed to create preview container: \(error)")
         }
     }
 }
-
 extension View {
     func withSampleData() -> some View {
         self.modelContainer(PreviewHelper.createSampleContainer())
