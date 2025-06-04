@@ -22,12 +22,6 @@ struct ActivityDayList: View {
                 }
             }
             .listStyle(.plain)
-            .onAppear {
-                print("📱 Activities count: \(allActivities.count)")
-                for (index, activity) in allActivities.enumerated() {
-                    print("📱 Activity \(index): \(activity.habit.name) - Completed: \(activity.completedAt != nil) - ID: \(activity.id)")
-                }
-            }
         }
     }
 }

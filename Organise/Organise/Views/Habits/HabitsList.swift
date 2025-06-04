@@ -21,10 +21,6 @@ struct HabitsList: View {
                 Text(habit.name)
             }
         }
-        .onAppear {
-            print("📱 Device - Habits count: \(habits.count)")
-            print("📱 ModelContext: \(String(describing: modelContext))")
-        }
     }
 }
 
