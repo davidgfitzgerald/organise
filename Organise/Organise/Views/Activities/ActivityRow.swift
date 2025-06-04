@@ -12,56 +12,45 @@ struct ActivityRow: View {
     let activity: Activity
 
     var body: some View {
-        HStack {
-            HStack {
-                Text(activity.habit.name)
-                
-                    .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
-            Spacer()
-            }
-            .fullStrikethrough(activity.completedAt != nil)
+        Button {
+            print("🔘 Tap detected for: \(activity.habit.name)")
+            print("🔘 Current completedAt: \(String(describing: activity.completedAt))")
             
             if activity.completedAt != nil {
-                Button {
-                    print("Button pressed")
-                    activity.completedAt = nil
-                    try? context.save()
-                } label: {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
-                        .padding(.leading, 12)
-                }
+                print("🔘 Setting to incomplete")
+                activity.completedAt = nil
             } else {
-                Button {
-                    print("Button pressed")
-                    activity.completedAt = Date()
-                    try? context.save()
-                } label: {
-                    Image(systemName: "circle")
-                        .foregroundColor(.secondary)
-                        .padding(.leading, 12)
-                }
+                print("🔘 Setting to complete")
+                activity.completedAt = Date()
             }
+            
+            do {
+                try context.save()
+                print("✅ Save successful")
+            } catch {
+                print("❌ Save failed: \(error)")
+            }
+        } label: {
+            HStack {
+                Text(activity.habit.name)
+                    .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
+                Spacer()
+                Image(systemName: activity.completedAt != nil ? "checkmark.circle.fill" : "circle")
+                    .foregroundColor(activity.completedAt != nil ? .green : .secondary)
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .onAppear {
+            print("📱 Row appeared for: \(activity.habit.name)")
         }
     }
-}
-
-#Preview {
-    @Previewable @State var june2nd2025: Date = {
-        var components = DateComponents()
-        components.year = 2025
-        components.month = 6
-        components.day = 2
-        return Calendar.current.date(from: components) ?? Date()
-    }()
-    ActivityDayList(date: $june2nd2025)
-        .withSampleData()
 }
 
 #Preview {
     let container = PreviewHelper.createSampleContainer()
     let activity = Activity(habit: Habit(name: "Laundry"), completedAt: Date())
     
-    ActivityRow(activity: activity)
-    .modelContainer(container)
+    return ActivityRow(activity: activity)
+        .modelContainer(container)
 }
