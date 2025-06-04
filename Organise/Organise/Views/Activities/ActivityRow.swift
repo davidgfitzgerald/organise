@@ -45,26 +45,6 @@ struct ActivityRow: View {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: Activity.self, Habit.self, configurations: config)
-    
-    let sampleHabits: [Habit] = [
-        Habit(name: "Exercise"),
-        Habit(name: "Read"),
-        Habit(name: "Meditate"),
-    ]
-    sampleHabits.forEach { container.mainContext.insert($0) }
-    try? container.mainContext.save()
-    
-    let sampleActivities = [
-        Activity(habit: sampleHabits[0], completedAt: Date()),
-        Activity(habit: sampleHabits[1]),
-        Activity(habit: sampleHabits[2], completedAt: Date().addingTimeInterval(-3600))
-    ]
-    sampleActivities.forEach { container.mainContext.insert($0) }
-
-    try? container.mainContext.save()
-    
-    return ActivityDayList()
-        .modelContainer(container)
-} 
+    ActivityDayList()
+        .withSampleData()
+}
