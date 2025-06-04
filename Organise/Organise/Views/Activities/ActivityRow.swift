@@ -65,6 +65,6 @@ struct ActivityRow: View {
 
     try? container.mainContext.save()
     
-    return ActivityList()
+    return ActivityDayList()
         .modelContainer(container)
 } 
