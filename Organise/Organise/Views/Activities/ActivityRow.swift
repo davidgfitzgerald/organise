@@ -1,56 +1,64 @@
-//
-//  ActivityRow.swift
-//  Organise
-//
-//  Created by David Fitzgerald on 03/06/2025.
-//
-import SwiftData
 import SwiftUI
+import SwiftData
+
 
 struct ActivityRow: View {
     @Environment(\.modelContext) private var context
     let activity: Activity
-
+    
     var body: some View {
-        Button {
-            print("🔘 Tap detected for: \(activity.habit.name)")
-            print("🔘 Current completedAt: \(String(describing: activity.completedAt))")
-            
+        HStack {
+            Text(activity.habit.name)
+                .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
+            if let completedAt = activity.completedAt {
+                Text(completedAt.short)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
             if activity.completedAt != nil {
-                print("🔘 Setting to incomplete")
-                activity.completedAt = nil
+                Button {
+                    activity.completedAt = nil
+                    try? context.save()
+                } label: {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                }
+                .buttonStyle(PlainButtonStyle())
             } else {
-                print("🔘 Setting to complete")
-                activity.completedAt = Date()
+                Button {
+                    activity.completedAt = Date()
+                    try? context.save()
+                } label: {
+                    Image(systemName: "circle")
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(PlainButtonStyle())
             }
-            
-            do {
-                try context.save()
-                print("✅ Save successful")
-            } catch {
-                print("❌ Save failed: \(error)")
-            }
-        } label: {
-            HStack {
-                Text(activity.habit.name)
-                    .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
-                Spacer()
-                Image(systemName: activity.completedAt != nil ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(activity.completedAt != nil ? .green : .secondary)
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .onAppear {
-            print("📱 Row appeared for: \(activity.habit.name)")
         }
     }
 }
 
 #Preview {
-    let container = PreviewHelper.createSampleContainer()
-    let activity = Activity(habit: Habit(name: "Laundry"), completedAt: Date())
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Activity.self, Habit.self, configurations: config)
     
-    return ActivityRow(activity: activity)
+    let sampleHabits: [Habit] = [
+        Habit(name: "Exercise"),
+        Habit(name: "Read"),
+        Habit(name: "Meditate"),
+    ]
+    sampleHabits.forEach { container.mainContext.insert($0) }
+    try? container.mainContext.save()
+    
+    let sampleActivities = [
+        Activity(habit: sampleHabits[0], completedAt: Date()),
+        Activity(habit: sampleHabits[1]),
+        Activity(habit: sampleHabits[2], completedAt: Date().addingTimeInterval(-3600))
+    ]
+    sampleActivities.forEach { container.mainContext.insert($0) }
+
+    try? container.mainContext.save()
+    
+    return ActivityList()
         .modelContainer(container)
-}
+} 

@@ -8,12 +8,6 @@
 import SwiftUI
 import SwiftData
 
-// TODO move this elsewhere?
-extension Date {
-    func isOn(_ day: Date) -> Bool {
-        Calendar.current.isDate(self, inSameDayAs: day)
-    }
-}
 
 struct ActivityDayList: View {
     @Query(sort: \Activity.habit.name) private var allActivities: [Activity]

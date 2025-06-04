@@ -9,13 +9,13 @@ import SwiftUI
 import SwiftData
 
 struct ActivityList: View {
-    @Query(sort: \Activity.habit.name) private var items: [Activity]
+    @Query(sort: \Activity.habit.name) private var activities: [Activity]
     
     var body: some View {
         List {
-            ForEach(items) { item in
-                ActivityRow2(item: item)
-                    .id(item.id)
+            ForEach(activities) { activity in
+                ActivityRow(activity: activity)
+                    .id(activity.id)
             }
         }
     }

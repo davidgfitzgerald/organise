@@ -12,3 +12,9 @@ public extension Date {
         Self.shortFormatter.string(from: self)
     }
 } 
+
+extension Date {
+    func isOn(_ day: Date) -> Bool {
+        Calendar.current.isDate(self, inSameDayAs: day)
+    }
+}
