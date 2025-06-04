@@ -8,13 +8,16 @@ struct ActivityRow: View {
     
     var body: some View {
         HStack {
-            Text(activity.habit.name)
-                .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
-            if let completedAt = activity.completedAt {
-                Text(completedAt.short)
-                    .foregroundColor(.secondary)
+            HStack {
+                Text(activity.habit.name)
+                    .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
+                if let completedAt = activity.completedAt {
+                    Text(completedAt.short)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
             }
-            Spacer()
+            .fullStrikethrough(activity.completedAt != nil)
             if activity.completedAt != nil {
                 Button {
                     activity.completedAt = nil
@@ -22,6 +25,7 @@ struct ActivityRow: View {
                 } label: {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundColor(.green)
+                        .padding(.leading, 12)
                 }
                 .buttonStyle(PlainButtonStyle())
             } else {
@@ -31,10 +35,12 @@ struct ActivityRow: View {
                 } label: {
                     Image(systemName: "circle")
                         .foregroundColor(.secondary)
+                        .padding(.leading, 12)
                 }
                 .buttonStyle(PlainButtonStyle())
             }
         }
+        
     }
 }
 
