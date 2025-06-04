@@ -52,28 +52,28 @@ struct ActivityDayList: View {
         components.day = 2
         return Calendar.current.date(from: components) ?? Date()
     }()
+
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: Activity.self, Habit.self, configurations: config)
     
-    let container = try! ModelContainer(for: Activity.self, Habit.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-    let context = ModelContext(container)
+    let sampleHabits: [Habit] = [
+        Habit(name: "Exercise"),
+        Habit(name: "Read"),
+        Habit(name: "Meditate"),
+    ]
+    sampleHabits.forEach { container.mainContext.insert($0) }
+    try? container.mainContext.save()
     
-    // Create habits
-    let exercise = Habit(name: "Exercise")
-    let read = Habit(name: "Read")
-    let meditate = Habit(name: "Meditate")
-    
-    // Create activities
-    let exerciseActivity = Activity(habit: exercise, completedAt: Date())
-    let readActivity = Activity(habit: read, completedAt: nil)
-    let meditateActivity = Activity(habit: meditate, completedAt: Date())
-    
-    // Insert into context
-    context.insert(exercise)
-    context.insert(read)
-    context.insert(meditate)
-    context.insert(exerciseActivity)
-    context.insert(readActivity)
-    context.insert(meditateActivity)
+    let sampleActivities = [
+        Activity(habit: sampleHabits[0], completedAt: Date()),
+        Activity(habit: sampleHabits[1]),
+        Activity(habit: sampleHabits[2], completedAt: Date().addingTimeInterval(-3600))
+    ]
+    sampleActivities.forEach { container.mainContext.insert($0) }
+
+    try? container.mainContext.save()
     
     return ActivityDayList(date: $june2nd2025)
         .modelContainer(container)
 }
+
