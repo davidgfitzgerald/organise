@@ -50,10 +50,12 @@ struct EmojiPicker: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     ForEach(Array(Emojis.categories.keys.sorted()), id: \.self) { category in
-                        VStack(alignment: .leading) {
+                        VStack(alignment: .leading, spacing: 8) {
                             Text(category)
                                 .font(.headline)
+                                .foregroundColor(.secondary)
                                 .padding(.horizontal)
+                                .padding(.top, 16)
                             
                             LazyVGrid(columns: columns, spacing: 20) {
                                 if let emojis = Emojis.categories[category] {
@@ -73,12 +75,19 @@ struct EmojiPicker: View {
                                     }
                                 }
                             }
-                            .padding(.horizontal)
+                            .padding()
                         }
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color(.secondarySystemGroupedBackground))
+                                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+                        )
+                        .padding(.horizontal)
                     }
                 }
                 .padding(.vertical)
             }
+            .background(Color(.systemGroupedBackground))
             .navigationTitle("Pick an Emoji")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
