@@ -7,31 +7,62 @@
 
 import SwiftUI
 
+
 struct DatePickerView: View {
     @Binding var date: Date
     @Binding var showing: Bool
     
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }
+    
     var body: some View {
-        ZStack {
-            Button {
-                withAnimation {
-                    showing = true
-                }
-            } label: {
-                Image(systemName: "calendar")
-                    .font(.title2)
-                    .foregroundColor(.blue)
-            }
+        HStack {
+            Spacer()
             
-            if showing {
-                DatePicker("", selection: $date, displayedComponents: .date)
-                    .allowsHitTesting(true)
-                    .datePickerStyle(.wheel)
-                    .background(.regularMaterial)
-                    .cornerRadius(16)
-                    .shadow(radius: 10)
-                    .scaleEffect(showing ? 1 : 0.8)
+            Button(action: {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    showing.toggle()
+                }
+            }) {
+                HStack(spacing: 8) {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(.secondary)
+                    
+                    Text(dateFormatter.string(from: date))
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                    
+                    Image(systemName: showing ? "chevron.up" : "chevron.down")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .animation(.easeInOut(duration: 0.2), value: showing)
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 10)
+                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
             }
+            .buttonStyle(.plain)
+            
+            Spacer()
+        }
+        .padding(.horizontal)
+        .onChange(of: date) {
+            showing = false
+        }
+        
+        if showing {
+            DatePicker(
+                "Select Date",
+                selection: $date,
+                displayedComponents: .date
+            )
+            .datePickerStyle(.graphical)
+            .padding(.horizontal)
+            .transition(.opacity.combined(with: .scale(scale: 0.95)))
+            .animation(.easeInOut(duration: 0.3), value: showing)
         }
     }
 }

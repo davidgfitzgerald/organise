@@ -53,12 +53,17 @@ struct ActivityDayList: View {
         
         return incomplete + completed
     }
+    
+    // Func to create remaining habits
+    private func createRemainingActivities() {
+        for habit in remainingHabits {
+            let activity = Activity(habit: habit, due: date)
+            context.insert(activity)
+        }
+    }
 
     var body: some View {
         VStack {
-            Text("Activities")
-                .font(.title)
-            Text(date.shortest)
             List {
                 ForEach(sortedActivities) { activity in
                     ActivityRow(activity: activity)
@@ -69,11 +74,10 @@ struct ActivityDayList: View {
             .animation(.easeInOut(duration: 0.3), value: sortedActivities.map { $0.id })
         }
         .onAppear {
-            for habit in remainingHabits {
-                print(habit.name)
-                let activity = Activity(habit: habit, due: date)
-                context.insert(activity)
-            }
+            createRemainingActivities()
+        }
+        .onChange(of: date) {
+            createRemainingActivities()
         }
     }
 }

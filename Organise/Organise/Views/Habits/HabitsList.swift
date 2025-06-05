@@ -13,8 +13,6 @@ struct HabitsList: View {
     @Query(sort: \Habit.createdAt, order: .reverse) private var habits: [Habit]
     
     var body: some View {
-        Text("Habits")
-            .font(.title)
         List {
             HabitForm()
             ForEach(habits) { habit in
