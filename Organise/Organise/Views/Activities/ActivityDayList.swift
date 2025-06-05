@@ -10,14 +10,16 @@ import SwiftData
 
 
 struct ActivityDayList: View {
-    @Query(sort: \Activity.completedAt) private var allActivities: [Activity]
+    @Binding var date: Date
+    @Query(sort: \Activity.completedAt) private var activities: [Activity]
+    @Query private var habits: [Habit]
     
     private var sortedActivities: [Activity] {
-        let incomplete = allActivities.filter { $0.completedAt == nil }
+        let incomplete = activities.filter { $0.completedAt == nil }
             .sorted { $0.habit.name.localizedCaseInsensitiveCompare($1.habit.name) == .orderedAscending }
 
         
-        let completed = allActivities.filter { $0.completedAt != nil }
+        let completed = activities.filter { $0.completedAt != nil }
             .sorted {
                 guard let date1 = $0.completedAt, let date2 = $1.completedAt else { return false }
                 return date1 > date2 // Most recent first
@@ -30,6 +32,7 @@ struct ActivityDayList: View {
         VStack {
             Text("Activities")
                 .font(.title)
+            Text(date.shortest)
             List {
                 ForEach(sortedActivities) { activity in
                     ActivityRow(activity: activity)
@@ -37,14 +40,14 @@ struct ActivityDayList: View {
                 }
             }
             .listStyle(.plain)
-            .animation(.easeInOut(duration: 0.3), value: allActivities.map { $0.id })
+            .animation(.easeInOut(duration: 0.3), value: activities.map { $0.id })
 
         }
     }
 }
 
 #Preview {
-    ActivityDayList()
+    ActivityDayList(date: .constant(Date()))
         .withSampleData()
 }
 

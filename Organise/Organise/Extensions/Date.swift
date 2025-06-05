@@ -1,17 +1,19 @@
 import Foundation
 
 public extension Date {
-    static let shortFormatter: DateFormatter = {
+    var short: String {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         formatter.timeStyle = .short
-        return formatter
-    }()
-    
-    var short: String {
-        Self.shortFormatter.string(from: self)
+        return formatter.string(from: self)
     }
-} 
+    
+    var shortest: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E d MMM"
+        return formatter.string(from: self)
+    }
+}
 
 extension Date {
     func isOn(_ day: Date) -> Bool {

@@ -45,6 +45,6 @@ struct ActivityRow: View {
 }
 
 #Preview {
-    ActivityDayList()
+    ActivityDayList(date: .constant(Date()))
         .withSampleData()
 }
