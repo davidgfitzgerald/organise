@@ -36,6 +36,7 @@ struct DatePickerView: View {
     }
 }
 
+// TODO - nice idea but buggy
 extension View {
     func dismissDatePicker(when showing: Bool, action: @escaping () -> Void) -> some View {
         self.onTapGesture {
