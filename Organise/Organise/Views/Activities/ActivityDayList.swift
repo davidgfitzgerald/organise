@@ -14,6 +14,8 @@ struct ActivityDayList: View {
     
     private var sortedActivities: [Activity] {
         let incomplete = allActivities.filter { $0.completedAt == nil }
+            .sorted { $0.habit.name.localizedCaseInsensitiveCompare($1.habit.name) == .orderedAscending }
+
         
         let completed = allActivities.filter { $0.completedAt != nil }
             .sorted {
