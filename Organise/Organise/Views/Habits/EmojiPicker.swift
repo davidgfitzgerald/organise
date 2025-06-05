@@ -4,15 +4,13 @@ struct EmojiPicker: View {
     @Binding var selectedEmoji: String
     @Environment(\.dismiss) private var dismiss
     
-    private let emojis = ["✅", "🎯", "📚", "🏃", "🧘", "💪", "🎨", "🎵", "📝", "🎮", "🌱", "🌟", "💡", "🎯", "🎪", "🎭", "🎪", "🎨", "🎵", "📝", "🎮", "🌱", "🌟", "💡", "🎯", "🎪", "🎭"]
-    
     private let columns = Array(repeating: GridItem(.flexible()), count: 6)
     
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(emojis, id: \.self) { emoji in
+                    ForEach(Emojis.all, id: \.self) { emoji in
                         Button {
                             selectedEmoji = emoji
                             dismiss()
