@@ -16,7 +16,7 @@ struct HabitsList: View {
         List {
             HabitForm()
             ForEach(habits) { habit in
-                Text(habit.name)
+                HabitRow(habit: habit)
             }
         }
     }

@@ -11,6 +11,7 @@ import Foundation
 class Habit: Identifiable {
     var name: String
     var createdAt: Date
+    var emoji: String = "?"  // TODO use AI to default to a sensible emoji
     @Relationship(deleteRule: .cascade, inverse: \Activity.habit)  // TODO: How to handle deleting habits?
     var activities: [Activity] = []
     
