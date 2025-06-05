@@ -8,24 +8,28 @@ struct EmojiPicker: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 20) {
-                    ForEach(Emojis.all, id: \.self) { emoji in
-                        Button {
-                            selectedEmoji = emoji
-                            dismiss()
-                        } label: {
-                            Text(emoji)
-                                .font(.system(size: 30))
-                                .frame(width: 50, height: 50)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(selectedEmoji == emoji ? Color.blue.opacity(0.2) : Color.clear)
-                                )
+            List {
+                ForEach(Array(Emojis.categories.keys.sorted()), id: \.self) { category in
+                    Section(header: Text(category)) {
+                        LazyVGrid(columns: columns, spacing: 20) {
+                            ForEach(Emojis.categories[category] ?? [], id: \.self) { emoji in
+                                Button {
+                                    selectedEmoji = emoji
+                                    dismiss()
+                                } label: {
+                                    Text(emoji)
+                                        .font(.system(size: 30))
+                                        .frame(width: 50, height: 50)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(selectedEmoji == emoji ? Color.blue.opacity(0.2) : Color.clear)
+                                        )
+                                }
+                            }
                         }
+                        .padding(.vertical, 8)
                     }
                 }
-                .padding()
             }
             .navigationTitle("Pick an Emoji")
             .navigationBarTitleDisplayMode(.inline)
