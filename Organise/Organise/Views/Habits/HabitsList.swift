@@ -10,6 +10,7 @@ import SwiftData
 
 
 struct HabitsList: View {
+    @Environment(\.modelContext) private var context
     @Query(sort: \Habit.createdAt, order: .reverse) private var habits: [Habit]
     
     var body: some View {
@@ -17,6 +18,13 @@ struct HabitsList: View {
             HabitForm()
             ForEach(habits) { habit in
                 HabitRow(habit: habit)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button(role: .destructive) {
+                            context.delete(habit)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
             }
         }
     }
