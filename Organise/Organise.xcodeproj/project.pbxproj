@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6346DCAD2DFA5036006A4D5D /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6346DCAC2DFA5036006A4D5D /* Config.plist */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		632384C82DD3F82B00EF2BA2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +31,7 @@
 		632384B82DD3F82A00EF2BA2 /* Organise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Organise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		632384C72DD3F82B00EF2BA2 /* OrganiseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrganiseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		632384D12DD3F82B00EF2BA2 /* OrganiseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OrganiseUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6346DCAC2DFA5036006A4D5D /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +80,7 @@
 		632384AF2DD3F82A00EF2BA2 = {
 			isa = PBXGroup;
 			children = (
+				6346DCAC2DFA5036006A4D5D /* Config.plist */,
 				636A822E2DDD21D100FD29EC /* Organise */,
 				632384CA2DD3F82B00EF2BA2 /* OrganiseTests */,
 				632384D42DD3F82B00EF2BA2 /* OrganiseUITests */,
@@ -213,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6346DCAD2DFA5036006A4D5D /* Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

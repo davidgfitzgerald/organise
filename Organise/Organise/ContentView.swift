@@ -12,7 +12,7 @@ import SwiftData
 struct ContentView: View {
     @State private var date = Date()
     @State private var showingPicker: Bool = false
-    @State private var selectedTab = "Activities"
+    @State private var selectedTab = "Habits"
 
     var body: some View {
         TabView(selection: $selectedTab) {

@@ -13,6 +13,7 @@ struct HabitForm: View {
     @Environment(\.modelContext) private var context
     @State private var name = ""
     @State private var showError = false
+    @State private var isLoadingEmoji = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -29,7 +30,28 @@ struct HabitForm: View {
                     }
                 } else {
                     let habit = Habit(name: name)
+                    print("name is \(name)")
                     context.insert(habit)
+                    
+                    // Capture value of habitName before it is reset
+                    let habitName = name
+                    
+                    Task {
+                        do {
+                            print("About to create habit with name: '\(habitName)'")
+                            let suggestedEmoji = try await ClaudeAPIService.suggestEmoji(for: habitName)
+                            await MainActor.run {
+                                habit.emoji = suggestedEmoji
+                                isLoadingEmoji = false
+                            }
+                        } catch {
+                            await MainActor.run {
+                                isLoadingEmoji = false
+                            }
+                        }
+                    }
+                    
+                    // Reset name
                     name = ""
                 }
             }
