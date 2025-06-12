@@ -34,7 +34,7 @@ struct ClaudeAPIService {
             "messages": [
                 [
                     "role": "user",
-                    "content": "Suggest the best emoji for depicting \(name). Reply with only the single emoji character."
+                    "content": "Suggest the best emoji for depicting \(name). Favour emojis that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with only the single emoji character."
                 ]
             ]
         ]
