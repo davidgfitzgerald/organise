@@ -11,12 +11,14 @@ import Foundation
 class Habit: Identifiable {
     var name: String
     var createdAt: Date
-    var emoji: String = "?"  // TODO use AI to default to a sensible emoji
+    var isLoadingEmoji: Bool
+    var emoji: String = "?"
     @Relationship(deleteRule: .cascade, inverse: \Activity.habit)
     var activities: [Activity] = []
     
     init(name: String) {
         self.name = name
         self.createdAt = Date()
+        self.isLoadingEmoji = false
     }
 }

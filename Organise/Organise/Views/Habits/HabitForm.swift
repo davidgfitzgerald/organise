@@ -13,7 +13,6 @@ struct HabitForm: View {
     @Environment(\.modelContext) private var context
     @State private var name = ""
     @State private var showError = false
-    @State private var isLoadingEmoji = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -38,15 +37,16 @@ struct HabitForm: View {
                     
                     Task {
                         do {
+                            habit.isLoadingEmoji = true
                             print("About to create habit with name: '\(habitName)'")
                             let suggestedEmoji = try await ClaudeAPIService.suggestEmoji(for: habitName)
                             await MainActor.run {
                                 habit.emoji = suggestedEmoji
-                                isLoadingEmoji = false
+                                habit.isLoadingEmoji = false
                             }
                         } catch {
                             await MainActor.run {
-                                isLoadingEmoji = false
+                                habit.isLoadingEmoji = false
                             }
                         }
                     }
