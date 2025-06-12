@@ -16,6 +16,7 @@ struct HabitForm: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+            // TODO: Bug. Allow TextField to be dismissed.
             TextField("", text: $name, prompt: Text("Enter habit name").foregroundColor(showError ? .red : .gray))
             .onSubmit {
                 if name.isEmpty {
