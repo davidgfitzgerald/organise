@@ -18,17 +18,13 @@ struct HabitRow: View {
     var body: some View {
         HStack {
             if habit.isLoadingEmoji {
-                Text("🔄")
-                    .font(.title2)
+                ProgressView()
+                    .scaleEffect(0.8)
                     .frame(width: 40, height: 40)
-                    .rotationEffect(.degrees(isSpinning ? -360 : 0))
-                    .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isSpinning)
                     .background(
                         RoundedRectangle(cornerRadius: 8)
                             .fill(Color.secondary.opacity(0.1))
                     )
-                    .onAppear { isSpinning = true }
-                    .onDisappear { isSpinning = false }
             } else {
                 Button {
                     showingEmojiPicker = true
