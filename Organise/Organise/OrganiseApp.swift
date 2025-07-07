@@ -14,12 +14,17 @@ struct OrganiseApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(createModelContainer())
+        .modelContainer(
+            createModelContainer()
+        )
     }
     
     private func createModelContainer() -> ModelContainer {
         do {
-            let container = try ModelContainer(for: Habit.self, Activity.self)
+            let container = try ModelContainer(
+                for: Habit.self, Activity.self,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+            )
             return container
         } catch {
             fatalError("Failed to create ModelContainer: \(error)")
