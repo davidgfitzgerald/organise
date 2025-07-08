@@ -16,6 +16,7 @@ struct SampleData: Codable {
         let id: Int
         let name: String
         let createdAt: String
+        let emoji: String
     }
     
     struct ActivityData: Codable {
@@ -39,7 +40,7 @@ struct PreviewHelper {
             
             var habitsById: [Int: Habit] = [:]
             for habitData in sampleData.habits {
-                let habit = Habit(name: habitData.name)
+                let habit = Habit(name: habitData.name, emoji: habitData.emoji)
                 context.insert(habit)
                 habitsById[habitData.id] = habit
             }

@@ -16,9 +16,10 @@ class Habit: Identifiable {
     @Relationship(deleteRule: .cascade, inverse: \Activity.habit)
     var activities: [Activity] = []
     
-    init(name: String) {
+    init(name: String, emoji: String = "?") {
         self.name = name
         self.createdAt = Date()
         self.isLoadingEmoji = false
+        self.emoji = emoji
     }
 }
