@@ -15,19 +15,19 @@ struct ContentView: View {
     @State private var selectedTab = "Habits"
 
     var body: some View {
-        TabView(selection: $selectedTab) {
-            Tab("Habits", systemImage: "list.bullet", value: "Habits") {
-                Text("Habits")
-                    .font(.title)
-                HabitsList()
-            }
-            Tab("Activities", systemImage: "figure.run" , value: "Activities") {
+//        TabView(selection: $selectedTab) {
+//            Tab("Habits", systemImage: "list.bullet", value: "Habits") {
+//                Text("Habits")
+//                    .font(.title)
+//                HabitsList()
+//            }
+//            Tab("Activities", systemImage: "figure.run" , value: "Activities") {
                 Text("Activities")
                     .font(.title)
                 DatePickerView(date: $date, showing: $showingPicker)
                 ActivityDayList(date: $date)
-            }
-        }
+//            }
+//        }
     }
 }
 
