@@ -8,6 +8,10 @@
 import SwiftUI
 import SwiftData
 
+// Type aliases at the top level
+typealias Habit = AppSchemaV1.Habit
+typealias Activity = AppSchemaV1.Activity
+
 @main
 struct OrganiseApp: App {
     @Environment(\.modelContext) private var context

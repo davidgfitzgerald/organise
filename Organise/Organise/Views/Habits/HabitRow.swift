@@ -53,9 +53,9 @@ struct HabitRow: View {
         .contentShape(Rectangle()) // Make the entire row tappable
         .onTapGesture {
             if habit.completedOn(date) {
-                habit.decomplete(date)
+                try? habit.decomplete(on: date)
             } else {
-                habit.complete(date)
+                try? habit.complete(on: date)
             }
         }
         .sheet(isPresented: $showingEmojiPicker) {
