@@ -7,8 +7,8 @@
 import SwiftData
 import Foundation
 
-enum AppSchemaV1: VersionedSchema {
-    static var versionIdentifier = Schema.Version(0, 1, 0)
+enum AppSchemaV2: VersionedSchema {
+    static var versionIdentifier = Schema.Version(0, 1, 1)
     
     static var models: [any PersistentModel.Type] {
         [
@@ -25,13 +25,15 @@ enum AppSchemaV1: VersionedSchema {
         var emoji: String = "?"
         @Relationship(deleteRule: .cascade, inverse: \Activity.habit)
         var activities: [Activity] = []
+        var dummy: String? = nil // Optional field that can be safely ignored
+        var schemaVersion: Int = 2 // Track which schema version this object was created with
         
         init(name: String, emoji: String = "?") {
             self.name = name
             self.createdAt = Date()
             self.isLoadingEmoji = false
             self.emoji = emoji
-            print("Habit \(name) created")
+            self.dummy = dummy
         }
         
         func activity(for day: Date) -> Activity? {
@@ -91,7 +93,7 @@ enum AppSchemaV1: VersionedSchema {
             self.due = Calendar.current.startOfDay(for: due)
         }
     }
-
+    
     enum HabitError: Error {
         case contextNotAvailable
         
@@ -103,4 +105,5 @@ enum AppSchemaV1: VersionedSchema {
         }
     }
 }
+
 

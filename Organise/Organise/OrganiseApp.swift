@@ -34,7 +34,8 @@ struct OrganiseApp: App {
         do {
             let container = try ModelContainer(
                 for: Habit.self, Activity.self,
-                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+                migrationPlan: AppMigrationPlan.self,
+                configurations: ModelConfiguration(isStoredInMemoryOnly: false)
             )
             return container
         } catch {
