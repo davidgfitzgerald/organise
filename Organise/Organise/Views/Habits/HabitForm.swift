@@ -30,7 +30,6 @@ struct HabitForm: View {
                     }
                 } else {
                     let habit = Habit(name: name)
-                    print("name is \(name)")
                     context.insert(habit)
                     
                     // Capture value of habitName before it is reset

@@ -17,7 +17,7 @@ class Habit: Identifiable {
     var activities: [Activity] = []
     
     // Computed property to access DB context
-    private var context: ModelContext? {
+    private var context: ModelContext! {
         return self.modelContext
     }
     
@@ -42,7 +42,6 @@ class Habit: Identifiable {
          * Deterine if a given habit has been completed on a given day.
          */
         let result = activity(day) != nil
-        print("🔍 completedOn(\(day)): \(result), activities count: \(activities.count)")
         return result
     }
     
@@ -51,35 +50,23 @@ class Habit: Identifiable {
         /**
          * Mark a given habit as completed on a given day.
          *
-         * If an activity already exists, return that, else, create a new one.
+         * Only create a new activity if one doesn't already exist.
          */
-        guard let context = context else { 
-            print("⚠️ No context available for complete")
-            return 
-        }
-        
         if activity(day) == nil {
-            let newActivity = Activity(habit: self, completedAt: day)
-            context.insert(newActivity)
+            context.insert(Activity(habit: self, completedAt: day))
             try? context.save()
-            print("✅ Created activity for \(day), activities count: \(activities.count)")
-        } else {
-            print("⚠️ Activity already exists for \(day)")
         }
     }
     
     func decomplete(_ day: Date) {
-        guard let context = context else { 
-            print("⚠️ No context available for decomplete")
-            return 
-        }
-        
+        /**
+         * Mark a given habit as completed on a given day.
+         *
+         * Only create a new activity if one doesn't already exist.
+         */
         if let existingActivity = activity(day) {
             context.delete(existingActivity)
             try? context.save()
-            print("✅ Deleted activity for \(day), activities count: \(activities.count)")
-        } else {
-            print("⚠️ No activity found for \(day)")
         }
     }
 }

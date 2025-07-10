@@ -54,10 +54,8 @@ struct HabitRow: View {
         .onTapGesture {
             if habit.completedOn(date) {
                 habit.decomplete(date)
-                print("DECOMPLETED")
             } else {
                 habit.complete(date)
-                print("COMPLETED")
             }
         }
         .sheet(isPresented: $showingEmojiPicker) {

@@ -67,6 +67,7 @@ struct PreviewHelper {
         }
     }
 }
+
 extension View {
     func withSampleData() -> some View {
         self.modelContainer(PreviewHelper.createSampleContainer())
