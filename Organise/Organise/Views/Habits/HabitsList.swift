@@ -11,13 +11,15 @@ import SwiftData
 
 struct HabitsList: View {
     @Environment(\.modelContext) private var context
+    @Binding var date: Date
     @Query(sort: \Habit.createdAt, order: .reverse) private var habits: [Habit]
     
     var body: some View {
         List {
             HabitForm()
             ForEach(habits) { habit in
-                HabitRow(habit: habit)
+                
+                HabitRow(habit: habit, date: date)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) {
                             context.delete(habit)
@@ -31,6 +33,6 @@ struct HabitsList: View {
 }
 
 #Preview {
-    return HabitsList()
+    HabitsList(date: .constant(Date()))
         .withSampleData()
 }

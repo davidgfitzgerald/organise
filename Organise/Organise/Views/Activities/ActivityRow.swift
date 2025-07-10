@@ -24,35 +24,21 @@ struct ActivityRow: View {
 
             HStack {
                 Text(activity.habit.name)
-                    .foregroundColor(activity.completedAt != nil ? .secondary : .primary)
-                if let completedAt = activity.completedAt {
-                    Text(completedAt.short)
-                        .foregroundColor(.secondary)
-                }
+                    .foregroundColor(.primary)
                 Spacer()
             }
-            .fullStrikethrough(activity.completedAt != nil)
-            if activity.completedAt != nil {
-                Button {
-                    activity.completedAt = nil
-                    try? context.save()
-                } label: {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(.green)
-                        .padding(.leading, 12)
-                }
-                .buttonStyle(PlainButtonStyle())
-            } else {
-                Button {
-                    activity.completedAt = Date()
-                    try? context.save()
-                } label: {
-                    Image(systemName: "circle")
-                        .foregroundColor(.secondary)
-                        .padding(.leading, 12)
-                }
-                .buttonStyle(PlainButtonStyle())
+            .fullStrikethrough(true)
+
+            Button {
+                context.delete(activity)
+                try? context.save()
+            } label: {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .padding(.leading, 12)
             }
+            .buttonStyle(PlainButtonStyle())
+
         }
         .sheet(isPresented: $showingEmojiPicker) {
             EmojiPicker(selectedEmoji: Binding(
@@ -66,7 +52,7 @@ struct ActivityRow: View {
     }
 }
 
-#Preview {
-    ActivityDayList(date: .constant(Date()))
-        .withSampleData()
-}
+//#Preview {
+//    ActivityDayList(date: .constant(Date()))
+//        .withSampleData()
+//}

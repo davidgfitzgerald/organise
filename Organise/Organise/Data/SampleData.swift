@@ -21,7 +21,7 @@ struct SampleData: Codable {
     
     struct ActivityData: Codable {
         let habitId: Int
-        let completedAt: String?
+        let completedAt: String
     }
 }
 
@@ -54,9 +54,7 @@ struct PreviewHelper {
                     continue
                 }
                 
-                let completedAt: Date? = activityData.completedAt.flatMap {
-                    formatter.date(from: $0)
-                }
+                let completedAt: Date = formatter.date(from: activityData.completedAt)!
                 
                 let activity = Activity(habit: habit, completedAt: completedAt)
                 context.insert(activity)

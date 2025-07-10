@@ -51,6 +51,7 @@ struct DatePickerView: View {
         .padding(.horizontal)
         .onChange(of: date) {
             showing = false
+            print("Selected \(date.shortest)")
         }
         
         if showing {

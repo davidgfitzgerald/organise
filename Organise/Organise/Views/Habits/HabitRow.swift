@@ -12,8 +12,11 @@ struct HabitRow: View {
     @Environment(\.modelContext) private var context
     @Bindable var habit: Habit
     @State private var showingEmojiPicker = false
-    @State private var isSpinning = false
-
+    let date: Date
+    
+    private var completed: Bool {
+        habit.completedOn(date)
+    }
     
     var body: some View {
         HStack {
@@ -40,10 +43,22 @@ struct HabitRow: View {
                 .buttonStyle(.plain)
             }
             
-            Text(habit.name)
-                .foregroundColor(.primary)
-            
-            Spacer()
+            HStack {
+                Text(habit.name)
+                    .foregroundColor(completed ? .secondary : .primary)
+                Spacer()
+            }
+            .fullStrikethrough(completed)
+        }
+        .contentShape(Rectangle()) // Make the entire row tappable
+        .onTapGesture {
+            if habit.completedOn(date) {
+                habit.decomplete(date)
+                print("DECOMPLETED")
+            } else {
+                habit.complete(date)
+                print("COMPLETED")
+            }
         }
         .sheet(isPresented: $showingEmojiPicker) {
             EmojiPicker(selectedEmoji: $habit.emoji)
@@ -52,7 +67,14 @@ struct HabitRow: View {
 }
 
 #Preview {
-    let habit = Habit(name: "Exercise")
-    return HabitRow(habit: habit)
-        .withSampleData()
+    let container = PreviewHelper.createSampleContainer()
+    let context = ModelContext(container)
+    
+    // Get the first habit from the sample data
+    let descriptor = FetchDescriptor<Habit>()
+    let habits = try! context.fetch(descriptor)
+    let habit = habits.first!
+    
+    return HabitRow(habit: habit, date: Date())
+        .modelContainer(container)
 }
