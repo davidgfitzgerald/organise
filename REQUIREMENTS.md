@@ -3,7 +3,7 @@
 ## In Progress Features 🚧
 
 ### Bug Fixes & Improvements
-- [ ] Fix TextField dismissal issue in HabitForm
+- [x] Fix TextField dismissal issue in HabitForm
 - [ ] Improve error handling for Claude API calls
 - [ ] Add loading states for better UX
 - [ ] Optimize sample data loading
