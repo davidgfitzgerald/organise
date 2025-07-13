@@ -8,9 +8,6 @@
 import SwiftUI
 import SwiftData
 
-// Type aliases at the top level
-typealias Habit = AppSchemaV1.Habit
-typealias Activity = AppSchemaV1.Activity
 
 @main
 struct OrganiseApp: App {
@@ -24,22 +21,6 @@ struct OrganiseApp: App {
                 DataManager.shared.modelContext = context
             }
         }
-        .modelContainer(
-            createModelContainer()
-        )
-
-    }
-    
-    private func createModelContainer() -> ModelContainer {
-        do {
-            let container = try ModelContainer(
-                for: Habit.self, Activity.self,
-                migrationPlan: AppMigrationPlan.self,
-                configurations: ModelConfiguration(isStoredInMemoryOnly: false)
-            )
-            return container
-        } catch {
-            fatalError("Failed to create ModelContainer: \(error)")
-        }
+        .modelContainer(container)
     }
 }

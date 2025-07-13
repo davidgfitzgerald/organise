@@ -26,13 +26,8 @@ struct SampleData: Codable {
 }
 
 struct PreviewHelper {
-    static func createSampleContainer() -> ModelContainer {
+    static func createSampleData() {
         do {
-            let container = try ModelContainer(
-                for: Habit.self, Activity.self,
-                configurations: ModelConfiguration(isStoredInMemoryOnly: true)
-            )
-            
             // Create a new context that isn't MainActor isolated
             let context = ModelContext(container)
             
@@ -61,7 +56,6 @@ struct PreviewHelper {
             }
             
             try context.save()
-            return container
         } catch {
             fatalError("Failed to create preview container: \(error)")
         }
@@ -70,6 +64,7 @@ struct PreviewHelper {
 
 extension View {
     func withSampleData() -> some View {
-        self.modelContainer(PreviewHelper.createSampleContainer())
+        PreviewHelper.createSampleData()
+        return self.modelContainer(container)
     }
 }

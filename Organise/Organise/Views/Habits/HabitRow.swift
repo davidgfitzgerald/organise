@@ -65,7 +65,7 @@ struct HabitRow: View {
 }
 
 #Preview {
-    let container = PreviewHelper.createSampleContainer()
+    PreviewHelper.createSampleData()
     let context = ModelContext(container)
     
     // Get the first habit from the sample data
