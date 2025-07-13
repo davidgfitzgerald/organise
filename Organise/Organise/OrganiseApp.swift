@@ -16,10 +16,6 @@ struct OrganiseApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-            .onAppear {
-                // TODO - determine pros/cons of this approach
-                DataManager.shared.modelContext = context
-            }
         }
         .modelContainer(container)
     }
