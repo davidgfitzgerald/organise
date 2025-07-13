@@ -1,0 +1,32 @@
+{
+    "habits": [
+        {
+            "id": 0,
+            "name": "Exercise",
+            "createdAt": "2025-06-02T19:32:01.317Z",
+            "emoji": "💪"
+        },
+        {
+            "id": 1,
+            "name": "Read",
+            "createdAt": "2025-06-02T19:34:01.317Z",
+            "emoji": "📚"
+        },
+        {
+            "id": 2,
+            "name": "Meditate",
+            "createdAt": "2025-06-02T19:33:01.317Z",
+            "emoji": "🧘"
+        }
+    ],
+    "activities": [
+        {
+            "habitId": 0,
+            "completedAt": "2025-07-09T22:20:22.562Z"
+        },
+        {
+            "habitId": 1,
+            "completedAt": "2025-06-02T21:20:22.562Z"
+        }
+    ]
+}
