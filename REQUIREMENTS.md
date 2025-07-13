@@ -1,41 +1,5 @@
 # Organise App - Requirements & Progress
 
-## Current Features ✅
-
-### Core Habit Management
-- [x] Users can create new habits with custom names
-- [x] Users can delete habits with swipe actions
-- [x] Data is persisted locally with SwiftData
-- [x] Habit are listed with creation date sorting
-- [x] Users can mark habits as completed/uncompleted
-- [x] Users can view habits list per day
-- [x] Users can view habits details
-- [x] Users can view habits statistics
-- [x] Users can view habits history
-- [x] Users can view habits settings
-
-### Daily Tracking
-- [x] Users can tap to mark habits as completed/uncompleted
-- [x] Users see visual feedback with strikethrough for completed habits
-- [x] Users can use a date picker to view different days
-- [x] Users can track completion status per day
-
-### UI/UX Features
-- [x] AI-suggested emojis via Claude API
-- [x] Custom emoji picker for habit icons
-- [x] Loading states while AI generates emojis
-- [x] Sample data for testing/preview
-- [x] Clean, minimal interface design
-
-### Technical Foundation
-- [x] SwiftUI frontend
-- [x] SwiftData backend persistence
-- [x] MVVM architecture
-- [x] Claude API integration
-- [x] Schema versioning support
-
----
-
 ## In Progress Features 🚧
 
 ### Bug Fixes & Improvements
@@ -184,3 +148,37 @@
 - [ ] Performance testing
 - [ ] Accessibility testing
 - [ ] Beta testing program
+
+## Current Features ✅
+
+### Core Habit Management
+- [x] Users can create new habits with custom names
+- [x] Users can delete habits with swipe actions
+- [x] Data is persisted locally with SwiftData
+- [x] Habit are listed with creation date sorting
+- [x] Users can mark habits as completed/uncompleted
+- [x] Users can view habits list per day
+- [x] Users can view habits details
+- [x] Users can view habits statistics
+- [x] Users can view habits history
+- [x] Users can view habits settings
+
+### Daily Tracking
+- [x] Users can tap to mark habits as completed/uncompleted
+- [x] Users see visual feedback with strikethrough for completed habits
+- [x] Users can use a date picker to view different days
+- [x] Users can track completion status per day
+
+### UI/UX Features
+- [x] AI-suggested emojis via Claude API
+- [x] Custom emoji picker for habit icons
+- [x] Loading states while AI generates emojis
+- [x] Sample data for testing/preview
+- [x] Clean, minimal interface design
+
+### Technical Foundation
+- [x] SwiftUI frontend
+- [x] SwiftData backend persistence
+- [x] MVVM architecture
+- [x] Claude API integration
+- [x] Schema versioning support
