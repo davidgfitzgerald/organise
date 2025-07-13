@@ -4,7 +4,8 @@
 
 ### Bug Fixes & Improvements
 - [x] Fix TextField dismissal issue in HabitForm
-- [ ] Improve error handling for Claude API calls
+- [x] Improve error handling for Claude API calls
+- [ ] Validate emoji unicode values
 - [ ] Add loading states for better UX
 - [ ] Optimize sample data loading
 - [ ] Allow users to pick more/all emojis
