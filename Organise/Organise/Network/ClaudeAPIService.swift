@@ -14,6 +14,7 @@ enum ClaudeAPIError: LocalizedError {
     case rateLimitExceeded
     case serverError(String)
     case invalidEmojiResponse
+    case invalidEmojiUnicode
     
     var errorDescription: String? {
         switch self {
@@ -29,6 +30,8 @@ enum ClaudeAPIError: LocalizedError {
             return "Server error: \(message)"
         case .invalidEmojiResponse:
             return "Failed to generate emoji. Using default emoji instead."
+        case .invalidEmojiUnicode:
+            return "Invalid emoji received from API. Using default emoji instead."
         }
     }
 }
@@ -46,6 +49,18 @@ struct ClaudeAPIService {
     static let baseURL = URL(string: "https://api.anthropic.com/v1")!
     static let messagesEndpoint = baseURL.appendingPathComponent("messages")
     
+    static func validateEmoji(_ character: Character) -> Character {
+        guard !character.isWhitespace else { return "❓" }
+        
+        // If it's a valid emoji, return it
+        if character.isEmoji {
+            return character
+        }
+        
+        // If not valid, return a fallback emoji
+        return "❓"
+    }
+
     static func createRequest() throws -> URLRequest {
         // Validate API key
         guard !claudeAPIKey.isEmpty else {
@@ -88,10 +103,10 @@ struct ClaudeAPIService {
         return try await URLSession.shared.data(for: request)
     }
 
-    static func suggestEmoji(for name: String) async throws -> String {
+    static func suggestEmoji(for name: String) async throws -> Character {
         do {
             let (data, response) = try await prompt(content:
-                "Suggest the best emoji for depicting \(name). Favour emojis that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with only the single emoji character.", maxTokens: 10
+                "Suggest the best emoji for depicting \(name). Favour emojis that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with only the single emoji character.", maxTokens: 1
             )
 
             // Check HTTP response status
@@ -117,10 +132,16 @@ struct ClaudeAPIService {
                let firstContent = content.first,
                let text = firstContent["text"] as? String,
                !text.isEmpty {
+                let character = text.first!
                 
-                let trimmedText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-                print("Emoji received: \(trimmedText)")
-                return trimmedText
+                print("Character received: \(character)")
+                
+                // Validate the emoji
+                let emoji = validateEmoji(character)
+
+                
+                print("Validated emoji: \(emoji)")
+                return emoji
             } else {
                 print("Failed to parse emoji from response")
                 throw ClaudeAPIError.invalidEmojiResponse
@@ -135,7 +156,7 @@ struct ClaudeAPIService {
         }
     }
     
-    static func suggestEmojiWithRetry(for name: String, maxRetries: Int = 2) async throws -> String {
+    static func suggestEmojiWithRetry(for name: String, maxRetries: Int = 2) async throws -> Character {
         var lastError: Error?
         
         for attempt in 1...maxRetries {
@@ -147,7 +168,7 @@ struct ClaudeAPIService {
                 // Don't retry on certain errors
                 if let claudeError = error as? ClaudeAPIError {
                     switch claudeError {
-                    case .missingAPIKey, .invalidResponse, .invalidEmojiResponse:
+                    case .missingAPIKey, .invalidResponse, .invalidEmojiResponse, .invalidEmojiUnicode:
                         throw claudeError // Don't retry these
                     default:
                         break // Retry other errors

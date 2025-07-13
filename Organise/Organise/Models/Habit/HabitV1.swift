@@ -12,7 +12,7 @@ class HabitV1: Identifiable {
     var name: String
     var createdAt: Date
     var isLoadingEmoji: Bool
-    var emoji: String = "?"
+    var emoji: String = "?"  // TODO make this a character?
     @Relationship(deleteRule: .cascade, inverse: \ActivityV1.habit)
     var activities: [ActivityV1] = []
     

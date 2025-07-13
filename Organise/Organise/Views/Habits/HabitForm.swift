@@ -62,7 +62,7 @@ struct HabitForm: View {
                     let suggestedEmoji = try await ClaudeAPIService.suggestEmojiWithRetry(for: habitName)
                     
                     await MainActor.run {
-                        habit.emoji = suggestedEmoji
+                        habit.emoji = String(suggestedEmoji)
                         habit.isLoadingEmoji = false
                     }
                 } catch let claudeError as ClaudeAPIError {
