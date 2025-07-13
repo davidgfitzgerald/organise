@@ -31,7 +31,6 @@ enum AppSchemaV1: VersionedSchema {
             self.createdAt = Date()
             self.isLoadingEmoji = false
             self.emoji = emoji
-            print("Habit \(name) created")
         }
         
         func activity(for day: Date) -> Activity? {

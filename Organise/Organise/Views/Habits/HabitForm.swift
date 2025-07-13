@@ -38,7 +38,7 @@ struct HabitForm: View {
                     Task {
                         do {
                             habit.isLoadingEmoji = true
-                            print("About to create habit with name: '\(habitName)'")
+                            print("Creating habit: '\(habitName)'")
                             let suggestedEmoji = try await ClaudeAPIService.suggestEmoji(for: habitName)
                             await MainActor.run {
                                 habit.emoji = suggestedEmoji
