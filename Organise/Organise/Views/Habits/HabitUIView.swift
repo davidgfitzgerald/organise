@@ -388,26 +388,24 @@ struct DateHeaderView: View {
     var body: some View {
         // Date Selection
         HStack(spacing: 16) {
-            HStack {
-                DatePicker(
-                    "Select date",
-                    selection: $selectedDate,
-                    displayedComponents: .date
-                )
-                    // Workaround to dismiss calendar
-                    // upon date selection.
-                    .id(calendarId)
-                    .onChange(of: selectedDate) { oldValue, newValue in
-                        let components = Calendar.current.dateComponents([.year, .month], from: oldValue, to: newValue)
-                        guard components.year == 0 && components.month == 0 else {
-                            return
-                        }
-                        calendarId += 1
+            DatePicker(
+                "Select date",
+                selection: $selectedDate,
+                displayedComponents: .date
+            )
+                // Workaround to dismiss calendar
+                // upon date selection.
+                .id(calendarId)
+                .onChange(of: selectedDate) { oldValue, newValue in
+                    let components = Calendar.current.dateComponents([.year, .month], from: oldValue, to: newValue)
+                    guard components.year == 0 && components.month == 0 else {
+                        return
                     }
-                    .datePickerStyle(.compact)
-                    .labelsHidden()
+                    calendarId += 1
+                }
+                .datePickerStyle(.compact)
+                .labelsHidden()
 
-            }
 
             Text("Today")
                 .font(.caption)
@@ -444,7 +442,7 @@ struct DateHeaderView: View {
 // MARK: - Main UI View
 struct HabitUIView: View {
     @StateObject private var habitData = HabitData()
-    @State private var selectedDate = Date()
+    @State private var selectedDate: Date = .now
     @State private var showDatePicker = false
     
     var body: some View {
