@@ -2,14 +2,6 @@
 
 ## In Progress Features 🚧
 
-### Bug Fixes & Improvements
-- [x] Fix TextField dismissal issue in HabitForm
-- [x] Improve error handling for Claude API calls
-- [x] Validate emoji unicode values
-- [ ] Add loading states for better UX
-- [ ] Optimize sample data loading
-- [ ] Allow users to pick more/all emojis
-
 ### Basic Statistics
 - [ ] Add streak counting logic
 - [ ] Show current streak for each habit
@@ -26,6 +18,14 @@
 ---
 
 ## Upcoming Features 📋
+
+### Bug Fixes & Improvements
+- [x] Fix TextField dismissal issue in HabitForm
+- [x] Improve error handling for Claude API calls
+- [x] Validate emoji unicode values
+- [ ] Add loading states for better UX
+- [ ] Optimize sample data loading
+- [ ] Allow users to pick more/all emojis
 
 #### Streak Tracking
 - [ ] Show current streak for each habit
