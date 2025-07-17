@@ -434,7 +434,7 @@ struct DateHeaderView: View {
         .padding(.horizontal, 20)
         .padding(.vertical, 20)
         .background(
-            Color(.systemGray5)
+            Color(.systemGray6)
                 .opacity(0.7)
                 .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
         )
