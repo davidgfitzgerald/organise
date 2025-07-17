@@ -369,6 +369,7 @@ struct RoundedCorner: Shape {
 // MARK: - Date Header View
 struct DateHeaderView: View {
     @Binding var selectedDate: Date
+    @State var showCalendar = false
 
     // Hack to get DatePicker to dismiss
     @State private var calendarId: Int = 0
@@ -388,23 +389,36 @@ struct DateHeaderView: View {
     var body: some View {
         // Date Selection
         HStack(spacing: 16) {
-            DatePicker(
-                "Select date",
-                selection: $selectedDate,
-                displayedComponents: .date
-            )
-                // Workaround to dismiss calendar
-                // upon date selection.
-                .id(calendarId)
-                .onChange(of: selectedDate) { oldValue, newValue in
-                    let components = Calendar.current.dateComponents([.year, .month], from: oldValue, to: newValue)
-                    guard components.year == 0 && components.month == 0 else {
-                        return
-                    }
-                    calendarId += 1
+            
+            // From https://stackoverflow.com/a/78116229
+            Button(action: {
+                showCalendar = true
+            }, label: {
+                HStack {
+                    Image(systemName: "calendar")
+                        .foregroundColor(.primary)
+                    Text(selectedDate, style: .date)
+                        .foregroundColor(.primary)
                 }
-                .datePickerStyle(.compact)
-                .labelsHidden()
+                .padding()
+                .background(Color(.systemGray5))
+                .cornerRadius(10)
+
+            })
+            .popover(isPresented: $showCalendar) {
+                DatePicker(
+                    "Select date",
+                    selection: $selectedDate,
+                    displayedComponents: .date
+                )
+                .datePickerStyle(.graphical)
+                .padding()
+                .frame(width: 365, height: 365)
+                .presentationCompactAdaptation(.popover)
+            }
+            .onChange(of: selectedDate) { _, _ in
+                showCalendar = false
+            }
 
 
             Text("Today")
