@@ -259,7 +259,7 @@ struct HabitRowView: View {
                     .font(.title3)
                     .foregroundColor(habit.color)
                     .scaleEffect(isCompleted ? 1.1 : 1.0)
-                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCompleted)
+                    .animation(.easeInOut(duration: 0.3), value: isCompleted)
             }
             
             // Habit Name and Streak
@@ -294,7 +294,7 @@ struct HabitRowView: View {
             
             // Completion Toggle with enhanced animation
             Button(action: {
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.6)) {
+                withAnimation(.easeIn(duration: 0.3)) {
                     onToggle()
                 }
             }) {
@@ -333,7 +333,7 @@ struct HabitRowView: View {
                 )
         )
         .scaleEffect(isPressed ? 0.98 : 1.0)
-        .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isPressed)
+        .animation(.easeInOut(duration: 0.3), value: isPressed)
         
     }
 }
