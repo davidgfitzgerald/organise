@@ -13,13 +13,22 @@ import SwiftData
 struct ContentView: View {
     @State private var date = Date()
     @State private var showingPicker: Bool = false
-    @State private var selectedTab = "Habits"
+    @State var selectedTab = "Habits"
     
     var body: some View {
-        Text("Habits")
-            .font(.title)
-        DatePickerView(date: $date, showing: $showingPicker)
-        HabitsList(date: $date)
+        
+        TabView(selection: $selectedTab) {
+            Tab("Habits", systemImage: "list.bullet", value: "Habits") {
+                Text("Habits")
+                    .font(.title)
+                DatePickerView(date: $date, showing: $showingPicker)
+                HabitsList(date: $date)
+            }
+            Tab("Experiments", systemImage: "testtube.2" , value: "Experiments") {
+                HabitUIView()
+            }
+        }
+
     }
 }
 
@@ -28,14 +37,4 @@ struct ContentView: View {
         .withSampleData()
 }
 
-//        TabView(selection: $selectedTab) {
-//            Tab("Habits", systemImage: "list.bullet", value: "Habits") {
 
-//            }
-//            Tab("Activities", systemImage: "figure.run" , value: "Activities") {
-//                Text("Activities")
-//                    .font(.title)
-//                DatePickerView(date: $date, showing: $showingPicker)
-//                ActivityDayList(date: $date)
-//            }
-//        }

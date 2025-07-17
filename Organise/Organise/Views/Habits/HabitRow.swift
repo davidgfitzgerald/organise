@@ -65,6 +65,11 @@ struct HabitRow: View {
 }
 
 #Preview {
+    HabitsList(date: .constant(Date()))
+        .withSampleData()
+}
+
+#Preview {
     PreviewHelper.createSampleData()
     let context = ModelContext(container)
     
