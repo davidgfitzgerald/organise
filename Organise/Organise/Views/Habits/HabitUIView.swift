@@ -8,7 +8,7 @@
 import SwiftUI
 
 // MARK: - Models
-struct HabitExperiment: Identifiable {
+struct HabitModel: Identifiable {
     let id = UUID()
     let name: String
     let icon: String
@@ -26,15 +26,15 @@ struct HabitCompletion: Identifiable {
 
 // MARK: - Sample Data
 class HabitData: ObservableObject {
-    @Published var habits: [HabitExperiment] = [
-        HabitExperiment(name: "Drink Water", icon: "drop.fill", color: .blue, maxStreak: 45, currentStreak: 12),
-        HabitExperiment(name: "Exercise", icon: "figure.run", color: .green, maxStreak: 28, currentStreak: 5),
-        HabitExperiment(name: "Read", icon: "book.fill", color: .purple, maxStreak: 67, currentStreak: 23),
-        HabitExperiment(name: "Meditate", icon: "leaf.fill", color: .mint, maxStreak: 31, currentStreak: 8),
-        HabitExperiment(name: "Journal", icon: "pencil", color: .orange, maxStreak: 22, currentStreak: 0),
-        HabitExperiment(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3),
-        HabitExperiment(name: "Fishing", icon: "fish.fill", color: .red, maxStreak: 3, currentStreak: 3),
-        HabitExperiment(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", color: .green, maxStreak: 3, currentStreak: 3)
+    @Published var habits: [HabitModel] = [
+        HabitModel(name: "Drink Water", icon: "drop.fill", color: .blue, maxStreak: 45, currentStreak: 12),
+        HabitModel(name: "Exercise", icon: "figure.run", color: .green, maxStreak: 28, currentStreak: 5),
+        HabitModel(name: "Read", icon: "book.fill", color: .purple, maxStreak: 67, currentStreak: 23),
+        HabitModel(name: "Meditate", icon: "leaf.fill", color: .mint, maxStreak: 31, currentStreak: 8),
+        HabitModel(name: "Journal", icon: "pencil", color: .orange, maxStreak: 22, currentStreak: 0),
+        HabitModel(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3),
+        HabitModel(name: "Fishing", icon: "fish.fill", color: .red, maxStreak: 3, currentStreak: 3),
+        HabitModel(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", color: .green, maxStreak: 3, currentStreak: 3)
     ]
     
     @Published var completions: [HabitCompletion] = []
@@ -116,7 +116,9 @@ class HabitData: ObservableObject {
         let completedHabits = habits.filter { isHabitCompleted(habitId: $0.id, date: Date()) }.count
         return Double(completedHabits) / Double(totalHabits)
     }
-}// MARK: - Custom Progress Ring
+}
+
+// MARK: - Custom Progress Ring
 struct ProgressRing: View {
     let progress: Double
     let color: Color
@@ -137,7 +139,9 @@ struct ProgressRing: View {
                 .animation(.easeInOut(duration: 0.8), value: progress)
         }
     }
-}// MARK: - Streak Indicator View
+}
+
+// MARK: - Streak Indicator View
 struct StreakIndicator: View {
     let streak: Int
     let maxStreak: Int
@@ -149,10 +153,19 @@ struct StreakIndicator: View {
                 Image(systemName: "flame.fill")
                     .font(.caption2)
                     .foregroundColor(.orange)
-                Text("\(streak)")
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundColor(.primary)
+                HStack(spacing: 0) {
+                    Text("\(streak) ")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.primary)
+                        .contentTransition(.numericText())
+                    Text("/ \(maxStreak)")
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .foregroundColor(.secondary)
+                        .contentTransition(.numericText())
+                    
+                }
             }
             
             // Mini progress bar
@@ -238,7 +251,7 @@ struct PlusToCheckmarkShape: Shape {
 
 // MARK: - Enhanced Habit Row View
 struct HabitRowView: View {
-    let habit: HabitExperiment
+    let habit: HabitModel
     let isCompleted: Bool
     let onToggle: () -> Void
     @State private var isPressed = false
@@ -351,6 +364,7 @@ struct RoundedCorner: Shape {
         return Path(path.cgPath)
     }
 }
+
 
 // MARK: - Date Header View
 struct DateHeaderView: View {

@@ -16,19 +16,7 @@ struct ContentView: View {
     @State var selectedTab = "Habits"
     
     var body: some View {
-        
-        TabView(selection: $selectedTab) {
-            Tab("Habits", systemImage: "list.bullet", value: "Habits") {
-                Text("Habits")
-                    .font(.title)
-                DatePickerView(date: $date, showing: $showingPicker)
-                HabitsList(date: $date)
-            }
-            Tab("Experiments", systemImage: "testtube.2" , value: "Experiments") {
-                HabitUIView()
-            }
-        }
-
+        HabitUIView()
     }
 }
 
