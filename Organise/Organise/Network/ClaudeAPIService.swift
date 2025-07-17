@@ -106,7 +106,7 @@ struct ClaudeAPIService {
     static func suggestEmoji(for name: String) async throws -> Character {
         do {
             let (data, response) = try await prompt(content:
-                "Suggest the best emoji for depicting \(name). Favour emojis that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with only the single emoji character.", maxTokens: 1
+                "Suggest the best emoji for depicting \(name). Favour emojis that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with only the single emoji character.", maxTokens: 10
             )
 
             // Check HTTP response status
