@@ -32,7 +32,9 @@ class HabitData: ObservableObject {
         HabitExperiment(name: "Read", icon: "book.fill", color: .purple, maxStreak: 67, currentStreak: 23),
         HabitExperiment(name: "Meditate", icon: "leaf.fill", color: .mint, maxStreak: 31, currentStreak: 8),
         HabitExperiment(name: "Journal", icon: "pencil", color: .orange, maxStreak: 22, currentStreak: 0),
-        HabitExperiment(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3)
+        HabitExperiment(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3),
+        HabitExperiment(name: "Fishing", icon: "fish.fill", color: .red, maxStreak: 3, currentStreak: 3),
+        HabitExperiment(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", color: .green, maxStreak: 3, currentStreak: 3)
     ]
     
     @Published var completions: [HabitCompletion] = []
