@@ -309,14 +309,9 @@ struct HabitRowView: View {
                     
                     PlusToCheckmarkShape(progress: isCompleted ? 1 : 0)
                         .stroke(isCompleted ? .white : .gray, lineWidth: 3)
-//                        .font(.system(size: 18, weight: .semibold))
                         .frame(width: 44, height: 44)
                         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isCompleted)
                 }
-//                PlusToCheckmarkShape(progress: isCompleted ? 1 : 0)
-//                    .stroke(isCompleted ? Color.green : Color.gray, lineWidth: 2)
-//                    .frame(width: 44, height: 44)
-//                    .padding()
             }
             .buttonStyle(.plain)
             .scaleEffect(isPressed ? 0.95 : 1.0)
@@ -326,12 +321,11 @@ struct HabitRowView: View {
                 }
             }, perform: {})
         }
-
         .padding(.vertical, 16)
         .padding(.horizontal, 20)
         .background(
             RoundedRectangle(cornerRadius: 16)
-                .fill(Color(.systemBackground))
+                .fill(isCompleted ? habit.color.opacity(0.1) : Color(.systemBackground))
                 .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 16)
