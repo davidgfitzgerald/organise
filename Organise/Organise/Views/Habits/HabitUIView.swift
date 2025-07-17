@@ -388,36 +388,31 @@ struct DateHeaderView: View {
     var body: some View {
         // Date Selection
         HStack(spacing: 16) {
-            HStack(spacing: 8) {
-                HStack(spacing: 6) {
-                    DatePicker(
-                        "Select date",
-                        selection: $selectedDate,
-                        displayedComponents: .date
-                    )
-                        // Workaround to dismiss calendar
-                        // upon date selection.
-                        .id(calendarId)
-                        .onChange(of: selectedDate) { oldValue, newValue in
-                            let components = Calendar.current.dateComponents([.year, .month], from: oldValue, to: newValue)
-                            guard components.year == 0 && components.month == 0 else {
-                                return
-                            }
-                            calendarId += 1
+            HStack {
+                DatePicker(
+                    "Select date",
+                    selection: $selectedDate,
+                    displayedComponents: .date
+                )
+                    // Workaround to dismiss calendar
+                    // upon date selection.
+                    .id(calendarId)
+                    .onChange(of: selectedDate) { oldValue, newValue in
+                        let components = Calendar.current.dateComponents([.year, .month], from: oldValue, to: newValue)
+                        guard components.year == 0 && components.month == 0 else {
+                            return
                         }
-                        .datePickerStyle(.compact)
-                        .labelsHidden()
+                        calendarId += 1
+                    }
+                    .datePickerStyle(.compact)
+                    .labelsHidden()
 
-                }
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .clipShape(Capsule())
-
-                Text("Today")
-                    .font(.caption)
-                    .foregroundColor(.orange)
-                    .opacity(isToday ? 1 : 0)
             }
+
+            Text("Today")
+                .font(.caption)
+                .foregroundColor(.orange)
+                .opacity(isToday ? 1 : 0)
             
             Spacer()
             
