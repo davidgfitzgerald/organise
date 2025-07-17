@@ -291,9 +291,7 @@ struct HabitRowView: View {
             }
             
             Spacer()
-            
-
-            
+                        
             // Completion Toggle with enhanced animation
             Button(action: {
                 withAnimation(.easeIn(duration: 0.3)) {
@@ -340,9 +338,27 @@ struct HabitRowView: View {
     }
 }
 
+struct RoundedCorner: Shape {
+    var radius: CGFloat = .infinity
+    var corners: UIRectCorner = .allCorners
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
+    }
+}
+
 // MARK: - Date Header View
 struct DateHeaderView: View {
     @Binding var selectedDate: Date
+
+    // Hack to get DatePicker to dismiss
+    @State private var calendarId: Int = 0
+
     let completionPercentage: Double
     
     private var dateFormatter: DateFormatter {
@@ -356,60 +372,67 @@ struct DateHeaderView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            // Date Selection
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(isToday ? "Today" : dateFormatter.string(from: selectedDate))
-                        .font(.title2)
+        // Date Selection
+        HStack(spacing: 16) {
+            HStack(spacing: 8) {
+                HStack(spacing: 6) {
+                    DatePicker(
+                        "Select date",
+                        selection: $selectedDate,
+                        displayedComponents: .date
+                    )
+                        // Workaround to dismiss calendar
+                        // upon date selection.
+                        .id(calendarId)
+                        .onChange(of: selectedDate) { oldValue, newValue in
+                            let components = Calendar.current.dateComponents([.year, .month], from: oldValue, to: newValue)
+                            guard components.year == 0 && components.month == 0 else {
+                                return
+                            }
+                            calendarId += 1
+                        }
+                        .datePickerStyle(.compact)
+                        .labelsHidden()
+
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .clipShape(Capsule())
+
+                Text("Today")
+                    .font(.caption)
+                    .foregroundColor(.orange)
+                    .opacity(isToday ? 1 : 0)
+            }
+            
+            Spacer()
+            
+            // Overall Progress Ring
+            ZStack {
+                ProgressRing(progress: completionPercentage, color: .green, lineWidth: 4, size: 50)
+                
+                VStack(spacing: 0) {
+                    Text("\(Int(completionPercentage * 100))%")
+                        .font(.caption)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
-                    
-                    if !isToday {
-                        Text("Tap to change date")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
+                    Text("done")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
                 }
-                
-                Spacer()
-                
-                // Overall Progress Ring
-                ZStack {
-                    ProgressRing(progress: completionPercentage, color: .green, lineWidth: 4, size: 50)
-                    
-                    VStack(spacing: 0) {
-                        Text("\(Int(completionPercentage * 100))%")
-                            .font(.caption)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                        Text("done")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
-            .padding(.horizontal, 20)
-            
-            // Date Picker (hidden by default, shown when tapped)
-            if !isToday {
-                DatePicker(
-                    "Select Date",
-                    selection: $selectedDate,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.compact)
-                .padding(.horizontal, 20)
             }
         }
+        .padding(.horizontal, 20)
         .padding(.vertical, 20)
         .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(Color(.systemGray6))
+            Color(.systemGray5)
                 .opacity(0.7)
+                .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
         )
     }
-}// MARK: - Main UI View
+}
+
+// MARK: - Main UI View
 struct HabitUIView: View {
     @StateObject private var habitData = HabitData()
     @State private var selectedDate = Date()
@@ -429,22 +452,11 @@ struct HabitUIView: View {
                             }
                         }
                     }
-                
-                // Show date picker when not today or when toggled
-                if showDatePicker && Calendar.current.isDateInToday(selectedDate) {
-                    DatePicker(
-                        "Select Date",
-                        selection: $selectedDate,
-                        displayedComponents: .date
-                    )
-                    .datePickerStyle(.compact)
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 16)
-                    .background(Color(.systemGray6))
-                    .transition(.move(edge: .top).combined(with: .opacity))
-                }
-                
-                // Habits List with enhanced spacing
+
+                Divider()
+                    .shadow(color: Color.black.opacity(0.05), radius: 4, y: 2)
+
+                // Habits List
                 ScrollView {
                     LazyVStack(spacing: 16) {
                         ForEach(habitData.habits) { habit in
