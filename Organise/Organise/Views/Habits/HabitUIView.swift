@@ -4,37 +4,19 @@
 //
 //  Created by David Fitzgerald on 17/07/2025.
 //
-
 import SwiftUI
-
-// MARK: - Models
-struct HabitModel: Identifiable {
-    let id = UUID()
-    let name: String
-    let icon: String
-    let color: Color
-    var maxStreak: Int
-    var currentStreak: Int
-}
-
-struct HabitCompletion: Identifiable {
-    let id = UUID()
-    let habitId: UUID
-    let date: Date
-    var isCompleted: Bool
-}
 
 // MARK: - Sample Data
 class HabitData: ObservableObject {
-    @Published var habits: [HabitModel] = [
-        HabitModel(name: "Drink Water", icon: "drop.fill", color: .blue, maxStreak: 45, currentStreak: 12),
-        HabitModel(name: "Exercise", icon: "figure.run", color: .green, maxStreak: 28, currentStreak: 5),
-        HabitModel(name: "Read", icon: "book.fill", color: .purple, maxStreak: 67, currentStreak: 23),
-        HabitModel(name: "Meditate", icon: "leaf.fill", color: .mint, maxStreak: 31, currentStreak: 8),
-        HabitModel(name: "Journal", icon: "pencil", color: .orange, maxStreak: 22, currentStreak: 0),
-        HabitModel(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3),
-        HabitModel(name: "Fishing", icon: "fish.fill", color: .red, maxStreak: 3, currentStreak: 3),
-        HabitModel(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", color: .green, maxStreak: 3, currentStreak: 3)
+    @Published var habits: [Habit] = [
+        Habit(name: "Drink Water", icon: "drop.fill", color: .blue, maxStreak: 45, currentStreak: 12),
+        Habit(name: "Exercise", icon: "figure.run", color: .green, maxStreak: 28, currentStreak: 5),
+        Habit(name: "Read", icon: "book.fill", color: .purple, maxStreak: 67, currentStreak: 23),
+        Habit(name: "Meditate", icon: "leaf.fill", color: .mint, maxStreak: 31, currentStreak: 8),
+        Habit(name: "Journal", icon: "pencil", color: .orange, maxStreak: 22, currentStreak: 0),
+        Habit(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3),
+        Habit(name: "Fishing", icon: "fish.fill", color: .red, maxStreak: 3, currentStreak: 3),
+        Habit(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", color: .green, maxStreak: 3, currentStreak: 3)
     ]
     
     @Published var completions: [HabitCompletion] = []
@@ -118,29 +100,6 @@ class HabitData: ObservableObject {
     }
 }
 
-// MARK: - Custom Progress Ring
-struct ProgressRing: View {
-    let progress: Double
-    let color: Color
-    let lineWidth: CGFloat
-    let size: CGFloat
-    
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(color.opacity(0.2), lineWidth: lineWidth)
-                .frame(width: size, height: size)
-            
-            Circle()
-                .trim(from: 0, to: progress)
-                .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
-                .frame(width: size, height: size)
-                .rotationEffect(.degrees(-90))
-                .animation(.easeInOut(duration: 0.8), value: progress)
-        }
-    }
-}
-
 // MARK: - Streak Indicator View
 struct StreakIndicator: View {
     let streak: Int
@@ -220,7 +179,7 @@ struct PlusToCheckmarkShape: Shape {
         }
 
         if progress < 0.5 {
-            // Draw full plus lines, fade out toward check
+            // Draw plus symbol lines, fade out toward check
             let pVStart = interp(plusVStart, checkStart)
             let pVEnd   = interp(plusVEnd,   checkMid)
             let pHStart = interp(plusHStart, checkMid)
@@ -232,7 +191,7 @@ struct PlusToCheckmarkShape: Shape {
             path.move(to: pHStart)
             path.addLine(to: pHEnd)
         } else {
-            // Morph into continuous checkmark
+            // Morph from plus symbol into checkmark
             let p1 = interp(plusVStart, checkStart)
             let p2 = interp(plusVEnd,   checkMid)
             let p3 = interp(plusHEnd,   checkEnd)
@@ -243,111 +202,6 @@ struct PlusToCheckmarkShape: Shape {
         }
 
         return path
-    }
-}
-
-
-
-
-// MARK: - Enhanced Habit Row View
-struct HabitRowView: View {
-    let habit: HabitModel
-    let isCompleted: Bool
-    let onToggle: () -> Void
-    @State private var isPressed = false
-    
-    @Namespace private var iconNamespace
-    
-    var body: some View {
-        HStack(spacing: 16) {
-            // Habit Icon with animated background
-            ZStack {
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(habit.color.opacity(isCompleted ? 0.3 : 0.15))
-                    .frame(width: 48, height: 48)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(habit.color.opacity(0.3), lineWidth: 1)
-                    )
-                
-                Image(systemName: habit.icon)
-                    .font(.title3)
-                    .foregroundColor(habit.color)
-                    .scaleEffect(isCompleted ? 1.1 : 1.0)
-                    .animation(.easeInOut(duration: 0.3), value: isCompleted)
-            }
-            
-            // Habit Name and Streak
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(habit.name)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.primary)
-                    
-                HStack {
-                    StreakIndicator(streak: habit.currentStreak, maxStreak: habit.maxStreak, color: habit.color)
-                    // PB Badge
-                    if habit.currentStreak == habit.maxStreak && habit.maxStreak > 0 {
-                        Text("PB")
-                            .font(.caption2)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.orange)
-                            )
-                            .scaleEffect(0.9)
-                    }
-                }
-            }
-            
-            Spacer()
-                        
-            // Completion Toggle with enhanced animation
-            Button(action: {
-                withAnimation(.easeIn(duration: 0.3)) {
-                    onToggle()
-                }
-            }) {
-                ZStack {
-                    Circle()
-                        .fill(isCompleted ? habit.color : Color.clear)
-                        .frame(width: 44, height: 44)
-                        .overlay(
-                            Circle()
-                                .stroke(isCompleted ? habit.color : Color.gray.opacity(0.4), lineWidth: 2)
-                        )
-                    
-                    PlusToCheckmarkShape(progress: isCompleted ? 1 : 0)
-                        .stroke(isCompleted ? .white : .gray, lineWidth: 3)
-                        .frame(width: 44, height: 44)
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isCompleted)
-                }
-            }
-            .buttonStyle(.plain)
-            .scaleEffect(isPressed ? 0.95 : 1.0)
-            .onLongPressGesture(minimumDuration: 0, maximumDistance: .infinity, pressing: { pressing in
-                withAnimation(.easeInOut(duration: 0.1)) {
-                    isPressed = pressing
-                }
-            }, perform: {})
-        }
-        .padding(.vertical, 16)
-        .padding(.horizontal, 20)
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(isCompleted ? habit.color.opacity(0.1) : Color(.systemBackground))
-                .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 2)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(habit.color.opacity(isCompleted ? 0.5 : 0.1), lineWidth: 3)
-                )
-        )
-        .scaleEffect(isPressed ? 0.98 : 1.0)
-        .animation(.easeInOut(duration: 0.3), value: isPressed)
-        
     }
 }
 
@@ -362,94 +216,6 @@ struct RoundedCorner: Shape {
             cornerRadii: CGSize(width: radius, height: radius)
         )
         return Path(path.cgPath)
-    }
-}
-
-
-// MARK: - Date Header View
-struct DateHeaderView: View {
-    @Binding var selectedDate: Date
-    @State var showCalendar = false
-
-    // Hack to get DatePicker to dismiss
-    @State private var calendarId: Int = 0
-
-    let completionPercentage: Double
-    
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .full
-        return formatter
-    }
-    
-    private var isToday: Bool {
-        Calendar.current.isDateInToday(selectedDate)
-    }
-    
-    var body: some View {
-        // Date Selection
-        HStack(spacing: 16) {
-            
-            // From https://stackoverflow.com/a/78116229
-            Button(action: {
-                showCalendar = true
-            }, label: {
-                HStack {
-                    Image(systemName: "calendar")
-                        .foregroundColor(.primary)
-                    Text(selectedDate, style: .date)
-                        .foregroundColor(.primary)
-                }
-                .padding()
-                .background(Color(.systemGray5))
-                .cornerRadius(10)
-
-            })
-            .popover(isPresented: $showCalendar) {
-                DatePicker(
-                    "Select date",
-                    selection: $selectedDate,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.graphical)
-                .padding()
-                .frame(width: 365, height: 365)
-                .presentationCompactAdaptation(.popover)
-            }
-            .onChange(of: selectedDate) { _, _ in
-                showCalendar = false
-            }
-
-
-            Text("Today")
-                .font(.caption)
-                .foregroundColor(.orange)
-                .opacity(isToday ? 1 : 0)
-            
-            Spacer()
-            
-            // Overall Progress Ring
-            ZStack {
-                ProgressRing(progress: completionPercentage, color: .green, lineWidth: 4, size: 50)
-                
-                VStack(spacing: 0) {
-                    Text("\(Int(completionPercentage * 100))%")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                    Text("done")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                }
-            }
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 20)
-        .background(
-            Color(.systemGray6)
-                .opacity(0.7)
-                .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
-        )
     }
 }
 

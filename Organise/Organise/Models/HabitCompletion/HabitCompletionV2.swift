@@ -8,14 +8,14 @@ import Foundation
 import SwiftData
 
 @Model
-final class ActivityV2 {
+final class HabitCompletionV2 {
+    var id = UUID()
     var habit: HabitV2
     var completedAt: Date
-    var due: Date
+    var isCompleted: Bool
     
-    init(habit: HabitV2, completedAt: Date, due: Date = Date()) {
+    init(habit: HabitV2, completedAt: Date) {
         self.habit = habit
         self.completedAt = completedAt
-        self.due = Calendar.current.startOfDay(for: due)
     }
 }

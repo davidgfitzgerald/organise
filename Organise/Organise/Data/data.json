@@ -1,25 +1,61 @@
 {
     "habits": [
         {
-            "id": 0,
-            "name": "Exercise",
+            "id": "196797F2-63F1-4F78-BACA-400EC8FD1B56",
+            "name": "Drink Water",
             "createdAt": "2025-06-02T19:32:01.317Z",
-            "emoji": "💪"
+            "icon": "drop.fill",
+            "color": ".blue",
+            "maxStreak": 45,
+            "currentStreak": 22,
         },
         {
-            "id": 1,
-            "name": "Read",
+            "id": "DCDB9A8F-7700-457E-AE8E-0001AB8821F3",
+            "name": "Exercise",
             "createdAt": "2025-06-02T19:34:01.317Z",
-            "emoji": "📚"
+            "icon": "figure.run",
+            "color": ".green",
+            "maxStreak": 28,
+            "currentStreak": 5,
         },
         {
-            "id": 2,
+            "id": "A3F84364-8F99-4CB8-BDC8-18B0AD647AE0",
+            "name": "Read",
+            "createdAt": "2025-06-02T19:33:01.317Z",
+            "icon": "book.fill",
+            "color": ".purple",
+            "maxStreak": 67,
+            "currentStreak": 23,
+        },
+        {
+            "id": "79958818-BD05-4E84-91F4-431313DC44F3",
             "name": "Meditate",
             "createdAt": "2025-06-02T19:33:01.317Z",
-            "emoji": "🧘"
-        }
+            "icon": "leaf.fill",
+            "color": ".mint",
+            "maxStreak": 31,
+            "currentStreak": 8,
+        },
+        {
+            "id": "C6A152BA-BF12-4270-8728-3EB13225E487",
+            "name": "Journal",
+            "createdAt": "2025-06-02T19:33:01.317Z",
+            "icon": "pencil",
+            "color": ".orange",
+            "maxStreak": 22,
+            "currentStreak": 0,
+        },
+        {
+            "id": "9E20E109-EB20-43C5-B452-16266352EF7F",
+            "name": "Sleep 8h",
+            "createdAt": "2025-06-02T19:33:01.317Z",
+            "icon": "bed.double.fill",
+            "color": ".indigo",
+            "maxStreak": 3,
+            "currentStreak": 3,
+        },
     ],
-    "activities": [
+    "completions": [
         {
             "habitId": 0,
             "completedAt": "2025-07-09T22:20:22.562Z"
