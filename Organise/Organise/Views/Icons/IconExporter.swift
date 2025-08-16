@@ -94,14 +94,14 @@ struct IconExporter: View {
         
         guard let uiImage = renderer.uiImage,
               let pngData = uiImage.pngData() else {
-            print("❌ Failed to render \(filename)")
+            AppLogger.error("Failed to render \(filename)")
             return false
         }
         
         // Get Documents directory
         guard let documentsPath = FileManager.default.urls(for: .documentDirectory,
                                                            in: .userDomainMask).first else {
-            print("❌ Could not access Documents directory")
+            AppLogger.error("Could not access Documents directory")
             return false
         }
         
@@ -113,7 +113,7 @@ struct IconExporter: View {
                                                    withIntermediateDirectories: true,
                                                    attributes: nil)
         } catch {
-            print("❌ Could not create AppIcons/\(folderName) folder: \(error)")
+            AppLogger.error("Could not create AppIcons/\(folderName) folder: \(error)")
             return false
         }
         
@@ -122,10 +122,10 @@ struct IconExporter: View {
         
         do {
             try pngData.write(to: fileURL)
-            print("✅ Exported \(filename).png at \(size)×\(size)px to: \(fileURL.path)")
+            AppLogger.success("Exported \(filename).png at \(size)×\(size)px to: \(fileURL.path)")
             return true
         } catch {
-            print("❌ Failed to save \(filename): \(error)")
+            AppLogger.error("Failed to save \(filename): \(error)")
             return false
         }
     }
@@ -234,7 +234,7 @@ struct IconExporterMac: View {
         renderer.scale = 1.0
         
         guard let nsImage = renderer.nsImage else {
-            print("❌ Failed to render \(filename)")
+            AppLogger.error("Failed to render \(filename)")
             return false
         }
         
@@ -242,7 +242,7 @@ struct IconExporterMac: View {
         guard let tiffData = nsImage.tiffRepresentation,
               let bitmap = NSBitmapImageRep(data: tiffData),
               let pngData = bitmap.representation(using: .png, properties: [:]) else {
-            print("❌ Failed to convert \(filename) to PNG")
+            AppLogger.error("Failed to convert \(filename) to PNG")
             return false
         }
         
@@ -251,10 +251,10 @@ struct IconExporterMac: View {
         
         do {
             try pngData.write(to: fileURL)
-            print("✅ Exported \(filename).png to: \(fileURL.path)")
+            AppLogger.success("Exported \(filename).png to: \(fileURL.path)")
             return true
         } catch {
-            print("❌ Failed to save \(filename): \(error)")
+            AppLogger.error("Failed to save \(filename): \(error)")
             return false
         }
     }

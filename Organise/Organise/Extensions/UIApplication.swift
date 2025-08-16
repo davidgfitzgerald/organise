@@ -11,7 +11,7 @@ import UIKit
 /**
  * Make tap gestures cancel the current focus.
  *
- * For example, in the TextField in HabitRow, this is
+ * For example, in a TextField, this is
  * used such that a user can easily dismiss the keyboard.
  */
 extension UIApplication {

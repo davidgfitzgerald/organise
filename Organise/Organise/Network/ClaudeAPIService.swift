@@ -98,7 +98,7 @@ struct ClaudeAPIService {
         
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
         
-        print("Making request to: \(messagesEndpoint.absoluteString)")
+        AppLogger.info("Making request to: \(messagesEndpoint.absoluteString)")
         
         return try await URLSession.shared.data(for: request)
     }
@@ -125,7 +125,7 @@ struct ClaudeAPIService {
             
             let decodedData = try JSONSerialization.jsonObject(with: data) as! [String : Any]
             
-            print("Got \(decodedData) back from Claude.")
+            AppLogger.info("Got \(decodedData) back from Claude.")
             
             // Extract the emoji from the response
             if let content = decodedData["content"] as? [[String: Any]],
@@ -134,16 +134,16 @@ struct ClaudeAPIService {
                !text.isEmpty {
                 let character = text.first!
                 
-                print("Character received: \(character)")
+                AppLogger.info("Character received: \(character)")
                 
                 // Validate the emoji
                 let emoji = validateEmoji(character)
 
                 
-                print("Validated emoji: \(emoji)")
+                AppLogger.info("Validated emoji: \(emoji)")
                 return emoji
             } else {
-                print("Failed to parse emoji from response")
+                AppLogger.error("Failed to parse emoji from response")
                 throw ClaudeAPIError.invalidEmojiResponse
             }
             

@@ -8,63 +8,65 @@ import Foundation
 import SwiftUICore
 import SwiftData
 
+
 struct SampleData: Codable {
     let habits: [HabitData]
-    let activities: [ActivityData]
+    let completions: [CompletionData]
     
     struct HabitData: Codable {
-        let id: Int
+        let id: String
         let name: String
-        let createdAt: String
-        let emoji: String
+        let icon: String
+        let color: String
+        let maxStreak: Int
+        let currentStreak: Int
     }
     
-    struct ActivityData: Codable {
-        let habitId: Int
+    struct CompletionData: Codable {
+        let habitId: String
         let completedAt: String
     }
 }
 
 struct PreviewHelper {
-    static func createSampleData() {
-        do {
-            // Create a new context that isn't MainActor isolated
-            let context = ModelContext(container)
-            
-            let sampleData: SampleData = load("data.json")
-            
-            var habitsById: [Int: Habit] = [:]
-            for habitData in sampleData.habits {
-                let habit = Habit(name: habitData.name, emoji: habitData.emoji)
-                context.insert(habit)
-                habitsById[habitData.id] = habit
-            }
-            
-            let formatter = ISO8601DateFormatter()
-            formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-            
-            for activityData in sampleData.activities {
-                guard let habit = habitsById[activityData.habitId] else {
-                    print("⚠️ No habit found with ID \(activityData.habitId)")
-                    continue
-                }
-                
-                let completedAt: Date = formatter.date(from: activityData.completedAt)!
-                
-                let activity = Activity(habit: habit, completedAt: completedAt)
-                context.insert(activity)
-            }
-            
-            try context.save()
-        } catch {
-            fatalError("Failed to create preview container: \(error)")
+    static func createSampleData() throws {
+        // Create a new context that isn't MainActor isolated
+        AppLogger.info("Creating model context")
+        let context = ModelContext(container)
+        AppLogger.success("Created model context")
+        
+        AppLogger.info("Loading data.json")
+        let sampleData: SampleData = load("data.json")
+        AppLogger.success("Loaded data.json")
+        
+        AppLogger.info("Creating habits")
+        var habitsById: [UUID: Habit] = [:]
+        for habitData in sampleData.habits {
+            let habit = HabitV1(name: habitData.name, icon: habitData.icon, colorString: habitData.color, maxStreak: 0, currentStreak: 0)
+            context.insert(habit)
+            let habitId = UUID(uuidString: habitData.id)!
+            habitsById[habitId] = habit
         }
-    }
-}
-
-extension View {
-    func withSampleData() -> some View {
-        PreviewHelper.createSampleData()
-        return self.modelContainer(container)
+        
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        AppLogger.info("Creating habit completions")
+        for completionData in sampleData.completions {
+            let habitId = UUID(uuidString: completionData.habitId)!
+            guard let habit = habitsById[habitId] else {
+                AppLogger.error("No habit found with ID \(completionData.habitId)")
+                continue
+            }
+            
+            let completedAt: Date = formatter.date(from: completionData.completedAt)!
+            
+            let completion = HabitCompletionV1(habit: habit, completedAt: completedAt, isCompleted: true)
+            context.insert(completion)
+        }
+        
+        AppLogger.info("Saving context")
+        try context.save()
+        AppLogger.success("Context saved")
     }
 }
