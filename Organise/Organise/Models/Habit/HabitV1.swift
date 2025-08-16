@@ -10,20 +10,32 @@ import SwiftUICore
 
 @Model
 class HabitV1: Identifiable {
-    var id = UUID()
+    var id: UUID
     var name: String
     var icon: String
-    var color: Color
     var maxStreak: Int
     var currentStreak: Int
+    
+    private var colorString: String
+    
+    // Color persists as a string but is accessed as the object
+    var color: Color {
+        get {
+            Color(from: colorString)
+        }
+        set {
+            colorString = newValue.toString()
+        }
+    }
+
     @Relationship(deleteRule: .cascade, inverse: \HabitCompletionV1.habit)
     var completions: [HabitCompletionV1] = []
     
-    init(name: String, icon: String, color: Color) {
-        self.id = id
+    init(name: String, icon: String, colorString: String, maxStreak: Int, currentStreak: Int) {
+        self.id = UUID()
         self.name = name
         self.icon = icon
-        self.color = color
+        self.colorString = colorString
         self.maxStreak = 0
         self.currentStreak = 0
     }
@@ -52,7 +64,7 @@ class HabitV1: Identifiable {
         }
         
         if completion(for: day) == nil {
-            let newCompletion = HabitCompletionV1(habit: self, completedAt: day)
+            let newCompletion = HabitCompletionV1(habit: self, completedAt: day, isCompleted: true)
             modelContext.insert(newCompletion)
             try modelContext.save()
         }
@@ -70,6 +82,18 @@ class HabitV1: Identifiable {
         if let existingCompletion = completion(for: day) {
             modelContext.delete(existingCompletion)
             try modelContext.save()
+        }
+    }
+    
+    func toggleCompletion(on day: Date) throws {
+        /**
+         * Toggle a habit's completion on a day to
+         * become either completed, or not completed.
+         */
+        if completedOn(day) {
+            try decomplete(on: day)
+        } else {
+            try complete(on: day)
         }
     }
     

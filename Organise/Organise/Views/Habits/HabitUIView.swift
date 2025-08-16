@@ -9,14 +9,14 @@ import SwiftUI
 // MARK: - Sample Data
 class HabitData: ObservableObject {
     @Published var habits: [Habit] = [
-        Habit(name: "Drink Water", icon: "drop.fill", color: .blue, maxStreak: 45, currentStreak: 12),
-        Habit(name: "Exercise", icon: "figure.run", color: .green, maxStreak: 28, currentStreak: 5),
-        Habit(name: "Read", icon: "book.fill", color: .purple, maxStreak: 67, currentStreak: 23),
-        Habit(name: "Meditate", icon: "leaf.fill", color: .mint, maxStreak: 31, currentStreak: 8),
-        Habit(name: "Journal", icon: "pencil", color: .orange, maxStreak: 22, currentStreak: 0),
-        Habit(name: "Sleep 8h", icon: "bed.double.fill", color: .indigo, maxStreak: 3, currentStreak: 3),
-        Habit(name: "Fishing", icon: "fish.fill", color: .red, maxStreak: 3, currentStreak: 3),
-        Habit(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", color: .green, maxStreak: 3, currentStreak: 3)
+        Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12),
+        Habit(name: "Exercise", icon: "figure.run", colorString: ".green", maxStreak: 28, currentStreak: 5),
+        Habit(name: "Read", icon: "book.fill", colorString: ".purple", maxStreak: 67, currentStreak: 23),
+        Habit(name: "Meditate", icon: "leaf.fill", colorString: ".mint", maxStreak: 31, currentStreak: 8),
+        Habit(name: "Journal", icon: "pencil", colorString: ".orange", maxStreak: 22, currentStreak: 0),
+        Habit(name: "Sleep 8h", icon: "bed.double.fill", colorString: ".indigo", maxStreak: 3, currentStreak: 3),
+        Habit(name: "Fishing", icon: "fish.fill", colorString: ".red", maxStreak: 3, currentStreak: 3),
+        Habit(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", colorString: ".green", maxStreak: 3, currentStreak: 3)
     ]
     
     @Published var completions: [HabitCompletion] = []
@@ -35,8 +35,8 @@ class HabitData: ObservableObject {
             for habit in habits {
                 let shouldComplete = Int.random(in: 0...100) < 70
                 let completion = HabitCompletion(
-                    habitId: habit.id,
-                    date: calendar.startOfDay(for: date),
+                    habit: habit,
+                    completedAt: calendar.startOfDay(for: date),
                     isCompleted: shouldComplete
                 )
                 completions.append(completion)
@@ -47,29 +47,29 @@ class HabitData: ObservableObject {
     func getCompletions(for date: Date) -> [HabitCompletion] {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
-        return completions.filter { calendar.isDate($0.date, inSameDayAs: startOfDay) }
+        return completions.filter { calendar.isDate($0.completedAt, inSameDayAs: startOfDay) }
     }
     
-    func isHabitCompleted(habitId: UUID, date: Date) -> Bool {
-        return getCompletions(for: date).first { $0.habitId == habitId }?.isCompleted ?? false
+    func isHabitCompleted(habit: Habit, date: Date) -> Bool {
+        return getCompletions(for: date).first { $0.habit == habit }?.isCompleted ?? false
     }
     
-    func toggleHabitCompletion(habitId: UUID, date: Date) {
+    func toggleHabitCompletion(habit: Habit, date: Date) {
         let calendar = Calendar.current
         let startOfDay = calendar.startOfDay(for: date)
         
-        if let index = completions.firstIndex(where: { $0.habitId == habitId && calendar.isDate($0.date, inSameDayAs: startOfDay) }) {
+        if let index = completions.firstIndex(where: { $0.habit == habit && calendar.isDate($0.completedAt, inSameDayAs: startOfDay) }) {
             completions[index].isCompleted.toggle()
         } else {
-            let newCompletion = HabitCompletion(habitId: habitId, date: startOfDay, isCompleted: true)
+            let newCompletion = HabitCompletion(habit: habit, completedAt: startOfDay, isCompleted: true)
             completions.append(newCompletion)
         }
         
-        updateCurrentStreak(for: habitId)
+        updateCurrentStreak(for: habit)
     }
     
-    private func updateCurrentStreak(for habitId: UUID) {
-        guard let habitIndex = habits.firstIndex(where: { $0.id == habitId }) else { return }
+    private func updateCurrentStreak(for habit: Habit) {
+        guard let habitIndex = habits.firstIndex(where: { $0 == habit }) else { return }
         
         let calendar = Calendar.current
         let today = Date()
@@ -78,7 +78,7 @@ class HabitData: ObservableObject {
         for dayOffset in 0..<365 {
             guard let date = calendar.date(byAdding: .day, value: -dayOffset, to: today) else { break }
             
-            if isHabitCompleted(habitId: habitId, date: date) {
+            if isHabitCompleted(habit: habit, date: date) {
                 currentStreak += 1
             } else {
                 break
@@ -95,7 +95,7 @@ class HabitData: ObservableObject {
     var completionPercentage: Double {
         let totalHabits = habits.count
         guard totalHabits > 0 else { return 0 }
-        let completedHabits = habits.filter { isHabitCompleted(habitId: $0.id, date: Date()) }.count
+        let completedHabits = habits.filter { isHabitCompleted(habit: $0, date: Date()) }.count
         return Double(completedHabits) / Double(totalHabits)
     }
 }
@@ -221,6 +221,7 @@ struct RoundedCorner: Shape {
 
 // MARK: - Main UI View
 struct HabitUIView: View {
+    @Environment(\.modelContext) private var context
     @StateObject private var habitData = HabitData()
     @State private var selectedDate: Date = .now
     @State private var showDatePicker = false
@@ -249,9 +250,9 @@ struct HabitUIView: View {
                         ForEach(habitData.habits) { habit in
                             HabitRowView(
                                 habit: habit,
-                                isCompleted: habitData.isHabitCompleted(habitId: habit.id, date: selectedDate)
+                                isCompleted: habitData.isHabitCompleted(habit: habit, date: selectedDate)
                             ) {
-                                habitData.toggleHabitCompletion(habitId: habit.id, date: selectedDate)
+                                habitData.toggleHabitCompletion(habit: habit, date: selectedDate)
                             }
                         }
                     }

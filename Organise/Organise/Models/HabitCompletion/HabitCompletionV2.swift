@@ -9,13 +9,15 @@ import SwiftData
 
 @Model
 final class HabitCompletionV2 {
-    var id = UUID()
+    var id: UUID
     var habit: HabitV2
     var completedAt: Date
     var isCompleted: Bool
     
-    init(habit: HabitV2, completedAt: Date) {
+    init(habit: HabitV2, completedAt: Date, isCompleted: Bool) {
+        self.id = UUID()
         self.habit = habit
         self.completedAt = completedAt
+        self.isCompleted = isCompleted
     }
 }

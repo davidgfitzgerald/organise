@@ -22,7 +22,9 @@ struct ColorParser {
         ".black": .black,
         ".white": .white,
         ".gray": .gray,
-        ".clear": .clear
+        ".clear": .clear,
+        ".mint": Color.mint,
+        ".indigo": .indigo,
     ]
     
     static func color(from string: String) -> Color {

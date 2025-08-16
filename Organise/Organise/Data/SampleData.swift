@@ -38,7 +38,7 @@ struct PreviewHelper {
             var habitsById: [UUID: Habit] = [:]
             for habitData in sampleData.habits {
 //                let habit = Habit(name: habitData.name, emoji: habitData.emoji)
-                let habit = Habit(name: habitData.name, icon: habitData.icon, color: ColorParser.color(from: habitData.color))
+                let habit = Habit(name: habitData.name, icon: habitData.icon, colorString: habitData.color, maxStreak: 0, currentStreak: 0)
                 context.insert(habit)
                 habitsById[habitData.id] = habit
             }

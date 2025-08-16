@@ -9,7 +9,8 @@ import SwiftUI
 
 // MARK: - Enhanced Habit Row View
 struct HabitRowView: View {
-    let habit: HabitModel
+    @Environment(\.modelContext) private var context
+    let habit: Habit
     let isCompleted: Bool
     let onToggle: () -> Void
     @State private var isPressed = false
@@ -110,8 +111,12 @@ struct HabitRowView: View {
 }
 
 #Preview {
-    @Previewable @State var habit = HabitModel(name: "Drink Water", icon: "drop.fill", color: .blue, maxStreak: 45, currentStreak: 12)
+    @Previewable @State var habit = Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12)
     HabitRowView(habit: habit, isCompleted: true) {
-        habit.toggleHabitCompletion(habitId: habit.id, date: selectedDate)
+        do {
+            try habit.toggleCompletion(on: Date())
+        } catch {
+            print("Preview error: \(error)")
+        }
     }
 }
