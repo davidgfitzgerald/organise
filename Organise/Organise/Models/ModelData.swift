@@ -29,30 +29,24 @@ func load<T: Decodable>(_ filename: String) -> T {
     }
 }
 
-// Main container for the app
+// Single container that automatically detects preview vs app mode
 var container: ModelContainer {
     do {
-        let config = ModelConfiguration(isStoredInMemoryOnly: false)
+        // Check if we're in preview mode by looking at the environment
+        let isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+        
+        let config = ModelConfiguration(isStoredInMemoryOnly: isPreview)
         let container = try ModelContainer(for: Habit.self, HabitCompletionV1.self, configurations: config)
-        AppLogger.info("Created configured container")
+        
+        if isPreview {
+            AppLogger.info("Created preview container (in-memory)")
+        } else {
+            AppLogger.info("Created app container (persistent)")
+        }
+
         return container
     } catch {
         AppLogger.error("Failed to create configured container: \(error)")
-        // Fallback: create container without configuration
-        return try! ModelContainer(for: Habit.self, HabitCompletionV1.self)
+        fatalError("Failed to create configured container: \(error)")
     }
 }
-
-// Preview container - always in memory only
-var previewContainer: ModelContainer {
-    do {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: Habit.self, HabitCompletionV1.self, configurations: config)
-//        AppLogger.debug("Created configured preview container")
-        return container
-    } catch {
-        AppLogger.error("Failed to create configured preview container: \(error)")
-        // Fallback: create empty container for previews
-        return try! ModelContainer(for: Habit.self, HabitCompletionV1.self)
-    }
-} 

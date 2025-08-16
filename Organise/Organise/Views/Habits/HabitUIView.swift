@@ -179,6 +179,6 @@ struct HabitUIView: View {
 
 // MARK: - Previews
 #Preview {
-    HabitUIView()
-        .modelContainer(previewContainer)
+    return HabitUIView()
+        .withSampleData()
 }

@@ -32,7 +32,7 @@ struct PreviewHelper {
     static func createSampleData() throws {
         // Create a new context that isn't MainActor isolated
         AppLogger.info("Creating model context")
-        let context = ModelContext(previewContainer)
+        let context = ModelContext(container)
         AppLogger.success("Created model context")
         
         AppLogger.info("Loading data.json")

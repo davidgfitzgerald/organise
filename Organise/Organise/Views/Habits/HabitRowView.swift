@@ -117,5 +117,5 @@ struct HabitRowView: View {
         // Simple preview action
         print("Toggle button tapped in preview")
     }
-    .modelContainer(previewContainer)
+    .withSampleData()
 }
