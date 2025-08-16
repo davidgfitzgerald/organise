@@ -22,7 +22,7 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .withSampleData()
+//        .withSampleData()
 }
 
 

@@ -274,11 +274,11 @@ struct HabitUIView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(selectedTab: "Experiments")
-            .withSampleData()
+//            .withSampleData()
     }
 }
 
 #Preview {
     ContentView(selectedTab: "Experiments")
-        .withSampleData()
+//        .withSampleData()
 }
