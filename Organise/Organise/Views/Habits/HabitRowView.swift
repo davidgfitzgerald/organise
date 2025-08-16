@@ -111,12 +111,11 @@ struct HabitRowView: View {
 }
 
 #Preview {
-    @Previewable @State var habit = Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12)
+    let habit = Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12)
+    
     HabitRowView(habit: habit, isCompleted: true) {
-        do {
-            try habit.toggleCompletion(on: Date())
-        } catch {
-            AppLogger.error("Preview error: \(error)")
-        }
+        // Simple preview action
+        print("Toggle button tapped in preview")
     }
+    .modelContainer(previewContainer)
 }

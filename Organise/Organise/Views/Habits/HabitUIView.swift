@@ -7,29 +7,6 @@
 import SwiftUI
 import SwiftData
 
-// MARK: - Sample Data
-class HabitData: ObservableObject {
-    @Published var habits: [Habit] = [
-        Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12),
-        Habit(name: "Exercise", icon: "figure.run", colorString: ".green", maxStreak: 28, currentStreak: 5),
-        Habit(name: "Read", icon: "book.fill", colorString: ".purple", maxStreak: 67, currentStreak: 23),
-        Habit(name: "Meditate", icon: "leaf.fill", colorString: ".mint", maxStreak: 31, currentStreak: 8),
-        Habit(name: "Journal", icon: "pencil", colorString: ".orange", maxStreak: 22, currentStreak: 0),
-        Habit(name: "Sleep 8h", icon: "bed.double.fill", colorString: ".indigo", maxStreak: 3, currentStreak: 3),
-        Habit(name: "Fishing", icon: "fish.fill", colorString: ".red", maxStreak: 3, currentStreak: 3),
-        Habit(name: "Homemade Lunch", icon: "takeoutbag.and.cup.and.straw.fill", colorString: ".green", maxStreak: 3, currentStreak: 3)
-    ]
-    
-    @Published var completions: [HabitCompletion] = []
-    
-    var completionPercentage: Double {
-        let totalHabits = habits.count
-        guard totalHabits > 0 else { return 0 }
-        let completedHabits = habits.filter { $0.completedOn(Date()) }.count
-        return Double(completedHabits) / Double(totalHabits)
-    }
-}
-
 // MARK: - Streak Indicator View
 struct StreakIndicator: View {
     let streak: Int
@@ -201,14 +178,7 @@ struct HabitUIView: View {
 }
 
 // MARK: - Previews
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(selectedTab: "Experiments")
-            .withSampleData()
-    }
-}
-
 #Preview {
-    ContentView(selectedTab: "Experiments")
-        .withSampleData()
+    HabitUIView()
+        .modelContainer(previewContainer)
 }
