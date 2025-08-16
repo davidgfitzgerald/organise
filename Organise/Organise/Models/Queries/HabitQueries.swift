@@ -23,13 +23,13 @@ func calculateCompletionPercentage(on date: Date) -> Double {
     let totalCount = (try? context.fetchCount(totalDescriptor)) ?? 0
     
     // Get completed habits count
-    let completedPredicate = #Predicate<HabitV1> { habit in
+    let completedPredicate = #Predicate<Habit> { habit in
         habit.completions.contains { completion in
             completion.completedAt >= dayInterval.start && completion.completedAt < dayInterval.end
         }
     }
     
-    let completedDescriptor = FetchDescriptor<HabitV1>(predicate: completedPredicate)
+    let completedDescriptor = FetchDescriptor<Habit>(predicate: completedPredicate)
     let completedCount = (try? context.fetchCount(completedDescriptor)) ?? 0
     
     guard totalCount > 0 else { return 0.0 }

@@ -42,7 +42,7 @@ struct PreviewHelper {
         AppLogger.info("Creating habits")
         var habitsById: [UUID: Habit] = [:]
         for habitData in sampleData.habits {
-            let habit = Habit(name: habitData.name, icon: habitData.icon, colorString: habitData.color, maxStreak: 0, currentStreak: 0)
+            let habit = HabitV1(name: habitData.name, icon: habitData.icon, colorString: habitData.color, maxStreak: 0, currentStreak: 0)
             context.insert(habit)
             let habitId = UUID(uuidString: habitData.id)!
             habitsById[habitId] = habit
@@ -61,7 +61,7 @@ struct PreviewHelper {
             
             let completedAt: Date = formatter.date(from: completionData.completedAt)!
             
-            let completion = HabitCompletion(habit: habit, completedAt: completedAt, isCompleted: true)
+            let completion = HabitCompletionV1(habit: habit, completedAt: completedAt, isCompleted: true)
             context.insert(completion)
         }
         

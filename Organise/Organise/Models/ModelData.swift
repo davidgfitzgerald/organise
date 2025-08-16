@@ -33,13 +33,13 @@ func load<T: Decodable>(_ filename: String) -> T {
 var container: ModelContainer {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: false)
-        let container = try ModelContainer(for: HabitV1.self, HabitCompletionV1.self, configurations: config)
+        let container = try ModelContainer(for: Habit.self, HabitCompletionV1.self, configurations: config)
         AppLogger.info("Created configured container")
         return container
     } catch {
         AppLogger.error("Failed to create configured container: \(error)")
         // Fallback: create container without configuration
-        return try! ModelContainer(for: HabitV1.self, HabitCompletionV1.self)
+        return try! ModelContainer(for: Habit.self, HabitCompletionV1.self)
     }
 }
 
@@ -47,12 +47,12 @@ var container: ModelContainer {
 var previewContainer: ModelContainer {
     do {
         let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: HabitV1.self, HabitCompletionV1.self, configurations: config)
-        AppLogger.info("Created configured preview container")
+        let container = try ModelContainer(for: Habit.self, HabitCompletionV1.self, configurations: config)
+//        AppLogger.debug("Created configured preview container")
         return container
     } catch {
         AppLogger.error("Failed to create configured preview container: \(error)")
         // Fallback: create empty container for previews
-        return try! ModelContainer(for: HabitV1.self, HabitCompletionV1.self)
+        return try! ModelContainer(for: Habit.self, HabitCompletionV1.self)
     }
 } 
