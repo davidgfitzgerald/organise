@@ -17,3 +17,10 @@ extension View {
         }
     }
 }
+
+extension View {
+    func withSampleData() -> some View {
+        try! PreviewHelper.createSampleData()
+        return self.modelContainer(previewContainer)
+    }
+}

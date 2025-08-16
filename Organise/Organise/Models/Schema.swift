@@ -28,13 +28,13 @@ enum AppSchemaV1: VersionedSchema {
     }
 }
 
-enum AppSchemaV2: VersionedSchema {
-    static var versionIdentifier = Schema.Version(0, 1, 1)
-    
-    static var models: [any PersistentModel.Type] {
-        [
-            HabitV2.self,
-            HabitCompletionV2.self
-        ]
-    }
-}
+//enum AppSchemaV2: VersionedSchema {
+//    static var versionIdentifier = Schema.Version(0, 1, 1)
+//    
+//    static var models: [any PersistentModel.Type] {
+//        [
+//            HabitV2.self,
+//            HabitCompletionV2.self
+//        ]
+//    }
+//}

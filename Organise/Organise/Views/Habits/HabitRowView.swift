@@ -116,7 +116,7 @@ struct HabitRowView: View {
         do {
             try habit.toggleCompletion(on: Date())
         } catch {
-            print("Preview error: \(error)")
+            AppLogger.error("Preview error: \(error)")
         }
     }
 }

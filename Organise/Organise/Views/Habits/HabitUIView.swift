@@ -5,6 +5,7 @@
 //  Created by David Fitzgerald on 17/07/2025.
 //
 import SwiftUI
+import SwiftData
 
 // MARK: - Sample Data
 class HabitData: ObservableObject {
@@ -21,81 +22,10 @@ class HabitData: ObservableObject {
     
     @Published var completions: [HabitCompletion] = []
     
-    init() {
-        generateSampleCompletions()
-    }
-    
-    private func generateSampleCompletions() {
-        let calendar = Calendar.current
-        let today = Date()
-        
-        for dayOffset in 0..<30 {
-            guard let date = calendar.date(byAdding: .day, value: -dayOffset, to: today) else { continue }
-            
-            for habit in habits {
-                let shouldComplete = Int.random(in: 0...100) < 70
-                let completion = HabitCompletion(
-                    habit: habit,
-                    completedAt: calendar.startOfDay(for: date),
-                    isCompleted: shouldComplete
-                )
-                completions.append(completion)
-            }
-        }
-    }
-    
-    func getCompletions(for date: Date) -> [HabitCompletion] {
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        return completions.filter { calendar.isDate($0.completedAt, inSameDayAs: startOfDay) }
-    }
-    
-    func isHabitCompleted(habit: Habit, date: Date) -> Bool {
-        return getCompletions(for: date).first { $0.habit == habit }?.isCompleted ?? false
-    }
-    
-    func toggleHabitCompletion(habit: Habit, date: Date) {
-        let calendar = Calendar.current
-        let startOfDay = calendar.startOfDay(for: date)
-        
-        if let index = completions.firstIndex(where: { $0.habit == habit && calendar.isDate($0.completedAt, inSameDayAs: startOfDay) }) {
-            completions[index].isCompleted.toggle()
-        } else {
-            let newCompletion = HabitCompletion(habit: habit, completedAt: startOfDay, isCompleted: true)
-            completions.append(newCompletion)
-        }
-        
-        updateCurrentStreak(for: habit)
-    }
-    
-    private func updateCurrentStreak(for habit: Habit) {
-        guard let habitIndex = habits.firstIndex(where: { $0 == habit }) else { return }
-        
-        let calendar = Calendar.current
-        let today = Date()
-        var currentStreak = 0
-        
-        for dayOffset in 0..<365 {
-            guard let date = calendar.date(byAdding: .day, value: -dayOffset, to: today) else { break }
-            
-            if isHabitCompleted(habit: habit, date: date) {
-                currentStreak += 1
-            } else {
-                break
-            }
-        }
-        
-        habits[habitIndex].currentStreak = currentStreak
-        
-        if currentStreak > habits[habitIndex].maxStreak {
-            habits[habitIndex].maxStreak = currentStreak
-        }
-    }
-    
     var completionPercentage: Double {
         let totalHabits = habits.count
         guard totalHabits > 0 else { return 0 }
-        let completedHabits = habits.filter { isHabitCompleted(habit: $0, date: Date()) }.count
+        let completedHabits = habits.filter { $0.completedOn(Date()) }.count
         return Double(completedHabits) / Double(totalHabits)
     }
 }
@@ -222,7 +152,7 @@ struct RoundedCorner: Shape {
 // MARK: - Main UI View
 struct HabitUIView: View {
     @Environment(\.modelContext) private var context
-    @StateObject private var habitData = HabitData()
+    @Query var habits: [Habit]
     @State private var selectedDate: Date = .now
     @State private var showDatePicker = false
     
@@ -230,7 +160,7 @@ struct HabitUIView: View {
         NavigationView {
             VStack(spacing: 0) {
                 // Enhanced Date Header
-                DateHeaderView(selectedDate: $selectedDate, completionPercentage: habitData.completionPercentage)
+                DateHeaderView(selectedDate: $selectedDate, completionPercentage: calculateCompletionPercentage(on: selectedDate))
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .onTapGesture {
@@ -247,12 +177,12 @@ struct HabitUIView: View {
                 // Habits List
                 ScrollView {
                     LazyVStack(spacing: 16) {
-                        ForEach(habitData.habits) { habit in
+                        ForEach(habits) { habit in
                             HabitRowView(
                                 habit: habit,
-                                isCompleted: habitData.isHabitCompleted(habit: habit, date: selectedDate)
+                                isCompleted: habit.completedOn(selectedDate)
                             ) {
-                                habitData.toggleHabitCompletion(habit: habit, date: selectedDate)
+                                try? habit.toggleCompletion(on: selectedDate)
                             }
                         }
                     }
@@ -274,11 +204,11 @@ struct HabitUIView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView(selectedTab: "Experiments")
-//            .withSampleData()
+            .withSampleData()
     }
 }
 
 #Preview {
     ContentView(selectedTab: "Experiments")
-//        .withSampleData()
+        .withSampleData()
 }

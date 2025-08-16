@@ -1,67 +1,85 @@
 {
     "habits": [
         {
-            "id": "196797F2-63F1-4F78-BACA-400EC8FD1B56",
-            "name": "Drink Water",
-            "createdAt": "2025-06-02T19:32:01.317Z",
-            "icon": "drop.fill",
-            "color": ".blue",
-            "maxStreak": 45,
-            "currentStreak": 22,
+          "id": "196797F2-63F1-4F78-BACA-400EC8FD1B56",
+          "name": "Drink Water",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "drop.fill",
+          "color": ".blue",
+          "maxStreak": 45,
+          "currentStreak": 12
         },
         {
-            "id": "DCDB9A8F-7700-457E-AE8E-0001AB8821F3",
-            "name": "Exercise",
-            "createdAt": "2025-06-02T19:34:01.317Z",
-            "icon": "figure.run",
-            "color": ".green",
-            "maxStreak": 28,
-            "currentStreak": 5,
+          "id": "2A8B9C3D-4E5F-6789-ABCD-EF1234567890",
+          "name": "Exercise",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "figure.run",
+          "color": ".green",
+          "maxStreak": 28,
+          "currentStreak": 5
         },
         {
-            "id": "A3F84364-8F99-4CB8-BDC8-18B0AD647AE0",
-            "name": "Read",
-            "createdAt": "2025-06-02T19:33:01.317Z",
-            "icon": "book.fill",
-            "color": ".purple",
-            "maxStreak": 67,
-            "currentStreak": 23,
+          "id": "3F7E8D9C-1B2A-3456-789A-BCDEF0123456",
+          "name": "Read",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "book.fill",
+          "color": ".purple",
+          "maxStreak": 67,
+          "currentStreak": 23
         },
         {
-            "id": "79958818-BD05-4E84-91F4-431313DC44F3",
-            "name": "Meditate",
-            "createdAt": "2025-06-02T19:33:01.317Z",
-            "icon": "leaf.fill",
-            "color": ".mint",
-            "maxStreak": 31,
-            "currentStreak": 8,
+          "id": "4C5D6E7F-8A9B-0123-4567-89ABCDEF0123",
+          "name": "Meditate",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "leaf.fill",
+          "color": ".mint",
+          "maxStreak": 31,
+          "currentStreak": 8
         },
         {
-            "id": "C6A152BA-BF12-4270-8728-3EB13225E487",
-            "name": "Journal",
-            "createdAt": "2025-06-02T19:33:01.317Z",
-            "icon": "pencil",
-            "color": ".orange",
-            "maxStreak": 22,
-            "currentStreak": 0,
+          "id": "5B4A3C2D-1E0F-9876-5432-10FEDCBA9876",
+          "name": "Journal",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "pencil",
+          "color": ".orange",
+          "maxStreak": 22,
+          "currentStreak": 0
         },
         {
-            "id": "9E20E109-EB20-43C5-B452-16266352EF7F",
-            "name": "Sleep 8h",
-            "createdAt": "2025-06-02T19:33:01.317Z",
-            "icon": "bed.double.fill",
-            "color": ".indigo",
-            "maxStreak": 3,
-            "currentStreak": 3,
+          "id": "6D8E9F0A-1B2C-3456-789A-BCDEF0123456",
+          "name": "Sleep 8h",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "bed.double.fill",
+          "color": ".indigo",
+          "maxStreak": 3,
+          "currentStreak": 3
         },
+        {
+          "id": "7A9B8C7D-6E5F-4321-0987-6543210FEDCB",
+          "name": "Fishing",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "fish.fill",
+          "color": ".red",
+          "maxStreak": 3,
+          "currentStreak": 3
+        },
+        {
+          "id": "8F0E9D8C-7B6A-5432-1098-76543210FEDC",
+          "name": "Homemade Lunch",
+          "createdAt": "2025-06-02T19:32:01.317Z",
+          "icon": "takeoutbag.and.cup.and.straw.fill",
+          "color": ".green",
+          "maxStreak": 3,
+          "currentStreak": 3
+        }
     ],
     "completions": [
         {
-            "habitId": 0,
+            "habitId": "196797F2-63F1-4F78-BACA-400EC8FD1B56",
             "completedAt": "2025-07-09T22:20:22.562Z"
         },
         {
-            "habitId": 1,
+            "habitId": "2A8B9C3D-4E5F-6789-ABCD-EF1234567890",
             "completedAt": "2025-06-02T21:20:22.562Z"
         }
     ]

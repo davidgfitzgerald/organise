@@ -15,8 +15,7 @@ class HabitV1: Identifiable {
     var icon: String
     var maxStreak: Int
     var currentStreak: Int
-    
-    private var colorString: String
+    var colorString: String
     
     // Color persists as a string but is accessed as the object
     var color: Color {
@@ -36,8 +35,8 @@ class HabitV1: Identifiable {
         self.name = name
         self.icon = icon
         self.colorString = colorString
-        self.maxStreak = 0
-        self.currentStreak = 0
+        self.maxStreak = maxStreak
+        self.currentStreak = currentStreak
     }
     
     func completion(for day: Date) -> HabitCompletionV1? {
