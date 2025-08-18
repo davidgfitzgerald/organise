@@ -132,6 +132,7 @@ struct HabitUIView: View {
     @Query var habits: [Habit]
     @State private var selectedDate: Date = .now
     @State private var showDatePicker = false
+    @State private var isEditMode = false
 
     var body: some View {
         NavigationView {
@@ -158,11 +159,17 @@ struct HabitUIView: View {
                             HabitRowView(
                                 habit: habit,
                                 isCompleted: habit.completedOn(selectedDate),
+                                isEditMode: isEditMode,
                                 onToggle: {
                                     try? habit.toggleCompletion(on: selectedDate)
                                 },
                                 onDelete: {
+                                    // Delete all completions first, then delete the habit
+                                    for completion in habit.completions {
+                                        context.delete(completion)
+                                    }
                                     context.delete(habit)
+                                    try? context.save()
                                 }
                             )
 
@@ -179,6 +186,15 @@ struct HabitUIView: View {
             }
             .navigationTitle("Daily Habits")
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(isEditMode ? "Done" : "Edit") {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            isEditMode.toggle()
+                        }
+                    }
+                }
+            }
             .background(Color(.systemGroupedBackground))
         }
     }

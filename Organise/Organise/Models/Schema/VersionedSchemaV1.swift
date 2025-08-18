@@ -115,7 +115,8 @@ extension VersionedSchemaV1 {
     @Model
     final class HabitCompletion {
         var id: UUID
-        var habit: Habit
+        
+        @Relationship var habit: Habit?
         var completedAt: Date
         var isCompleted: Bool
         

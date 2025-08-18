@@ -12,6 +12,7 @@ struct HabitRowView: View {
     @Environment(\.modelContext) private var context
     let habit: Habit
     let isCompleted: Bool
+    let isEditMode: Bool
     let onToggle: () -> Void
     let onDelete: () -> Void
     @State private var isPressed = false
@@ -21,6 +22,21 @@ struct HabitRowView: View {
     
     var body: some View {
         HStack(spacing: 16) {
+            // Delete Button (only shown in edit mode)
+            if isEditMode {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        onDelete()
+                    }
+                }) {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(.plain)
+                .transition(.scale.combined(with: .opacity))
+            }
+            
             // Habit Icon with animated background
             ZStack {
                 RoundedRectangle(cornerRadius: 12)
@@ -66,10 +82,12 @@ struct HabitRowView: View {
             
             Spacer()
                         
-            // Completion Toggle with enhanced animation
+            // Completion Toggle with enhanced animation (disabled in edit mode)
             Button(action: {
-                withAnimation(.easeIn(duration: 0.3)) {
-                    onToggle()
+                if !isEditMode {
+                    withAnimation(.easeIn(duration: 0.3)) {
+                        onToggle()
+                    }
                 }
             }) {
                 ZStack {
@@ -89,9 +107,12 @@ struct HabitRowView: View {
             }
             .buttonStyle(.plain)
             .scaleEffect(isPressed ? 0.95 : 1.0)
+            .opacity(isEditMode ? 0.5 : 1.0)
             .onLongPressGesture(minimumDuration: 0, maximumDistance: .infinity, pressing: { pressing in
-                withAnimation(.easeInOut(duration: 0.1)) {
-                    isPressed = pressing
+                if !isEditMode {
+                    withAnimation(.easeInOut(duration: 0.1)) {
+                        isPressed = pressing
+                    }
                 }
             }, perform: {})
         }
@@ -108,26 +129,20 @@ struct HabitRowView: View {
         )
         .scaleEffect(isPressed ? 0.98 : 1.0)
         .animation(.easeInOut(duration: 0.3), value: isPressed)
-        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            Button(role: .destructive) {
-                // You'll need to pass the context or delete action as a parameter
-                onDelete()
-            } label: {
-                Label("Delete", systemImage: "trash")
-            }
-        }
-        
+        .animation(.easeInOut(duration: 0.3), value: isEditMode)
     }
 }
 
 #Preview {
     @Previewable @State var isCompleted = false
+    @Previewable @State var isEditMode = false
 
     let habit = Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12)
     
     HabitRowView(
         habit: habit,
         isCompleted: isCompleted,
+        isEditMode: isEditMode,
         onToggle: {
             try? isCompleted.toggle()
         },
