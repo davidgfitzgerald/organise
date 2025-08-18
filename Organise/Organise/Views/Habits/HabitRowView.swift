@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: - Enhanced Habit Row View
+
 struct HabitRowView: View {
     @Environment(\.modelContext) private var context
     let habit: Habit
@@ -15,7 +15,8 @@ struct HabitRowView: View {
     let onToggle: () -> Void
     @State private var isPressed = false
     
-    @Namespace private var iconNamespace
+    // TODO use this?
+    // @Namespace private var iconNamespace
     
     var body: some View {
         HStack(spacing: 16) {

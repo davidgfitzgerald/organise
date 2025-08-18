@@ -27,7 +27,7 @@ extension Color {
         case "cyan": self = .cyan
         case "indigo": self = .indigo
         case "brown": self = .brown
-        case "gray": self = .gray
+        case "grey": self = .gray
         case "black": self = .black
         case "white": self = .white
         default:

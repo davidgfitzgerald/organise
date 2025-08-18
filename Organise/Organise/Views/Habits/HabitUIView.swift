@@ -162,6 +162,7 @@ struct HabitUIView: View {
                                 try? habit.toggleCompletion(on: selectedDate)
                             }
                         }
+                        HabitRowNew()
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 24)
