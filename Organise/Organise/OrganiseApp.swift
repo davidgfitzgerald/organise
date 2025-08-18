@@ -19,7 +19,7 @@ struct OrganiseApp: App {
 
         WindowGroup {
             ContentView()
-                .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
+//                .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
                 .onAppear {
                     AppLogger.debug("isFirstLaunch: \(isFirstLaunch)")
                 }
