@@ -22,5 +22,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .withSampleData()
+        .modelContainer(DataContainer.create())
 }

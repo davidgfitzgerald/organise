@@ -180,5 +180,4 @@ struct HabitUIView: View {
 // MARK: - Previews
 #Preview {
     return HabitUIView()
-        .withSampleData()
 }

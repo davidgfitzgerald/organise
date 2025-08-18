@@ -18,6 +18,7 @@ struct OrganiseApp: App {
             ContentView()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
-        .modelContainer(container)
+        .modelContainer(DataContainer.create())
     }
 }
+
