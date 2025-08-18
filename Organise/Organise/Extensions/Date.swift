@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUICore
 
 public extension Date {
     var short: String {
@@ -18,5 +19,13 @@ public extension Date {
 extension Date {
     func isOn(_ day: Date) -> Bool {
         Calendar.current.isDate(self, inSameDayAs: day)
+    }
+}
+
+extension Date {
+    var day: DateInterval {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: self)
+        return DateInterval(start: startOfDay, duration: 24 * 60 * 60) // 24 hours
     }
 }

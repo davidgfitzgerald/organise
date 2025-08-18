@@ -25,9 +25,11 @@ struct ProgressRing: View {
                 .frame(width: size, height: size)
                 .rotationEffect(.degrees(-90))
                 .animation(.easeInOut(duration: 0.8), value: progress)
+                
 
             VStack(spacing: 0) {
                 Text("\(Int(progress * 100))%")
+                    .contentTransition(.numericText())
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundColor(.primary)
@@ -40,5 +42,11 @@ struct ProgressRing: View {
 }
 
 #Preview {
-    ProgressRing(progress: 0.50, color: .green, lineWidth: 4, size:50)
+    @Previewable @State var progress = 0.50
+    ProgressRing(progress: progress, color: .green, lineWidth: 4, size:50)
+    Button("Change percentage") {
+        withAnimation {
+            progress = Double.random(in: 0...100) / 100
+        }
+    }
 }
