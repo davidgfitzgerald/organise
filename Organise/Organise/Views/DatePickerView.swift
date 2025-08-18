@@ -9,78 +9,50 @@ import SwiftUI
 
 
 struct DatePickerView: View {
-    @Binding var date: Date
-    @Binding var showing: Bool
-    
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }
+    /**
+     * Date picker that automatically closes when
+     * the selected date changes.
+     */
+    @Binding var selectedDate: Date
+    @State private var showCalendar: Bool = false
     
     var body: some View {
-        HStack {
-            Spacer()
-            
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.2)) {
-                    showing.toggle()
-                }
-            }) {
-                HStack(spacing: 8) {
-                    Image(systemName: "calendar")
-                        .foregroundStyle(.secondary)
-                    
-                    Text(dateFormatter.string(from: date))
-                        .font(.headline)
-                        .foregroundStyle(.primary)
-                    
-                    Image(systemName: showing ? "chevron.up" : "chevron.down")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .animation(.easeInOut(duration: 0.2), value: showing)
-                }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
-                .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+        Button(action: {
+            showCalendar = true
+        }, label: {
+            HStack {
+                Image(systemName: "calendar")
+                    .foregroundColor(.primary)
+                Text(selectedDate, style: .date)
+                    .foregroundColor(.primary)
             }
-            .buttonStyle(.plain)
-            
-            Spacer()
-        }
-        .padding(.horizontal)
-        .onChange(of: date) {
-            showing = false
-            print("Selected \(date.shortest)")
-        }
-        
-        if showing {
+            .padding()
+            .background(Color(.systemGray5))
+            .cornerRadius(10)
+
+        })
+        .popover(isPresented: $showCalendar) {
             DatePicker(
-                "Select Date",
-                selection: $date,
+                "Select date",
+                selection: $selectedDate,
                 displayedComponents: .date
             )
             .datePickerStyle(.graphical)
-            .padding(.horizontal)
-            .transition(.opacity.combined(with: .scale(scale: 0.95)))
-            .animation(.easeInOut(duration: 0.3), value: showing)
+            .padding()
+            .frame(width: 365, height: 365)
+            /**
+             * The smallest device this will support is iPhone SE (3rd Gen), which has screen width 375.
+             * From https://stackoverflow.com/a/78116229
+             */
+            .presentationCompactAdaptation(.popover)
         }
-    }
-}
-
-// TODO - nice idea but buggy
-extension View {
-    func dismissDatePicker(when showing: Bool, action: @escaping () -> Void) -> some View {
-        self.onTapGesture {
-            if showing {
-                action()
-            }
+        .onChange(of: selectedDate) { _, _ in
+            showCalendar = false
         }
     }
 }
 
 #Preview {
     @Previewable @State var date = Date()
-    @Previewable @State var showingPicker = false
-    DatePickerView(date: $date, showing: $showingPicker)
+    DatePickerView(selectedDate: $date)
 }

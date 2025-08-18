@@ -6,49 +6,55 @@
 //
 import SwiftData
 import Foundation
+import SwiftUICore
 
 @Model
 class HabitV1: Identifiable {
+    var id: UUID
     var name: String
-    var createdAt: Date
-    var isLoadingEmoji: Bool
-    var emoji: String = "?"  // TODO make this a character?
-    @Relationship(deleteRule: .cascade, inverse: \ActivityV1.habit)
-    var activities: [ActivityV1] = []
+    var icon: String
+    var maxStreak: Int
+    var currentStreak: Int
+    var colorString: String
+
+    @Relationship(deleteRule: .cascade, inverse: \HabitCompletionV1.habit)
+    var completions: [HabitCompletionV1] = []
     
-    init(name: String, emoji: String = "?") {
+    init(name: String, icon: String, colorString: String, maxStreak: Int, currentStreak: Int) {
+        self.id = UUID()
         self.name = name
-        self.createdAt = Date()
-        self.isLoadingEmoji = false
-        self.emoji = emoji
+        self.icon = icon
+        self.colorString = colorString
+        self.maxStreak = maxStreak
+        self.currentStreak = currentStreak
     }
     
-    func activity(for day: Date) -> ActivityV1? {
+    func completion(for day: Date) -> HabitCompletionV1? {
         /**
-         * Retrieve an activity for a given habit on a given day, if one exists.
+         * Retrieve a completion for a given habit on a given day, if one exists.
          */
-        return activities.first { $0.completedAt.isOn(day) }
+        return completions.first { $0.completedAt.isOn(day) }
     }
     
     func completedOn(_ day: Date) -> Bool {
         /**
          * Determine if a given habit has been completed on a given day.
          */
-        return activity(for: day) != nil
+        return completion(for: day) != nil
     }
     
     func complete(on day: Date = Date()) throws {
         /**
          * Mark a given habit as completed on a given day.
-         * Only creates a new activity if one doesn't already exist.
+         * Only creates a new completion if one doesn't already exist.
          */
         guard let modelContext = modelContext else {
             throw HabitError.contextNotAvailable
         }
         
-        if activity(for: day) == nil {
-            let newActivity = ActivityV1(habit: self, completedAt: day)
-            modelContext.insert(newActivity)
+        if completion(for: day) == nil {
+            let newCompletion = HabitCompletionV1(habit: self, completedAt: day, isCompleted: true)
+            modelContext.insert(newCompletion)
             try modelContext.save()
         }
     }
@@ -56,15 +62,27 @@ class HabitV1: Identifiable {
     func decomplete(on day: Date) throws {
         /**
          * Mark a given habit as not completed on a given day.
-         * Removes the activity if it exists.
+         * Removes the completion if it exists.
          */
         guard let modelContext = modelContext else {
             throw HabitError.contextNotAvailable
         }
         
-        if let existingActivity = activity(for: day) {
-            modelContext.delete(existingActivity)
+        if let existingCompletion = completion(for: day) {
+            modelContext.delete(existingCompletion)
             try modelContext.save()
+        }
+    }
+    
+    func toggleCompletion(on day: Date) throws {
+        /**
+         * Toggle a habit's completion on a day to
+         * become either completed, or not completed.
+         */
+        if completedOn(day) {
+            try decomplete(on: day)
+        } else {
+            try complete(on: day)
         }
     }
     

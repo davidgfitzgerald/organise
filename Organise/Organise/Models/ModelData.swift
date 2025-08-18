@@ -32,12 +32,32 @@ func load<T: Decodable>(_ filename: String) -> T {
     }
 }
 
-let modelConfiguration = ModelConfiguration(schema: schema)
-var container: ModelContainer {
-    do {
-        let modelConfiguration = ModelConfiguration(schema: schema)
-        return try ModelContainer(for: schema, configurations: [modelConfiguration])
-    } catch {
-        fatalError("Failed to create ModelContainer: \(error)")
+//let modelConfiguration = ModelConfiguration(schema: schema)
+//, configurations: [modelConfiguration]
+
+//var container: ModelContainer {
+//    let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+//    return try! ModelContainer(for:
+//        schema, configurations: [modelConfiguration]
+//    )
+//}
+
+@MainActor
+let container: ModelContainer = {    
+    let config: ModelConfiguration
+    
+    #if DEBUG
+    if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+        // 👇 Use in-memory store in previews
+        config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
+    } else {
+        // 👇 Use persistent store in debug/dev builds
+        config = ModelConfiguration(schema: schema)
     }
-}
+    #else
+    // 👇 Always persistent in release builds
+    config = ModelConfiguration(schema: schema)
+    #endif
+    
+    return try! ModelContainer(for: schema, configurations: [config])
+}()

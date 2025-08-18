@@ -10,11 +10,11 @@ import SwiftData
 
 
 typealias Habit = HabitV1
-typealias Activity = ActivityV1
+typealias HabitCompletion = HabitCompletionV1
 
 let schema = Schema([
     Habit.self,
-    Activity.self
+    HabitCompletion.self
 ])
 
 enum AppSchemaV1: VersionedSchema {
@@ -23,7 +23,7 @@ enum AppSchemaV1: VersionedSchema {
     static var models: [any PersistentModel.Type] {
         [
             HabitV1.self,
-            ActivityV1.self
+            HabitCompletionV1.self
         ]
     }
 }
@@ -34,7 +34,7 @@ enum AppSchemaV2: VersionedSchema {
     static var models: [any PersistentModel.Type] {
         [
             HabitV2.self,
-            ActivityV2.self
+            HabitCompletionV2.self
         ]
     }
 }
