@@ -13,6 +13,7 @@ struct HabitRowView: View {
     let habit: Habit
     let isCompleted: Bool
     let onToggle: () -> Void
+    let onDelete: () -> Void
     @State private var isPressed = false
     
     // TODO use this?
@@ -107,6 +108,14 @@ struct HabitRowView: View {
         )
         .scaleEffect(isPressed ? 0.98 : 1.0)
         .animation(.easeInOut(duration: 0.3), value: isPressed)
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            Button(role: .destructive) {
+                // You'll need to pass the context or delete action as a parameter
+                onDelete()
+            } label: {
+                Label("Delete", systemImage: "trash")
+            }
+        }
         
     }
 }
@@ -115,12 +124,13 @@ struct HabitRowView: View {
     @Previewable @State var isCompleted = false
 
     let habit = Habit(name: "Drink Water", icon: "drop.fill", colorString: ".blue", maxStreak: 45, currentStreak: 12)
-    let now = Date()
     
     HabitRowView(
         habit: habit,
-        isCompleted: isCompleted
-    ) {
-        try? isCompleted.toggle()
-    }.padding(16)
+        isCompleted: isCompleted,
+        onToggle: {
+            try? isCompleted.toggle()
+        },
+        onDelete: {return}
+    ).padding(16)
 }

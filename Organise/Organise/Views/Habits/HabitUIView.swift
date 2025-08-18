@@ -157,11 +157,17 @@ struct HabitUIView: View {
                         ForEach(habits) { habit in
                             HabitRowView(
                                 habit: habit,
-                                isCompleted: habit.completedOn(selectedDate)
-                            ) {
-                                try? habit.toggleCompletion(on: selectedDate)
-                            }
+                                isCompleted: habit.completedOn(selectedDate),
+                                onToggle: {
+                                    try? habit.toggleCompletion(on: selectedDate)
+                                },
+                                onDelete: {
+                                    context.delete(habit)
+                                }
+                            )
+
                         }
+
                         HabitRowNew()
                     }
                     .padding(.horizontal, 16)
