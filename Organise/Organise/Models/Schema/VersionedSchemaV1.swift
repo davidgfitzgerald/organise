@@ -30,17 +30,26 @@ extension VersionedSchemaV1 {
         var maxStreak: Int
         var currentStreak: Int
         var colorString: String
+        var isLoadingIcon: Bool
 
         @Relationship(deleteRule: .cascade, inverse: \HabitCompletion.habit)
         var completions: [HabitCompletion] = []
         
-        init(name: String, icon: String, colorString: String, maxStreak: Int, currentStreak: Int) {
+        init(
+            name: String,
+            icon: String,
+            colorString: String,
+            maxStreak: Int,
+            currentStreak: Int,
+            isLoadingIcon: Bool = false
+        ) {
             self.id = UUID()
             self.name = name
             self.icon = icon
             self.colorString = colorString
             self.maxStreak = maxStreak
             self.currentStreak = currentStreak
+            self.isLoadingIcon = isLoadingIcon
         }
         
         func completion(for day: Date) -> HabitCompletion? {

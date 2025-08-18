@@ -10,7 +10,10 @@ import SwiftUI
 
 struct HabitRowNew: View {
     @Environment(\.modelContext) private var context
-    @State private var habitName: String = ""
+    @State private var name: String = ""
+    @State private var showError = false
+    @State private var errorMessage = ""
+    @State private var showIconError = false
     
     var body: some View {
         HStack(spacing: 16) {
@@ -31,17 +34,59 @@ struct HabitRowNew: View {
             
             // Add Habit
             VStack(alignment: .leading, spacing: 4) {
-                TextField("Add Habit", text: $habitName)
+                TextField("Add Habit", text: $name)
                     .font(.headline)
                     .fontWeight(.semibold)
                     .foregroundColor(.secondary)
                     .onSubmit {
-                        AppLogger.info("Creating habit with name: \(habitName)")
-                        let habit = Habit(name: habitName, icon: "checkmark.square.fill", colorString: "purple", maxStreak: 0, currentStreak: 0)
-                        habitName = ""
+                        AppLogger.info("Creating habit with name: \(name)")
+                        let habit = Habit(name: name, icon: "checkmark.square.fill", colorString: "purple", maxStreak: 0, currentStreak: 0)
+                        
                         // Validate habit can't be empty etc.
                         context.insert(habit)
-                        try? context.save()
+                        // try? context.save()
+                        
+                        // Capture value of habitName before it is reset
+                        let habitName = name
+
+                        Task {
+                            do {
+                                habit.isLoadingIcon = true
+                                print("Creating habit: '\(habitName)'")
+
+                                // Use the retry mechanism for better reliability
+                                let suggestedIcon = try await ClaudeAPIService.suggestIconWithRetry(for: habitName)
+
+                                await MainActor.run {
+                                    habit.icon = String(suggestedIcon)
+                                    habit.isLoadingIcon = false
+                                }
+                            } catch let claudeError as ClaudeAPIError {
+                                await MainActor.run {
+                                    habit.isLoadingIcon = false
+                                    habit.icon = "questionmark.app.fill" // Set fallback icon
+
+                                    // Show error alert to user
+                                    errorMessage = claudeError.localizedDescription
+                                    showIconError = true
+
+                                    print("Claude API error: \(claudeError.localizedDescription)")
+                                }
+                            } catch {
+                                await MainActor.run {
+                                    habit.isLoadingIcon = false
+                                    habit.icon = "questionmark.app.fill" // Set fallback icon
+
+                                    // Show generic error
+                                    errorMessage = "Failed to generate icon. Using default icon instead."
+                                    showIconError = true
+
+                                    print("Unexpected error: \(error.localizedDescription)")
+                                }
+                            }
+                        }
+                        
+                        name = ""
                     }
             }
             

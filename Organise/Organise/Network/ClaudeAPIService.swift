@@ -13,8 +13,8 @@ enum ClaudeAPIError: LocalizedError {
     case networkError(Error)
     case rateLimitExceeded
     case serverError(String)
-    case invalidEmojiResponse
-    case invalidEmojiUnicode
+    case invalidIconResponse
+    case invalidIcon
     
     var errorDescription: String? {
         switch self {
@@ -28,10 +28,10 @@ enum ClaudeAPIError: LocalizedError {
             return "Rate limit exceeded. Please try again later."
         case .serverError(let message):
             return "Server error: \(message)"
-        case .invalidEmojiResponse:
-            return "Failed to generate emoji. Using default emoji instead."
-        case .invalidEmojiUnicode:
-            return "Invalid emoji received from API. Using default emoji instead."
+        case .invalidIconResponse:
+            return "Failed to generate icon. Using default icon instead."
+        case .invalidIcon:
+            return "Invalid icon received from API. Using default icon instead."
         }
     }
 }
@@ -49,16 +49,16 @@ struct ClaudeAPIService {
     static let baseURL = URL(string: "https://api.anthropic.com/v1")!
     static let messagesEndpoint = baseURL.appendingPathComponent("messages")
     
-    static func validateEmoji(_ character: Character) -> Character {
-        guard !character.isWhitespace else { return "❓" }
+    static func validateIcon(_ string: String) -> String {
+        guard !string.isEmpty else { return "questionmark.app.fill" }
         
-        // If it's a valid emoji, return it
-        if character.isEmoji {
-            return character
+        // If it's a valid icon, return it
+        if string.isValidSFSymbol {
+            return string
         }
         
-        // If not valid, return a fallback emoji
-        return "❓"
+        // If not valid, return a fallback icon
+        return "questionmark.app.fill"
     }
 
     static func createRequest() throws -> URLRequest {
@@ -77,7 +77,7 @@ struct ClaudeAPIService {
     
     static func prompt(
         content: String,
-        maxTokens: Int = 10,
+        maxTokens: Int = 50,
         model: String = "claude-sonnet-4-20250514",
     ) async throws -> (Data, URLResponse) {
         /**
@@ -103,10 +103,11 @@ struct ClaudeAPIService {
         return try await URLSession.shared.data(for: request)
     }
 
-    static func suggestEmoji(for name: String) async throws -> Character {
+    static func suggestIcon(for name: String) async throws -> String {
         do {
             let (data, response) = try await prompt(content:
-                "Suggest the best emoji for depicting \(name). Favour emojis that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with only the single emoji character.", maxTokens: 10
+                "Suggest the best SF Symbol string for depicting \(name). Favour SF Symbols that appear happier, more positive, cleaner, more fun, productive, exciting, etc. Reply with ONLY the single SF Symbol string for use in an API call (e.g. 'drop.fill').",
+//                                                    maxTokens: 50
             )
 
             // Check HTTP response status
@@ -127,24 +128,21 @@ struct ClaudeAPIService {
             
             AppLogger.info("Got \(decodedData) back from Claude.")
             
-            // Extract the emoji from the response
+            // Extract the icon from the response
             if let content = decodedData["content"] as? [[String: Any]],
                let firstContent = content.first,
                let text = firstContent["text"] as? String,
-               !text.isEmpty {
-                let character = text.first!
+               !text.isEmpty {                
+                AppLogger.info("Response received: \(text)")
                 
-                AppLogger.info("Character received: \(character)")
-                
-                // Validate the emoji
-                let emoji = validateEmoji(character)
+                // Validate the icon
+                let text = validateIcon(text)
 
-                
-                AppLogger.info("Validated emoji: \(emoji)")
-                return emoji
+                AppLogger.info("Validated icon: \(text)")
+                return text
             } else {
-                AppLogger.error("Failed to parse emoji from response")
-                throw ClaudeAPIError.invalidEmojiResponse
+                AppLogger.error("Failed to parse icon from response")
+                throw ClaudeAPIError.invalidIconResponse
             }
             
         } catch let error as ClaudeAPIError {
@@ -156,22 +154,22 @@ struct ClaudeAPIService {
         }
     }
     
-    static func suggestEmojiWithRetry(for name: String, maxRetries: Int = 2) async throws -> Character {
+    static func suggestIconWithRetry(for name: String, maxRetries: Int = 2) async throws -> String {
         var lastError: Error?
         
         for attempt in 1...maxRetries {
             do {
-                return try await suggestEmoji(for: name)
+                return try await suggestIcon(for: name)
             } catch {
                 lastError = error
                 
                 // Don't retry on certain errors
                 if let claudeError = error as? ClaudeAPIError {
                     switch claudeError {
-                    case .missingAPIKey, .invalidResponse, .invalidEmojiResponse, .invalidEmojiUnicode:
-                        throw claudeError // Don't retry these
-                    default:
-                        break // Retry other errors
+                    case .missingAPIKey, .invalidResponse, .invalidIconResponse, .invalidIcon:  // Don't retry these
+                        throw claudeError
+                    default: // Retry other errors
+                        break 
                     }
                 }
                 
