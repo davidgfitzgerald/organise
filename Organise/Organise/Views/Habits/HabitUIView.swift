@@ -186,5 +186,7 @@ struct HabitUIView: View {
 
 // MARK: - Previews
 #Preview {
-    return HabitUIView()
+    var shouldCreateDefaults = true
+    HabitUIView()
+        .modelContainer(DataContainer.create(shouldCreateDefaults: &shouldCreateDefaults))
 }
