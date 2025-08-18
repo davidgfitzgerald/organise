@@ -31,7 +31,11 @@ actor DataContainer {
         #endif
 
         AppLogger.info("Creating model container")
-        let container = try! ModelContainer(for: schema, configurations: [config])
+        let container = try! ModelContainer(
+            for: schema,
+            migrationPlan: AppMigrationPlan.self,
+            configurations: [config],
+        )
         AppLogger.success("Created model container")
         
         if shouldCreateDefaults {
