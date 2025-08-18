@@ -21,6 +21,7 @@ struct ContentView: View {
 
 
 #Preview {
+    var shouldCreateDefaults = true
     ContentView()
-        .modelContainer(DataContainer.create())
+        .modelContainer(DataContainer.create(shouldCreateDefaults: &shouldCreateDefaults))
 }

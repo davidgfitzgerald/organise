@@ -12,7 +12,7 @@ import SwiftData
 actor DataContainer {
     
     @MainActor
-    static func create() -> ModelContainer {
+    static func create(shouldCreateDefaults: inout Bool) -> ModelContainer {
         let config: ModelConfiguration
 
         #if DEBUG
@@ -34,8 +34,11 @@ actor DataContainer {
         let container = try! ModelContainer(for: schema, configurations: [config])
         AppLogger.success("Created model container")
         
-        // Insert test data
-        try! createSampleData(context: container.mainContext)
+        if shouldCreateDefaults {
+            AppLogger.debug("Creating sample data")
+            try! createSampleData(context: container.mainContext)
+            shouldCreateDefaults = false
+        }
         
         return container
     }

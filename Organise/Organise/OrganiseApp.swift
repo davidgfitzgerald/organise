@@ -11,14 +11,20 @@ import SwiftData
 
 @main
 struct OrganiseApp: App {
-    @Environment(\.modelContext) private var context
+    
+    @AppStorage("isFirstLaunch") private var isFirstLaunch: Bool = true
 
     var body: some Scene {
+        
+
         WindowGroup {
             ContentView()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
+                .onAppear {
+                    AppLogger.debug("isFirstLaunch: \(isFirstLaunch)")
+                }
         }
-        .modelContainer(DataContainer.create())
+        .modelContainer(DataContainer.create(shouldCreateDefaults: &isFirstLaunch))
     }
 }
 
