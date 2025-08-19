@@ -155,6 +155,7 @@ struct HabitUIView: View {
                 // Habits List
                 ScrollView {
                     LazyVStack(spacing: 16) {
+                        HabitRowNew()
                         ForEach(habits) { habit in
                             HabitRowView(
                                 habit: habit,
@@ -172,10 +173,9 @@ struct HabitUIView: View {
                                     try? context.save()
                                 }
                             )
-
                         }
+                        
 
-                        HabitRowNew()
                     }
                     .padding(.horizontal, 16)
                     .padding(.top, 24)

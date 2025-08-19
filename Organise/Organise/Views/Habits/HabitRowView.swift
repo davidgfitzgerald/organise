@@ -46,12 +46,17 @@ struct HabitRowView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(Color(from: habit.colorString).opacity(0.3), lineWidth: 1)
                     )
-                
-                Image(systemName: habit.icon)
-                    .font(.title3)
-                    .foregroundColor(Color(from: habit.colorString))
-                    .scaleEffect(isCompleted ? 1.1 : 1.0)
-                    .animation(.easeInOut(duration: 0.3), value: isCompleted)
+
+                if habit.isLoadingIcon {
+                    ProgressView()
+                        .scaleEffect(0.8)
+                } else {
+                    Image(systemName: habit.icon)
+                        .font(.title3)
+                        .foregroundColor(Color(from: habit.colorString))
+                        .scaleEffect(isCompleted ? 1.1 : 1.0)
+                        .animation(.easeInOut(duration: 0.3), value: isCompleted)
+                }
             }
             
             // Habit Name and Streak

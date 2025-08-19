@@ -40,16 +40,20 @@ struct HabitRowNew: View {
                     .foregroundColor(.secondary)
                     .onSubmit {
                         AppLogger.info("Creating habit with name: \(name)")
-                        let habit = Habit(name: name, icon: "checkmark.square.fill", colorString: "purple", maxStreak: 0, currentStreak: 0)
+                        let habit = Habit(name: name, icon: "checkmark.square.fill", colorString: Color.random, maxStreak: 0, currentStreak: 0)
                         
-                        // Validate habit can't be empty etc.
+                        // TODO validate habit name
+                        
                         context.insert(habit)
-                        // try? context.save()
                         
                         // Capture value of habitName before it is reset
                         let habitName = name
 
                         Task {
+                            /**
+                             * Asynchronously get an icon suggestion
+                             * from Claude.
+                             */
                             do {
                                 habit.isLoadingIcon = true
                                 print("Creating habit: '\(habitName)'")
