@@ -71,9 +71,13 @@ struct PlusToCheckmarkShape: Shape {
 }
 
 #Preview {
+    /**
+     * Preview that toggles isCompleted every few seconds.
+     */
+    @Previewable @State var isCompleted = false
     let color = Color.blue
-    let isCompleted = false
-
+    let interval = 2.0
+    
     ZStack {
         Circle()
             .fill(isCompleted ? color : Color.clear)
@@ -87,6 +91,11 @@ struct PlusToCheckmarkShape: Shape {
             .stroke(isCompleted ? .white : .gray, lineWidth: 3)
             .frame(width: 44, height: 44)
             .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isCompleted)
+    }
+    .onAppear {
+        Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+            isCompleted.toggle()
+        }
     }
 }
 
