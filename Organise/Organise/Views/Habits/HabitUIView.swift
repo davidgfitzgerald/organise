@@ -7,48 +7,6 @@
 import SwiftUI
 import SwiftData
 
-// MARK: - Streak Indicator View
-struct StreakIndicator: View {
-    let streak: Int
-    let maxStreak: Int
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 4) {
-            HStack(spacing: 2) {
-                Image(systemName: "flame.fill")
-                    .font(.caption2)
-                    .foregroundColor(.orange)
-                HStack(spacing: 0) {
-                    Text("\(streak) ")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(.primary)
-                        .contentTransition(.numericText())
-                    Text("/ \(maxStreak)")
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .foregroundColor(.secondary)
-                        .contentTransition(.numericText())
-
-                }
-            }
-
-            // Mini progress bar
-            let progress = maxStreak > 0 ? Double(streak) / Double(maxStreak) : 0
-            RoundedRectangle(cornerRadius: 2)
-                .fill(color.opacity(0.3))
-                .frame(height: 3)
-                .overlay(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 2)
-                        .fill(color)
-                        .frame(width: max(4, 40 * progress))
-                        .animation(.easeInOut(duration: 0.5), value: progress)
-                }
-                .frame(width: 40)
-        }
-    }
-}
 
 struct PlusToCheckmarkShape: Shape {
     var progress: CGFloat // 0 = plus, 1 = checkmark
@@ -126,7 +84,7 @@ struct RoundedCorner: Shape {
     }
 }
 
-// MARK: - Main UI View
+
 struct HabitUIView: View {
     @Environment(\.modelContext) private var context
     @Query var habits: [Habit]
@@ -200,7 +158,6 @@ struct HabitUIView: View {
     }
 }
 
-// MARK: - Previews
 #Preview {
     var shouldCreateDefaults = true
     HabitUIView()

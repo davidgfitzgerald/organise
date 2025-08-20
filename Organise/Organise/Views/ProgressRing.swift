@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-// MARK: - Custom Progress Ring
+
 struct ProgressRing: View {
     let progress: Double
     let color: Color

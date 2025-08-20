@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: - Date Header View
+
 struct DateHeaderView: View {
     @Binding var selectedDate: Date
     @State var showCalendar = false
