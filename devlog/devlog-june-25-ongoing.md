@@ -2,6 +2,11 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 31/08/25
+
+Resetting the project and starting again, just gonna get the 
+essentials up and running and not worry about the UI.
+
 # 13/07/25
 
 In a stage of planning and ideation for the app development. 

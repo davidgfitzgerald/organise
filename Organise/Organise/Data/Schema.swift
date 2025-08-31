@@ -10,10 +10,10 @@ import SwiftData
 
 
 // Set models to the current version
-typealias Habit = VersionedSchemaV1.Habit
-typealias HabitCompletion = VersionedSchemaV1.HabitCompletion
+//typealias Habit = VersionedSchemaV1.Habit
+//typealias HabitCompletion = VersionedSchemaV1.HabitCompletion
 
 let schema = Schema([
-    Habit.self,
-    HabitCompletion.self
+//    Habit.self,
+//    HabitCompletion.self
 ])

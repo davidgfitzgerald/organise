@@ -10,18 +10,20 @@ import SwiftData
 
 
 struct ContentView: View {
-    @State private var date = Date()
-    @State private var showingPicker: Bool = false
-    @State var selectedTab = "Habits"
-    
     var body: some View {
-        HabitUIView()
+        VStack {
+            Image(systemName: "globe")
+                .imageScale(.large)
+                .foregroundColor(.accentColor)
+            Text("Hello, world!")
+        }
+        .padding()
     }
 }
 
-
-#Preview {
-    var shouldCreateDefaults = true
-    ContentView()
-        .modelContainer(DataContainer.create(shouldCreateDefaults: &shouldCreateDefaults))
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }
+
