@@ -1,8 +1,8 @@
 //
-//  OrganiseTests.swift
-//  OrganiseTests
+//  HabitTests.swift
+//  HabitTests
 //
-//  Created by David Fitzgerald on 13/05/2025.
+//  Created by David Fitzgerald on 04/10/2025.
 //
 
 import Testing
@@ -26,3 +26,4 @@ import SwiftData
     #expect(habits[0].icon == "drop.fill")
     #expect(habits[0].color == ".blue")
 }
+
