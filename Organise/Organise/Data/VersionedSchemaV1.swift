@@ -22,7 +22,13 @@ enum VersionedSchemaV1: VersionedSchema {
 
 extension VersionedSchemaV1 {
 
-//    @Model
-//    final class SomeModel() {}
+    @Model
+    final class Habit: Identifiable {
+        @Attribute(.unique) var id: UUID
+
+        init(id: UUID = UUID()) {
+            self.id = id
+        }
+    }
 
 }
