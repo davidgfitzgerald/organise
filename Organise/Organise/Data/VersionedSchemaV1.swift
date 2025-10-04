@@ -27,12 +27,26 @@ extension VersionedSchemaV1 {
         @Attribute(.unique) var name: String
         var icon: String
         var color: String
+        @Relationship(deleteRule: .cascade, inverse: \HabitCompletion.habit) var completions: [HabitCompletion] = []
 
         init(id: UUID = UUID(), name: String, icon: String = "questionmark", color: String = ".gray") {
             self.id = id
             self.name = name
             self.icon = icon
             self.color = color
+        }
+    }
+    
+    @Model
+    final class HabitCompletion: Identifiable {
+        @Attribute(.unique) var id: UUID
+        var completedAt: Date
+        var habit: Habit?
+        
+        init(id: UUID = UUID(), completedAt: Date, habit: Habit? = nil) {
+            self.id = id
+            self.completedAt = completedAt
+            self.habit = habit
         }
     }
 

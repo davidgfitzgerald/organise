@@ -10,34 +10,106 @@ import SwiftData
 
 struct ContentView: View {
     @Query var habits: [Habit]
+    @Query var completions: [HabitCompletion]
     @Environment(\.modelContext) private var modelContext
     
     @State private var showingAddHabit = false
     @State private var editingHabit: Habit?
     @State private var showingDeleteAlert = false
     @State private var habitToDelete: Habit?
+    @State private var selectedDate = Date()
+    
+    private var selectedDateString: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter.string(from: selectedDate)
+    }
+    
+    private func isHabitCompletedOnDate(_ habit: Habit, date: Date) -> Bool {
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: date)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        return completions.contains { completion in
+            completion.habit?.id == habit.id &&
+            completion.completedAt >= startOfDay &&
+            completion.completedAt < endOfDay
+        }
+    }
+    
+    private func toggleHabitCompletion(_ habit: Habit, on date: Date) {
+        let isCompleted = isHabitCompletedOnDate(habit, date: date)
+        
+        if isCompleted {
+            // Remove completion
+            if let completion = completions.first(where: { completion in
+                completion.habit?.id == habit.id &&
+                Calendar.current.isDate(completion.completedAt, inSameDayAs: date)
+            }) {
+                modelContext.delete(completion)
+            }
+        } else {
+            // Add completion
+            let completion = HabitCompletion(completedAt: date, habit: habit)
+            modelContext.insert(completion)
+        }
+        
+        try? modelContext.save()
+    }
 
     var body: some View {
         NavigationView {
-            List(habits, id: \.id) { habit in
-                HStack(spacing: 12) {
-                    Image(systemName: habit.icon)
-                        .foregroundColor(Color(from: habit.color))
-                        .font(.title2)
-                        .frame(width: 30)
+            VStack(spacing: 0) {
+                // Date Picker Section
+                VStack(spacing: 12) {
+                    DatePicker("Select Date", selection: $selectedDate, displayedComponents: .date)
+                        .datePickerStyle(.compact)
+                        .padding(.horizontal)
                     
-                    Text(habit.name)
-                        .font(.body)
+                    Text(selectedDateString)
+                        .font(.headline)
+                        .foregroundColor(.secondary)
                 }
-                .padding(.vertical, 4)
-                .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                    Button("Delete", role: .destructive) {
-                        habitToDelete = habit
-                        showingDeleteAlert = true
+                .padding(.vertical, 12)
+                .background(Color(.systemGroupedBackground))
+                
+                // Habits List
+                List(habits, id: \.id) { habit in
+                    HStack(spacing: 12) {
+                        // Completion checkbox
+                        Button(action: {
+                            toggleHabitCompletion(habit, on: selectedDate)
+                        }) {
+                            Image(systemName: isHabitCompletedOnDate(habit, date: selectedDate) ? "checkmark.circle.fill" : "circle")
+                                .foregroundColor(isHabitCompletedOnDate(habit, date: selectedDate) ? .green : .gray)
+                                .font(.title2)
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        
+                        // Habit icon
+                        Image(systemName: habit.icon)
+                            .foregroundColor(Color(from: habit.color))
+                            .font(.title2)
+                            .frame(width: 30)
+                        
+                        // Habit name
+                        Text(habit.name)
+                            .font(.body)
+                            .strikethrough(isHabitCompletedOnDate(habit, date: selectedDate))
+                            .foregroundColor(isHabitCompletedOnDate(habit, date: selectedDate) ? .secondary : .primary)
+                        
+                        Spacer()
                     }
-                    
-                    Button("Edit") {
-                        editingHabit = habit
+                    .padding(.vertical, 4)
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button("Delete", role: .destructive) {
+                            habitToDelete = habit
+                            showingDeleteAlert = true
+                        }
+                        
+                        Button("Edit") {
+                            editingHabit = habit
+                        }
                     }
                 }
             }
