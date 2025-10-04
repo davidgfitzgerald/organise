@@ -5,17 +5,41 @@
 //  Created by David Fitzgerald on 02/06/2025.
 //
 import SwiftData
+import Foundation
 
 
-struct SampleData: Codable {
-    // Model the .json data
+struct HabitData: Codable, Identifiable {
+    var id: String
+    var name: String
+    var icon: String
+    var color: String
+}
+
+
+struct JsonData: Codable {
+    var habits: [HabitData]
 }
 
 @MainActor
-func createSampleData(container: ModelContainer) {
-//    AppLogger.info("Loading data.json")
-    let sampleData: SampleData = load("data.json")
-//    AppLogger.success("Loaded data.json")
+func createSampleData(container: ModelContainer, jsonFile: String = "data.json") {
+    AppLogger.info("Loading \(jsonFile)")
 
-    // TODO - create items in DB
+    let jsonData: JsonData = load(jsonFile)
+    
+    // Create habits
+    for data in jsonData.habits {
+        guard let id = UUID(uuidString: data.id) else {
+            fatalError("Could not cast \(data.id) to UUID in \(data)")
+        }
+
+        let habit = Habit(
+            id: id,
+            name: data.name,
+            icon: data.icon,
+            color: data.color,
+        )
+        container.mainContext.insert(habit)
+    }
+    
+    AppLogger.success("Loaded \(jsonFile)")
 }

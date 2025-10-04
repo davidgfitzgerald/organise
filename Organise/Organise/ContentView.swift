@@ -6,14 +6,37 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
+    @Query var habits: [Habit]
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List(habits, id: \.id) { habit in
+                HStack(spacing: 12) {
+                    Image(systemName: habit.icon)
+                        .foregroundColor(Color(from: habit.color))
+                        .font(.title2)
+                        .frame(width: 30)
+                    
+                    Text(habit.name)
+                        .font(.body)
+                }
+                .padding(.vertical, 4)
+            }
+            .navigationTitle("Habits")
+        }
     }
 }
 
 #Preview {
+    var shouldCreateDefaults = true
     ContentView()
-        .modelContainer(DataContainer.create(shouldCreateDefaults: true))
+        .modelContainer(
+            DataContainer.create(
+                shouldCreateDefaults: &shouldCreateDefaults,
+                configuration: ModelConfiguration(isStoredInMemoryOnly: true)
+            )
+        )
 }

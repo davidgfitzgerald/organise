@@ -10,10 +10,9 @@ import SwiftData
 
 
 // Set models to the current version
-//typealias SomeModel = VersionedSchemaV1.SomeModel
-//typealias SomeOtherModel = VersionedSchemaV1.SomeOtherModel
+typealias Habit = VersionedSchemaV1.Habit
+
 
 let schema = Schema([
-//    SomeModel.self,
-//    SomeOtherModel.self
+    Habit.self,
 ])

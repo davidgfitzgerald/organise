@@ -17,7 +17,12 @@ struct OrganiseApp: App {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(DataContainer.create(shouldCreateDefaults: &isFirstTimeLaunch))
+        .modelContainer(
+            DataContainer.create(
+                shouldCreateDefaults: &isFirstTimeLaunch,
+                configuration: ModelConfiguration(),
+            )
+        )
     }
 }
 
