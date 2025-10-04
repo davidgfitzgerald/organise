@@ -14,8 +14,8 @@ enum VersionedSchemaV1: VersionedSchema {
     
     static var models: [any PersistentModel.Type] {
         [
-//            Habit.self,
-//            HabitCompletion.self
+//            SomeModel.self,
+//            SomeOtherModel.self
         ]
     }
 }

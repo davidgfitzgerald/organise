@@ -7,6 +7,13 @@
 import Foundation
 
 func load<T: Decodable>(_ filename: String) -> T {
+    /**
+     * Generic function to load JSON from a file.
+     *
+     * Usage:
+     *
+     * let data: DataModel = load("data.json")
+     */
     let data: Data
 
     guard let file = Bundle.main.url(forResource: filename, withExtension: nil)

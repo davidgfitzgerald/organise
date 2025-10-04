@@ -13,9 +13,9 @@ struct SampleData: Codable {
 
 @MainActor
 func createSampleData(container: ModelContainer) {
-    AppLogger.info("Loading data.json")
+//    AppLogger.info("Loading data.json")
     let sampleData: SampleData = load("data.json")
-    AppLogger.success("Loaded data.json")
+//    AppLogger.success("Loaded data.json")
 
     // TODO - create items in DB
 }

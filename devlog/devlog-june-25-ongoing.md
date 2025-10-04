@@ -2,6 +2,10 @@
 
 This file is for rambling thoughts and notes during development.
 
+# 04/10/25
+
+Another little session, first in a while.
+
 # 31/08/25
 
 Resetting the project and starting again, just gonna get the 
