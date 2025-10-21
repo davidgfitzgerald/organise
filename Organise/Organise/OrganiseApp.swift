@@ -8,21 +8,20 @@
 import SwiftUI
 import SwiftData
 
-@main
-struct OrganiseApp: App {
-
-    @AppStorage("isFirstTimeLaunch") private var isFirstTimeLaunch: Bool = true
-    
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-        .modelContainer(
-            DataContainer.create(
-                shouldCreateDefaults: &isFirstTimeLaunch,
-                configuration: ModelConfiguration(),
-            )
-        )
-    }
-}
-
+//@main
+//struct OrganiseApp: App {
+//
+//    @AppStorage("isFirstTimeLaunch") private var isFirstTimeLaunch: Bool = true
+//    
+//    var body: some Scene {
+//        WindowGroup {
+//            ContentView()
+//        }
+//        .modelContainer(
+//            DataContainer.create(
+//                shouldCreateDefaults: &isFirstTimeLaunch,
+//                configuration: ModelConfiguration(),
+//            )
+//        )
+//    }
+//}

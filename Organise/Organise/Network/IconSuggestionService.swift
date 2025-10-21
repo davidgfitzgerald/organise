@@ -80,7 +80,8 @@ struct IconSuggestionService {
                 // Wait before retry (exponential backoff)
                 if attempt < maxRetries {
                     let delay = Double(attempt) * 1.0 // 1s, 2s delays
-                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+//                    try await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                    // TODO UNCOMMENT - Task now conflicts with created thing called Task
                 }
             }
         }
