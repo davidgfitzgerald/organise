@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6346DCAD2DFA5036006A4D5D /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6346DCAC2DFA5036006A4D5D /* Config.plist */; };
+		6389EEC92EA838BC00220685 /* InfiniteScrollViews in Frameworks */ = {isa = PBXBuildFile; productRef = 6389EEC82EA838BC00220685 /* InfiniteScrollViews */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6389EEC92EA838BC00220685 /* InfiniteScrollViews in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			);
 			name = Organise;
 			packageProductDependencies = (
+				6389EEC82EA838BC00220685 /* InfiniteScrollViews */,
 			);
 			productName = Organise;
 			productReference = 632384B82DD3F82A00EF2BA2 /* Organise.app */;
@@ -202,6 +205,9 @@
 			);
 			mainGroup = 632384AF2DD3F82A00EF2BA2;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6389EEC72EA8389900220685 /* XCRemoteSwiftPackageReference "InfiniteScrollViews" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 632384B92DD3F82A00EF2BA2 /* Products */;
 			projectDirPath = "";
@@ -571,6 +577,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6389EEC72EA8389900220685 /* XCRemoteSwiftPackageReference "InfiniteScrollViews" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/b5i/InfiniteScrollViews";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6389EEC82EA838BC00220685 /* InfiniteScrollViews */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6389EEC72EA8389900220685 /* XCRemoteSwiftPackageReference "InfiniteScrollViews" */;
+			productName = InfiniteScrollViews;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 632384B02DD3F82A00EF2BA2 /* Project object */;
 }

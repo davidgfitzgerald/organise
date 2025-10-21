@@ -24,7 +24,8 @@ final class Task {
 struct TaskCalendarApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+//            ContentView()
+            InfiniteScrollCalendarView()
         }
         .modelContainer(for: Task.self)
     }
@@ -746,11 +747,8 @@ extension Date {
     }
 }
 
-//#Preview {
-//    ContentView()
-//        .modelContainer(for: Task.self, inMemory: true)
-//}
-
 #Preview {
-    InfiniteCalendarView()
+    ContentView()
+        .modelContainer(for: Task.self, inMemory: true)
 }
+

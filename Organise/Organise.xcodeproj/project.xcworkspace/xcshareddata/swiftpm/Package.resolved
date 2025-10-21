@@ -1,0 +1,15 @@
+{
+  "originHash" : "d66ec17564a85f67bd7e4c1ce64d91e7113f32cf09bd7ce99da69ead762d03ab",
+  "pins" : [
+    {
+      "identity" : "infinitescrollviews",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/b5i/InfiniteScrollViews",
+      "state" : {
+        "branch" : "main",
+        "revision" : "139bdc6232b16adcb3c829a412f9a67d01159ee3"
+      }
+    }
+  ],
+  "version" : 3
+}
